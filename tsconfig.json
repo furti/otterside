@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "outDir": "./target/scripts/",
+    "target": "es5",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "rootDir": "./src/main/webapp/scripts"
+  },
+  "filesGlob": [
+    "./src/**/*.ts"
+  ],
+  "files": [
+    "./src/main/webapp/scripts/otterside.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "compileOnSave": false
+}

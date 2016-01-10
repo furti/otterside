@@ -1,0 +1,26 @@
+{
+  "name": "otterside",
+  "version": "0.0.1",
+  "description": "Browser based Game with logic puzzles for everyone that likes computers and programming :)",
+  "main": "gulpfile.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-typescript": "^2.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/furti/otterside.git"
+  },
+  "keywords": [
+    "game",
+    "puzzle"
+  ],
+  "author": "Daniel Furtlehner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/furti/otterside/issues"
+  },
+  "homepage": "https://github.com/furti/otterside#readme"
+}
