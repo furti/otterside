@@ -10,7 +10,8 @@
     "./src/**/*.ts"
   ],
   "files": [
-    "./src/web/scripts/otterside.ts"
+    "./src/web/scripts/OttersideGame.ts",
+    "./src/web/scripts/PlayState.ts"
   ],
   "atom": {
     "rewriteTsconfig": true
