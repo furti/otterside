@@ -24,12 +24,18 @@ gulp.task('ts', function() {
   return result.js.pipe(gulp.dest(tsconfig.compilerOptions.outDir));
 });
 
-gulp.task('watch', ['ts', 'assets', 'html'], function() {
+gulp.task('bower', function() {
+  return gulp.src(['./bower_components/phaser/build/phaser.js'])
+    .pipe(gulp.dest('./target/scripts'));
+});
+
+gulp.task('watch', ['ts', 'assets', 'html', 'bower'], function() {
   connect.server({
     root: 'target'
   });
 
-  gulp.watch(tsconfig.filesGlob, ['scripts']);
+  gulp.watch(tsconfig.filesGlob, ['ts']);
   gulp.watch(assetSource, ['assets']);
   gulp.watch(htmlSource, ['html']);
+  gulp.watch('./bower', ['bower']);
 });
