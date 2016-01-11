@@ -5,20 +5,16 @@ module Otterside {
         private map: Phaser.Tilemap;
 
         public preload() {
-            console.log('load');
-
             this.load.tilemap('ottersidemap', '/assets/map/otterside.json', null, Phaser.Tilemap.TILED_JSON);
             this.load.image('ottersideTiles', '/assets/map/otterside-tiles.png');
         }
 
         public create() {
-            console.log('create');
-
             this.map = this.game.add.tilemap('ottersidemap');
 
-            this.map.addTilesetImage('otterside_tiles', 'ottersideTiles');
+            this.map.addTilesetImage('otterside-tiles', 'ottersideTiles');
 
-            this.boardLayer = this.map.createLayer('board');
+            this.boardLayer = this.map.createLayer('ground');
             this.map.createLayer('walls');
 
             this.boardLayer.resizeWorld();
