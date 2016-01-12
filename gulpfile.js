@@ -39,3 +39,9 @@ gulp.task('watch', ['ts', 'assets', 'html', 'bower'], function() {
   gulp.watch(htmlSource, ['html']);
   gulp.watch('./bower', ['bower']);
 });
+
+gulp.task('connect', function() {
+  connect.server({
+    root: 'target'
+  });
+});
