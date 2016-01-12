@@ -11,6 +11,7 @@ module Otterside {
         }
 
         public start() {
+            //this.game.renderer.renderSession.roundPixels = true
             this.game.state.start('Play');
         }
     }
