@@ -3,6 +3,7 @@ module Otterside {
 
     export class OttersideGame {
         public game: Phaser.Game;
+        public static type = 'OttersideGame';
 
         constructor() {
             this.game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
@@ -15,6 +16,10 @@ module Otterside {
             this.game.state.start('Play');
         }
     }
+    var game = new OttersideGame();
+    export var objectStore = new ObjectStore();
 
-    new OttersideGame().start();
+    objectStore.add(OttersideGame.type, game);
+
+    game.start();
 }

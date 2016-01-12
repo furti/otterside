@@ -1,5 +1,12 @@
 /// <reference path="../../../bower_components/phaser/typescript/phaser.d.ts"/>
 module Otterside {
+    class PlayerStart {
+        public static type = 'player-start';
+        public x: number;
+        public y: number;
+        public type: string;
+    }
+
     export class PlayState extends Phaser.State {
 
         private cursorKeys: Phaser.CursorKeys;
@@ -27,14 +34,7 @@ module Otterside {
             this.map.setCollisionBetween(1, 20, true, 'walls');
 
             this.boardLayer.resizeWorld();
-
-            //Add the player
-            this.player = this.add.sprite(100, 100, 'player');
-            this.physics.arcade.enable(this.player);
-
-            this.camera.follow(this.player);
-
-            this.cursorKeys = this.input.keyboard.createCursorKeys();
+            this.setupPlayer();
         }
 
         public update() {
@@ -58,6 +58,18 @@ module Otterside {
             }
 
             this.physics.arcade.collide(this.player, this.wallLayer);
+        }
+
+        private setupPlayer() {
+            var playerStart = MapUtils.findFirstObjectByType(this.map, 'objects', PlayerStart.type, PlayerStart);
+
+            //Add the player
+            this.player = this.add.sprite(playerStart.x, playerStart.y, 'player');
+            this.physics.arcade.enable(this.player);
+
+            this.camera.follow(this.player);
+
+            this.cursorKeys = this.input.keyboard.createCursorKeys();
         }
     }
 }
