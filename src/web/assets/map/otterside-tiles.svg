@@ -30,9 +30,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="14.908369"
-     inkscape:cx="12.169713"
-     inkscape:cy="348.40793"
+     inkscape:zoom="11.339043"
+     inkscape:cx="117.19251"
+     inkscape:cy="354.55703"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -53,7 +53,7 @@
      inkscape:snap-bbox-edge-midpoints="false"
      inkscape:bbox-paths="true"
      inkscape:snap-midpoints="false"
-     inkscape:snap-global="true"
+     inkscape:snap-global="false"
      inkscape:snap-grids="true"
      inkscape:snap-to-guides="true">
     <inkscape:grid
@@ -289,68 +289,160 @@
          d="m 178,674.36217 -7,-7 4,-4 7,7 z"
          style="fill:#fcd079;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
-    <path
-       style="fill:#505050;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 22,686.36217 -9,9 0,14 9,-9 z"
-       id="path4427"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:#282828;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 13,709.36217 -3,-5 0,-14 3,5 z"
-       id="path4437"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:#646464;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 10,690.36217 4,-4 8,0 -9,9 z"
-       id="path4439"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
     <g
-       id="g4445"
-       transform="translate(1,-1.0000014)">
+       id="g4188"
+       transform="translate(0,-3.251253e-6)">
       <path
          sodipodi:nodetypes="ccccc"
          inkscape:connector-curvature="0"
-         id="path4441"
-         d="m 17,705.36217 0,10 -1,1 0,-10 z"
-         style="fill:#c8c8c8;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path4443"
-         d="m 16,716.36217 -1,-1 0,-8 1,-1 z"
-         style="fill:#a0a0a0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-    </g>
-    <g
-       id="g4449"
-       transform="translate(-2,1.9999986)">
-      <path
-         style="fill:#c8c8c8;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 17,705.36217 0,10 -1,1 0,-10 z"
-         id="path4451"
-         inkscape:connector-curvature="0"
-         sodipodi:nodetypes="ccccc" />
-      <path
-         style="fill:#a0a0a0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 16,716.36217 -1,-1 0,-8 1,-1 z"
-         id="path4453"
-         inkscape:connector-curvature="0" />
-    </g>
-    <g
-       transform="translate(4,-4.0000013)"
-       id="g4455">
+         id="path4427"
+         d="m 22,686.36217 -9,9 0,14 9,-9 z"
+         style="fill:#505050;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
       <path
          sodipodi:nodetypes="ccccc"
          inkscape:connector-curvature="0"
-         id="path4457"
-         d="m 17,705.36217 0,10 -1,1 0,-10 z"
-         style="fill:#c8c8c8;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+         id="path4437"
+         d="m 13,709.36217 -3,-5 0,-14 3,5 z"
+         style="fill:#282828;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
       <path
+         sodipodi:nodetypes="ccccc"
          inkscape:connector-curvature="0"
-         id="path4459"
-         d="m 16,716.36217 -1,-1 0,-8 1,-1 z"
-         style="fill:#a0a0a0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+         id="path4439"
+         d="m 10,690.36217 4,-4 8,0 -9,9 z"
+         style="fill:#646464;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <g
+         transform="matrix(1,0,0,0.9090909,1,63.123842)"
+         id="g4445">
+        <path
+           style="fill:#c8c8c8;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 17,705.36217 0,10 -1,1 0,-10 z"
+           id="path4441"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccccc" />
+        <path
+           style="fill:#a0a0a0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 16,716.36217 -1,-1 0,-8 1,-1 z"
+           id="path4443"
+           inkscape:connector-curvature="0" />
+      </g>
+      <g
+         transform="matrix(1,0,0,0.8181818,-2,130.24768)"
+         id="g4449">
+        <path
+           sodipodi:nodetypes="ccccc"
+           inkscape:connector-curvature="0"
+           id="path4451"
+           d="m 17,705.36217 0,10 -1,1 0,-10 z"
+           style="fill:#c8c8c8;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4453"
+           d="m 16,716.36217 -1,-1 0,-8 1,-1 z"
+           style="fill:#a0a0a0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      </g>
+      <g
+         id="g4455"
+         transform="translate(4,-4.0000013)">
+        <path
+           style="fill:#c8c8c8;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 17,705.36217 0,10 -1,1 0,-10 z"
+           id="path4457"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccccc" />
+        <path
+           style="fill:#a0a0a0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 16,716.36217 -1,-1 0,-8 1,-1 z"
+           id="path4459"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <path
+       style="fill:#e95d17;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 64,712.36217 0,-4 32,0 0,4 z"
+       id="path4251"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path4469"
+       d="m 64,702.36217 0,-4 32,0 0,4 z"
+       style="fill:#e95d17;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:#e95d17;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 64,692.36217 0,-4 32,0 0,4 z"
+       id="path4471"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path4473"
+       d="m 42,712.36217 0,-4 22,0 0,4 z"
+       style="fill:#e95d17;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:#e95d17;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 42,702.36217 0,-4 22,0 0,4 z"
+       id="path4475"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path4477"
+       d="m 42,692.36217 0,-4 22,0 0,4 z"
+       style="fill:#e95d17;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <g
+       id="g4491"
+       transform="matrix(1,0,0,1.0874977,0,-59.996099)">
+      <path
+         sodipodi:nodetypes="zcczz"
+         inkscape:connector-curvature="0"
+         id="path4489"
+         d="m 42,712.36217 c 0,-2 0,-24 0,-24 l -8,0 c 0,0 0,22 0,24 0,2 8,2 8,0 z"
+         style="fill:#505050;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <ellipse
+         cx="38.026268"
+         cy="687.95746"
+         rx="4"
+         ry="2.2703667"
+         id="path4485"
+         style="fill:#646464;fill-opacity:1;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <path
+       style="fill:#e95d17;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 96,712.36217 0,-4 22,0 0,4 z"
+       id="path4479"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path4481"
+       d="m 96,702.36217 0,-4 22,0 0,4 z"
+       style="fill:#e95d17;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:#e95d17;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 96,692.36217 0,-4 22,0 0,4 z"
+       id="path4483"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <g
+       id="g4495"
+       transform="matrix(1,0,0,1.062602,83.870968,-42.234163)">
+      <path
+         style="fill:#505050;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 42,712.36217 c 0,-2 0,-24 0,-24 l -8,0 c 0,0 0,22 0,24 0,2 8,2 8,0 z"
+         id="path4497"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="zcczz" />
+      <ellipse
+         style="fill:#646464;fill-opacity:1;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="ellipse4499"
+         ry="2.2703667"
+         rx="4"
+         cy="687.95746"
+         cx="38.026268" />
     </g>
   </g>
 </svg>
