@@ -15,6 +15,7 @@ module Otterside {
         private boardLayer: Phaser.TilemapLayer;
         private wallLayer: Phaser.TilemapLayer;
         private map: Phaser.Tilemap;
+        private objectGroup: Phaser.Group;
 
         public create() {
             this.map = this.game.add.tilemap('ottersidemap');
@@ -27,6 +28,7 @@ module Otterside {
             this.map.setCollisionBetween(1, 20, true, 'walls');
 
             this.boardLayer.resizeWorld();
+            this.setupSpritesForObjects();
             this.setupPlayer();
         }
 
@@ -51,7 +53,17 @@ module Otterside {
             }
 
             this.physics.arcade.collide(this.player, this.wallLayer);
+            this.physics.arcade.collide(this.player, this.objectGroup);
         }
+
+        private setupSpritesForObjects() {
+            this.objectGroup = this.add.group();
+
+            //Add physics for objects
+            this.objectGroup.enableBody = true;
+
+            MapUtils.createFromObjects(this.objectGroup, this.map, 'objects');
+        };
 
         private setupPlayer() {
             var playerStart = MapUtils.findFirstObjectByType(this.map, 'objects', PlayerStart.type, PlayerStart);

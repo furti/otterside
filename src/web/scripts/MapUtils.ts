@@ -4,7 +4,7 @@ module Otterside {
     export module MapUtils {
         export function findObjectsByType<ObjectType>(map: Phaser.Tilemap, layer: string, type: string): Array<ObjectType> {
             var array: ObjectType[] = [];
-            
+
             for (var object of map.objects[layer]) {
                 if (object.type === type) {
                     array.push(object);
@@ -20,6 +20,31 @@ module Otterside {
                     return object;
                 }
             }
+        }
+
+        /**
+         * Create sprites from an objects group in the tiled map.
+         *
+         * @param {Phaser.Group} group The group to add the sprites to.
+         * @param {Phaser.Tilemap} map The map to read the objects from.
+         * @param {string} groupName The name of the group on the map to read objects from.
+         */
+        export function createFromObjects(group: Phaser.Group, map: Phaser.Tilemap, groupName: string): void {
+            if (!map.objects[groupName]) {
+                console.log('CreateFromObjects: No Objectsgroup with name ' + groupName + ' found.');
+
+                return;
+            }
+
+            map.objects[groupName].forEach((object: GameObject) => {
+                if (object.properties.spriteIndex) {
+                    object.sprite = group.create(object.x, object.y, 'ottersideTiles', parseInt(object.properties.spriteIndex));
+
+                    if (object.properties.moveable !== 'true') {
+                        object.sprite.body.immovable  = true;
+                    }
+                }
+            });
         }
     }
 }
