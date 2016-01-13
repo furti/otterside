@@ -8,6 +8,7 @@ module Otterside {
     }
 
     export class PlayState extends Phaser.State {
+        public static stateName = 'Play';
 
         private cursorKeys: Phaser.CursorKeys;
         private player: Phaser.Sprite;
@@ -15,15 +16,7 @@ module Otterside {
         private wallLayer: Phaser.TilemapLayer;
         private map: Phaser.Tilemap;
 
-        public preload() {
-            this.load.tilemap('ottersidemap', '/assets/map/otterside.json', null, Phaser.Tilemap.TILED_JSON);
-            this.load.image('ottersideTiles', '/assets/map/otterside-tiles.png');
-            this.load.image('player', '/assets/player.png')
-        }
-
         public create() {
-            this.physics.startSystem(Phaser.Physics.ARCADE);
-
             this.map = this.game.add.tilemap('ottersidemap');
 
             this.map.addTilesetImage('otterside-tiles', 'ottersideTiles');
