@@ -79,7 +79,8 @@
                  "name":"riddle-firstpassword",
                  "properties":
                     {
-                     "riddle":"firstpassword"
+                     "riddle":"firstpassword",
+                     "spriteIndex":"18"
                     },
                  "rotation":0,
                  "type":"terminal",
