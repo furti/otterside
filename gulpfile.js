@@ -1,15 +1,22 @@
 var gulp = require('gulp'),
   ts = require('gulp-typescript'),
   connect = require('gulp-connect'),
+  svg2png = require('gulp-svg2png'),
   tsconfig = require('./tsconfig.json'),
-  assetSource = './src/web/assets/**',
+  assetBase = './src/web/assets/',
   htmlSource = './src/web/**/*.html';
 
 var tsProject = ts.createProject('./tsconfig.json');
 
-gulp.task('assets', function() {
-  return gulp.src(assetSource)
+gulp.task('assets', ['svg'], function() {
+  return gulp.src(assetBase + '**')
     .pipe(gulp.dest('./target/assets'));
+});
+
+gulp.task('svg', function() {
+  return gulp.src(assetBase + '**/*.svg')
+    .pipe(svg2png())
+    .pipe(gulp.dest(assetBase));
 });
 
 gulp.task('html', function() {
@@ -35,7 +42,7 @@ gulp.task('watch', ['ts', 'assets', 'html', 'bower'], function() {
   });
 
   gulp.watch(tsconfig.filesGlob, ['ts']);
-  gulp.watch(assetSource, ['assets']);
+  gulp.watch(assetBase + '**', ['assets']);
   gulp.watch(htmlSource, ['html']);
   gulp.watch('./bower', ['bower']);
 });
