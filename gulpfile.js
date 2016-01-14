@@ -9,14 +9,14 @@ var gulp = require('gulp'),
 var tsProject = ts.createProject('./tsconfig.json');
 
 gulp.task('assets', ['svg'], function() {
-  return gulp.src(assetBase + '**')
+  return gulp.src([assetBase + '**', '!' + assetBase + '**/*.svg'])
     .pipe(gulp.dest('./target/assets'));
 });
 
 gulp.task('svg', function() {
   return gulp.src(assetBase + '**/*.svg')
     .pipe(svg2png())
-    .pipe(gulp.dest(assetBase));
+    .pipe(gulp.dest('./target/assets'));
 });
 
 gulp.task('html', function() {

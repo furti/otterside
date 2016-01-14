@@ -38,18 +38,32 @@ module Otterside {
             body.velocity.x = 0;
             body.velocity.y = 0;
 
+
             if (this.cursorKeys.up.isDown) {
                 body.velocity.y -= 100;
+
+                this.player.animations.stop();
+                this.player.frame = 2;
             }
             else if (this.cursorKeys.down.isDown) {
                 body.velocity.y += 100;
-            }
 
-            if (this.cursorKeys.right.isDown) {
+                this.player.animations.stop();
+                this.player.frame = 2;
+            }
+            else if (this.cursorKeys.right.isDown) {
                 body.velocity.x += 100;
+
+                this.player.animations.play('right', 15, true);
             }
             else if (this.cursorKeys.left.isDown) {
                 body.velocity.x -= 100;
+
+                this.player.animations.play('left', 15, true);
+            }
+            else {
+                this.player.animations.stop();
+                this.player.frame = 2;
             }
 
             this.physics.arcade.collide(this.player, this.wallLayer);
@@ -70,6 +84,9 @@ module Otterside {
 
             //Add the player
             this.player = this.add.sprite(playerStart.x, playerStart.y, 'player');
+            this.player.animations.add('left', [0, 1]);
+            this.player.animations.add('right', [3, 4]);
+
             this.physics.arcade.enable(this.player);
 
             this.camera.follow(this.player);

@@ -138,7 +138,7 @@
         {
          "columns":11,
          "firstgid":1,
-         "image":"otterside-tiles.png",
+         "image":"..\/..\/..\/..\/target\/assets\/map\/otterside-tiles.png",
          "imageheight":400,
          "imagewidth":352,
          "margin":0,
