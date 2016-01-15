@@ -1,5 +1,3 @@
-/// <reference path="../../../bower_components/phaser/typescript/phaser.d.ts"/>
-
 module Otterside {
     export class BootState extends Phaser.State {
         public static stateName = 'Boot';

@@ -1,5 +1,3 @@
-/// <reference path="../../../bower_components/phaser/typescript/phaser.d.ts"/>
-
 module Otterside {
     export module MapUtils {
         export function findObjectsByType<ObjectType>(map: Phaser.Tilemap, layer: string, type: string): Array<ObjectType> {

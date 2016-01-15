@@ -1,4 +1,3 @@
-/// <reference path="../../../bower_components/phaser/typescript/phaser.d.ts"/>
 module Otterside {
     class PlayerStart {
         public static type = 'player-start';
