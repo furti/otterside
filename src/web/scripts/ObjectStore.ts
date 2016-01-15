@@ -1,13 +1,17 @@
 module Otterside {
-    export class ObjectStore {
-        private objects: { [type: string]: any };
+    export module ObjectStore {
+        var sharedObjects: { [type: string]: any } = {};
 
-        constructor() {
-            this.objects = {};
+        export function add(type: string, object: any) {
+            this.objects[type] = object;
         }
 
-        public add(type: string, object: any) {
-            this.objects[type] = object;
+        export function get(type: string) {
+            if (!this.objects[type]) {
+                console.log('ObjectStore: cannot find object of type ' + type);
+            }
+
+            return this.objects[type];
         }
     }
 }
