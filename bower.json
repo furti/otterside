@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "q": "~2.0.2",
+    "phaser": "~2.4.4"
+  }
+}
