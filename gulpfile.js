@@ -33,7 +33,7 @@ gulp.task('ts', function() {
 });
 
 gulp.task('bower', function() {
-  return gulp.src(['./bower_components/phaser/build/phaser.js'])
+  return gulp.src(['./bower_components/phaser/build/phaser.js', './bower_components/q/q.js', './bower_components/react/react.js', './bower_components/react/react-dom.js'])
     .pipe(gulp.dest('./target/scripts'));
 });
 

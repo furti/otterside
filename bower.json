@@ -1,6 +1,7 @@
 {
+  "name": "otterside",
   "devDependencies": {
-    "q": "~2.0.2",
+    "q": "~1.4.1",
     "phaser": "~2.4.4"
   }
 }
