@@ -1,10 +1,16 @@
 module Otterside {
+    /**
+     * Shows or hides the Loading Screen.
+     */
     export module Loading {
         var loadingContainer = document.getElementById('loading'),
             loadingComponten: React.Component<{}, LoadingScreenState>,
             isShown = false;
 
-        export function show() {
+        /**
+         * Show the loading screen if it is not shown yet.
+         */
+        export function show(): void {
             if (isShown) {
                 return;
             }
@@ -18,7 +24,10 @@ module Otterside {
             isShown = true;
         }
 
-        export function hide() {
+        /**
+         * Hides the console if it is visible.
+         */
+        export function hide(): void {
             if (!isShown) {
                 return;
             }

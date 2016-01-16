@@ -73,6 +73,14 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The Console that is used for interacting with the user.</p>
+					</div>
+					<p>Use the load method to load the content for the console.</p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -120,16 +128,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/furti/otterside/blob/master/src/web/scripts/Console.ts#L4">Console.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/furti/otterside/blob/master/src/web/scripts/Console.ts#L10">Console.ts:10</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a new console with the given name.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>consoleName: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The name of the console is used to load the content for the console from the server. The URL constructed is /console/<consoleName>.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_console_.otterside.console.html" class="tsd-signature-type">Console</a></h4>
+							<p>The Console.</p>
 						</li>
 					</ul>
 				</section>
@@ -142,7 +161,7 @@
 					<div class="tsd-signature tsd-kind-icon">console<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/furti/otterside/blob/master/src/web/scripts/Console.ts#L4">Console.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/furti/otterside/blob/master/src/web/scripts/Console.ts#L10">Console.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -152,7 +171,7 @@
 					<div class="tsd-signature tsd-kind-icon">content<wbr>Loaded<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/furti/otterside/blob/master/src/web/scripts/Console.ts#L3">Console.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/furti/otterside/blob/master/src/web/scripts/Console.ts#L9">Console.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -169,10 +188,18 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/furti/otterside/blob/master/src/web/scripts/Console.ts#L21">Console.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/furti/otterside/blob/master/src/web/scripts/Console.ts#L48">Console.ts:48</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Loads the content for the console.</p>
+								</div>
+								<p>The promise will be resolved when the content was loaded successfull.
+								If an Error occurs the promise will be rejected.</p>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>a promise for checking the loading state.</p>
 						</li>
 					</ul>
 				</section>
@@ -186,10 +213,19 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/furti/otterside/blob/master/src/web/scripts/Console.ts#L11">Console.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/furti/otterside/blob/master/src/web/scripts/Console.ts#L30">Console.ts:30</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This method displays the console. This method can safely be called at any time. It waits until the data is loaded and starts to display its content then.</p>
+								</div>
+								<p>The Returned promise will be resolved by the console when the underlying engine is finished.
+									For Example when the player has solved a riddle the promise will be resolved.
+								If the User exits the console without solving the riddle the promis will be rejected.</p>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>the promise that gets resolved by the console engine later.</p>
 						</li>
 					</ul>
 				</section>

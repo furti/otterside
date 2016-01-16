@@ -1,10 +1,9 @@
 module Otterside {
+    /**
+     * First State that is loaded by the game. Initializes some common functionality and starts the PreloadState.
+     */
     export class BootState extends Phaser.State {
         public static stateName = 'Boot';
-
-        public preload() {
-            this.load.image('loadingBar', '/assets/loading-bar.png');
-        }
 
         public create() {
             this.physics.startSystem(Phaser.Physics.ARCADE);
