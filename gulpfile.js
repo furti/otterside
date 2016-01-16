@@ -2,6 +2,7 @@ var gulp = require('gulp'),
   ts = require('gulp-typescript'),
   connect = require('gulp-connect'),
   svg2png = require('gulp-svg2png'),
+  typedoc = require('gulp-typedoc'),
   tsconfig = require('./tsconfig.json'),
   assetBase = './src/web/assets/',
   htmlSource = './src/web/**/*.html',
@@ -25,7 +26,7 @@ gulp.task('html', function() {
     .pipe(gulp.dest('./target'));
 });
 
-gulp.task('ts', function() {
+gulp.task('ts', ['typedoc'], function() {
   var result = tsProject.src()
     .pipe(ts(tsProject));
 
@@ -40,6 +41,17 @@ gulp.task('bower', function() {
 gulp.task('styles', function() {
   return gulp.src(styleSource)
     .pipe(gulp.dest('./target/styles'));
+});
+
+gulp.task('typedoc', function() {
+  return gulp.src(['./src/web/scripts/**/**.ts', './src/web/scripts/**/**.tsx'])
+    .pipe(typedoc({
+      name: 'Otterside',
+      module: tsconfig.compilerOptions.module,
+      target: tsconfig.compilerOptions.target,
+      out: './doc/api',
+      jsx: tsconfig.compilerOptions.jsx
+    }));
 });
 
 gulp.task('watch', ['ts', 'assets', 'html', 'bower', 'styles'], function() {
