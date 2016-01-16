@@ -25,7 +25,7 @@ module Otterside {
         }
 
         /**
-         * Hides the console if it is visible.
+         * Hides the loading screen if it is visible.
          */
         export function hide(): void {
             if (!isShown) {
@@ -39,7 +39,15 @@ module Otterside {
 
     class LoadingScreen extends React.Component<{}, LoadingScreenState> {
         render() {
-            return <div>Loading...</div>
+            return <div className="center vertical">
+                <div className="loading-image"></div>
+                <h1 className="loading-text">
+                    <span>Loading</span>
+                    <div className="point1">.</div>
+                    <div className="point2">.</div>
+                    <div className="point3">.</div>
+                </h1>
+            </div>
         }
     }
 

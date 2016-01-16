@@ -4,6 +4,7 @@ html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Consolas;
 }
 body {
   flex-direction: row;
@@ -12,6 +13,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.vertical {
+  flex-direction: column;
 }
 .content {
   position: relative;
@@ -29,4 +33,37 @@ body {
   width: 100%;
   display: flex;
   background: #FFFFFF;
+}
+.loading-image {
+  background-image: url("../assets/otter.png");
+  background-repeat: no-repeat;
+  height: 180px;
+  width: 200px;
+}
+.loading-text {
+  display: flex;
+}
+.loading-text div {
+  animation-name: pulse;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+  animation-timing-function: ease-in-out;
+}
+.point2 {
+  animation-delay: 0.2s;
+}
+.point3 {
+  animation-delay: 0.4s;
+}
+@keyframes pulse {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform:translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
