@@ -5,7 +5,13 @@ module Otterside {
 
         render() {
             return <div>
-                <h2>Otterside</h2>
+                <h2 className="interactive-header">
+                    Otterside
+                    <div className="flex">
+                        <button title="Minimize">-</button>
+                        <button title="Maximize">▢</button>
+                    </div>
+                </h2>
                 <div className="interactive-container"></div>
             </div>
         }

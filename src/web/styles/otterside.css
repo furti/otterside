@@ -9,6 +9,9 @@ html, body {
 body {
   flex-direction: row;
 }
+.flex {
+  display: flex;
+}
 .center {
   display: flex;
   justify-content: center;
@@ -79,16 +82,27 @@ body {
 /**
  * Console
  */
+
 .interactive-content {
   width: 224px;
   height: 600px;
   background: #002B36;
   color: #EEE8D5;
 }
-
-.interactive-content h2 {
-  padding: 0 20px;
+.interactive-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
   margin: 0;
   border-bottom: 1px solid #EEE8D5;
   background: #001E26;
+}
+.interactive-header button {
+  background: transparent;
+  color: #EEE8D5;
+  border: none;
+  cursor: pointer;
+}
+.interactive-header button:hover {
+    background: #003D4D;
 }
