@@ -26,7 +26,7 @@ gulp.task('html', function() {
     .pipe(gulp.dest('./target'));
 });
 
-gulp.task('ts', ['typedoc'], function() {
+gulp.task('ts', function() {
   var result = tsProject.src()
     .pipe(ts(tsProject));
 

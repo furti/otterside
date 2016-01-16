@@ -9,17 +9,51 @@ module Otterside {
      * @param <PROPS> type of properties for this object
      */
     export interface GameObject<PROPS extends GameObjectProperties> {
+        /**
+         * The Objects Id
+         * @type {number}
+         */
         id: number;
+
+        /**
+         * The Objects name
+         * @type {string}
+         */
         name: string;
+
+        /**
+         * The objects type. This is used to find all objects for a certain action.
+         *
+         * @type {string}
+         */
         type: string;
 
+        /**
+         * Location on the x axis.
+         * @type {number}
+         */
         x: number;
+
+        /**
+         * Location on the y axis.
+         * @type {number}
+         */
         y: number;
+
+
         height: number;
         width: number;
 
-        sprite: Phaser.Sprite;
+        /**
+         * The sprite associated with this object. Will only be set if properties.spriteindex is set.
+         * @type {Phaser.Sprite}
+         */
+        sprite?: Phaser.Sprite;
 
+        /**
+         * Further properties for the object.
+         * @type {PROPS}
+         */
         properties: PROPS;
     }
 
@@ -27,7 +61,16 @@ module Otterside {
      * Properties that all GameObjects have
      */
     export interface GameObjectProperties {
+        /**
+         * The Index of the sprite to render for this object.
+         * @type {string}
+         */
         spriteIndex: string;
+
+        /**
+         * If "true" the object can be pushed by the player to move. Otherwise it blocks the player.
+         * @type {[type]}
+         */
         moveable?: string;
     }
 
@@ -35,6 +78,10 @@ module Otterside {
      *	Properties for Objects that belong to an riddle.
      */
     export interface RiddleObjectProperties extends GameObjectProperties {
+        /**
+         * The id of the riddle the object belongs to.
+         * @type {string}
+         */
         riddle: string;
     }
 
