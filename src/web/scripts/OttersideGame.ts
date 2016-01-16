@@ -1,4 +1,3 @@
-/// <reference path="../../../bower_components/phaser/typescript/phaser.d.ts"/>
 module Otterside {
 
     export interface GameObject {
@@ -31,6 +30,7 @@ module Otterside {
         //setup all required states
         game.state.add(BootState.stateName, BootState);
         game.state.add(PreloadState.stateName, PreloadState);
+        game.state.add(MainMenuState.stateName, MainMenuState);
         game.state.add(PlayState.stateName, PlayState);
 
         game.state.start(BootState.stateName);

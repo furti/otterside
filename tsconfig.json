@@ -3,18 +3,24 @@
     "outDir": "./target/scripts/",
     "target": "es5",
     "module": "commonjs",
-    "rootDir": "./src/web/scripts"
+    "rootDir": "./src/web/scripts",
+    "jsx": "react"
   },
   "filesGlob": [
-    "./src/**/*.ts"
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
   ],
   "files": [
     "./src/web/scripts/BootState.ts",
+    "./src/web/scripts/Console.ts",
+    "./src/web/scripts/MainMenuState.ts",
     "./src/web/scripts/MapUtils.ts",
     "./src/web/scripts/ObjectStore.ts",
     "./src/web/scripts/OttersideGame.ts",
     "./src/web/scripts/PlayState.ts",
-    "./src/web/scripts/PreloadState.ts"
+    "./src/web/scripts/PreloadState.ts",
+    "./src/web/scripts/refs.d.ts",
+    "./src/web/scripts/Loading.tsx"
   ],
   "atom": {
     "rewriteTsconfig": true
