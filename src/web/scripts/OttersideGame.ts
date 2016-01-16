@@ -1,6 +1,14 @@
+/**
+ * Main Module for the Game
+ */
 module Otterside {
 
-    export interface GameObject {
+    /**
+     * Object contained in the "objects" layer of the tiled map.
+     *
+     * @param <PROPS> type of properties for this object
+     */
+    export interface GameObject<PROPS extends GameObjectProperties> {
         id: number;
         name: string;
         type: string;
@@ -12,15 +20,21 @@ module Otterside {
 
         sprite: Phaser.Sprite;
 
-        properties: GameObjectProperties;
+        properties: PROPS;
     }
 
+    /**
+     * Properties that all GameObjects have
+     */
     export interface GameObjectProperties {
         spriteIndex: string;
         moveable?: string;
     }
 
-    export interface RiddleGameProperties extends GameObjectProperties {
+    /**
+     *	Properties for Objects that belong to an riddle.
+     */
+    export interface RiddleObjectProperties extends GameObjectProperties {
         riddle: string;
     }
 

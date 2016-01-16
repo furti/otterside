@@ -34,7 +34,7 @@ module Otterside {
                 return;
             }
 
-            map.objects[groupName].forEach((object: GameObject) => {
+            map.objects[groupName].forEach((object: GameObject<GameObjectProperties>) => {
                 if (object.properties.spriteIndex) {
                     object.sprite = group.create(object.x, object.y, 'ottersideTiles', parseInt(object.properties.spriteIndex));
 
