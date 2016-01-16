@@ -5,6 +5,11 @@ module Otterside {
     export class BootState extends Phaser.State {
         public static stateName = 'Boot';
 
+        public preload() {
+            Loading.show();
+            InteractiveContent.setupContent();
+        }
+
         public create() {
             this.physics.startSystem(Phaser.Physics.ARCADE);
 

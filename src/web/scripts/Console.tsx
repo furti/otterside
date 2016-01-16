@@ -7,12 +7,14 @@ module Otterside {
      */
     export class Console {
         private contentLoaded: Q.Promise<void>;
+        private consoleDeferred: Q.Deferred<void>;
         private consoleName: string;
+        private running: boolean;
 
         /**
          * Constructs a new console with the given name.
          * @param  {string} consoleName The name of the console is used to load the content for the console from the server. The URL constructed is /console/<consoleName>.
-         * @return {Console}             The Console.
+         * @return {Console}            The Console.
          */
         constructor(consoleName: string) {
             this.consoleName = consoleName;
@@ -25,16 +27,25 @@ module Otterside {
          * For Example when the player has solved a riddle the promise will be resolved.
          * If the User exits the console without solving the riddle the promis will be rejected.
          *
+         * If the console is already running, the deferred will be returned and no further action is taken.
+         *
          * @return {Q.Promise<void>} the promise that gets resolved by the console engine later.
          */
         public start(): Q.Promise<void> {
-            var deferred = Q.defer<void>();
+            if (this.running) {
+                return this.consoleDeferred.promise;
+            }
+
+            this.consoleDeferred = Q.defer<void>();
+            this.running = true;
+
+            this.show();
 
             this.contentLoaded.then(() => {
-                deferred.resolve();
+                this.consoleDeferred.resolve();
             });
 
-            return deferred.promise;
+            return this.consoleDeferred.promise;
         }
 
         /**
@@ -54,9 +65,30 @@ module Otterside {
             //TODO: load content from server instead of dummy timeout
             window.setTimeout(() => {
                 contentLoadDefered.resolve();
-            }, 2000);
+            }, 500);
 
             return this.contentLoaded;
+        }
+
+        /**
+         * Displays the console on the screen and sets up all event handlers.
+         *
+         * It also displays the Text Loading... until the content is loaded.
+         */
+        private show(): void {
+
+        }
+    }
+
+    /**
+     * The visual representation of the console.
+     */
+    class ConsoleComponent extends React.Component<{}, {}> {
+
+        render() {
+            return <div className="console">
+
+            </div>
         }
     }
 }

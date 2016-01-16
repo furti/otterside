@@ -25,6 +25,14 @@ body {
 .hide {
   display: none !important;
 }
+.disabled {
+  opacity: 0.5;
+}
+
+/**
+ * Loading animation
+ */
+
 .loading {
   position: absolute;
   left: 0;
@@ -61,9 +69,26 @@ body {
     transform: translateY(0);
   }
   50% {
-    transform:translateY(-10px);
+    transform: translateY(-10px);
   }
   100% {
     transform: translateY(0);
   }
+}
+
+/**
+ * Console
+ */
+.interactive-content {
+  width: 224px;
+  height: 600px;
+  background: #002B36;
+  color: #EEE8D5;
+}
+
+.interactive-content h2 {
+  padding: 0 20px;
+  margin: 0;
+  border-bottom: 1px solid #EEE8D5;
+  background: #001E26;
 }

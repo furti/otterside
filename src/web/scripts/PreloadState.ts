@@ -3,8 +3,6 @@ module Otterside {
         public static stateName = 'Preload';
 
         public preload() {
-            Loading.show();
-            
             this.load.tilemap('ottersidemap', '/assets/map/otterside.json', null, Phaser.Tilemap.TILED_JSON);
             this.load.spritesheet('ottersideTiles', '/assets/map/otterside-tiles.png', 32, 32);
             this.load.spritesheet('player', '/assets/player.png', 32, 32);
