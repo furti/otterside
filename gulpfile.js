@@ -3,6 +3,7 @@ var gulp = require('gulp'),
   connect = require('gulp-connect'),
   svg2png = require('gulp-svg2png'),
   typedoc = require('gulp-typedoc'),
+  rename = require('gulp-rename'),
   tsconfig = require('./tsconfig.json'),
   assetBase = './src/web/assets/',
   htmlSource = './src/web/**/*.html',
@@ -34,7 +35,20 @@ gulp.task('ts', function() {
 });
 
 gulp.task('bower', function() {
-  return gulp.src(['./bower_components/phaser/build/phaser.js', './bower_components/q/q.js', './bower_components/react/react.js', './bower_components/react/react-dom.js'])
+  return gulp.src([
+      './bower_components/phaser/build/phaser.js',
+      './bower_components/q/q.js',
+      './bower_components/react/react.js',
+      './bower_components/react/react-dom.js',
+      './bower_components/classnames/index.js'
+    ])
+    .pipe(rename(function(path) {
+      if (path.basename === 'index') {
+        path.basename = 'classnames';
+      }
+
+      return path;
+    }))
     .pipe(gulp.dest('./target/scripts'));
 });
 

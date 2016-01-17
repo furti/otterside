@@ -3,5 +3,8 @@
   "devDependencies": {
     "q": "~1.4.1",
     "phaser": "~2.4.4"
+  },
+  "dependencies": {
+    "classnames": "~2.2.3"
   }
 }
