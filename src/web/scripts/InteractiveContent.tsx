@@ -2,6 +2,7 @@ module Otterside {
 
     export class InteractiveContent extends React.Component<{}, InteractiveContentState> {
         public static contentComponent: InteractiveContent;
+        private activeComponent: React.Component<any, any>;
 
         constructor() {
             super();
@@ -11,20 +12,33 @@ module Otterside {
         }
 
         public minimize() {
+            if (!this.activeComponent) {
+                return;
+            }
+
             this.setState({
                 maximized: false
             });
         }
 
         public maximize() {
+            if (!this.activeComponent) {
+                return;
+            }
+
             this.setState({
                 maximized: true
             });
         }
 
         render() {
+            var classes = classNames('interactive-content', {
+                'maximized': this.state.maximized,
+                'disabled': !this.activeComponent
+            });
+
             //Use refs to get active component
-            return <div className={this.state.maximized ? 'maximized interactive-content' : 'interactive-content'}>
+            return <div className={classes}>
                 <h2 className="interactive-header">
                     Otterside
                     <div className="flex">
@@ -33,7 +47,7 @@ module Otterside {
                     </div>
                 </h2>
                 <div className="interactive-container">
-
+                    <div className={this.state.actualComponentName ? 'hide' : ''}>There is no terminal connected at the moment.</div>
                 </div>
             </div>
         }
@@ -44,6 +58,7 @@ module Otterside {
     }
 
     export interface InteractiveContentState {
-        maximized: boolean;
+        maximized?: boolean;
+        actualComponentName?: string;
     }
 }

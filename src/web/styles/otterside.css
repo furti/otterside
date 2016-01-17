@@ -82,6 +82,7 @@ body {
 /**
  * Console
  */
+
 .interactive-content-container {
   position: relative;
   width: 224px;
@@ -100,7 +101,7 @@ body {
 }
 .interactive-content.maximized {
   width: 500px;
-  box-shadow: -5px 5px 10px 2px rgba(0,0,0,0.5);
+  box-shadow: -5px 5px 10px 2px rgba(0, 0, 0, 0.5);
 }
 .interactive-header {
   display: flex;
@@ -115,7 +116,14 @@ body {
   color: #EEE8D5;
   border: none;
   cursor: pointer;
+  outline: none;
+}
+.disabled .interactive-header button {
+  cursor: default;
+}
+.disabled .interactive-header button:hover {
+  background: #001E26;
 }
 .interactive-header button:hover {
-    background: #003D4D;
+  background: #003D4D;
 }
