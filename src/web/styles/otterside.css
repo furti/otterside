@@ -82,12 +82,25 @@ body {
 /**
  * Console
  */
-
-.interactive-content {
+.interactive-content-container {
+  position: relative;
   width: 224px;
   height: 600px;
+  overflow: visible;
+}
+.interactive-content {
   background: #002B36;
   color: #EEE8D5;
+  width: 224px;
+  height: 600px;
+  position: absolute;
+  right: 0;
+  transition: box-shadow 0.5s, width 1s;
+  transition-timing-function: ease-in-out;
+}
+.interactive-content.maximized {
+  width: 500px;
+  box-shadow: -5px 5px 10px 2px rgba(0,0,0,0.5);
 }
 .interactive-header {
   display: flex;
