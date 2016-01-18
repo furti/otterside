@@ -5,7 +5,8 @@ module Otterside {
      *
      * Use the load method to load the content for the console.
      */
-    export class Console {
+    export class Console implements InteractiveComponent {
+        private consoleView: ConsoleComponent;
         private contentLoaded: Q.Promise<void>;
         private consoleDeferred: Q.Deferred<void>;
         private consoleName: string;
@@ -76,7 +77,18 @@ module Otterside {
          * It also displays the Text Loading... until the content is loaded.
          */
         private show(): void {
+            InteractiveContent.contentComponent.activateComponent(this);
+        }
 
+        private connectConsoleView(consoleView: ConsoleComponent): void {
+            this.consoleView = consoleView;
+        }
+
+        public render(): JSX.Element {
+            return <ConsoleComponent ref={(consoleView) => {
+                this.connectConsoleView(consoleView);
+            } }>
+            </ConsoleComponent>;
         }
     }
 
@@ -87,7 +99,7 @@ module Otterside {
 
         render() {
             return <div className="console">
-
+                Console
             </div>
         }
     }
