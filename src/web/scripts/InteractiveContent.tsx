@@ -23,6 +23,25 @@ module Otterside {
         }
 
         /**
+         * Sets the component that should be shown.
+         * @param {InteractiveComponent} component The component to activate.
+         */
+        public activateComponent(component: InteractiveComponent): void {
+            this.setState({
+                activeComponent: component
+            });
+        }
+
+        /**
+         * Sets the default "Nothing active" component as the active one
+         */
+        public disableActiveComponent(): void {
+            this.setState({
+                activeComponent: this.nothingActive
+            });
+        }
+
+        /**
          * Minimize the component.
          */
         public minimize() {
@@ -54,7 +73,6 @@ module Otterside {
                 'disabled': !this.isComponentActive()
             });
 
-            //Use refs to get active component
             return <div className={classes}>
                 <h2 className="interactive-header">
                     Otterside
