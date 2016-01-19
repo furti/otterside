@@ -13,9 +13,16 @@ module Otterside {
         }
 
         public create() {
-            this.console.start().then(() => {
-                this.game.state.start(PlayState.stateName);
+            this.console.start().then((console: Console) => {
+                this.printWelcome(console);
+                // this.game.state.start(PlayState.stateName);
+
             });
+        }
+
+        private printWelcome(console: Console): void {
+            console.printLine('Hello dear Stranger!');
+            console.printLine('Welcome to the Otterside.');
         }
     }
 }

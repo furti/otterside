@@ -6,9 +6,9 @@ module Otterside {
      * Use the load method to load the content for the console.
      */
     export class Console implements InteractiveComponent {
-        private consoleView: ConsoleComponent;
+        private consoleView: ConsoleView;
         private contentLoaded: Q.Promise<void>;
-        private consoleDeferred: Q.Deferred<void>;
+        private consoleDeferred: Q.Deferred<Console>;
         private consoleName: string;
         private running: boolean;
 
@@ -22,28 +22,26 @@ module Otterside {
         }
 
         /**
-         * This method displays the console. This method can safely be called at any time. It waits until the data is loaded and starts to display its content then.
+         * This method displays the console. This method can safely be called at any time.
+         * It waits until the data is loaded and starts to display its content then.
          *
-         * The Returned promise will be resolved by the console when the underlying engine is finished.
-         * For Example when the player has solved a riddle the promise will be resolved.
-         * If the User exits the console without solving the riddle the promis will be rejected.
+         * The Returned promise will be resolved when the console is ready for use.
          *
-         * If the console is already running, the deferred will be returned and no further action is taken.
+         * If the console is already running, the deferred will be returned.
          *
-         * @return {Q.Promise<void>} the promise that gets resolved by the console engine later.
+         * @return {Q.Promise<void>} the promise that gets resolved when the console is shown.
          */
-        public start(): Q.Promise<void> {
+        public start(): Q.Promise<Console> {
             if (this.running) {
                 return this.consoleDeferred.promise;
             }
 
-            this.consoleDeferred = Q.defer<void>();
+            this.consoleDeferred = Q.defer<Console>();
             this.running = true;
 
             this.show();
-
             this.contentLoaded.then(() => {
-                this.consoleDeferred.resolve();
+                this.consoleDeferred.resolve(this);
             });
 
             return this.consoleDeferred.promise;
@@ -72,6 +70,14 @@ module Otterside {
         }
 
         /**
+         * Prints a line on the console.
+         * @param {string} line the text to print to the console
+         */
+        public printLine(line: string): void {
+            this.consoleView.addLine(line);
+        }
+
+        /**
          * Displays the console on the screen and sets up all event handlers.
          *
          * It also displays the Text Loading... until the content is loaded.
@@ -80,27 +86,53 @@ module Otterside {
             InteractiveContent.contentComponent.activateComponent(this);
         }
 
-        private connectConsoleView(consoleView: ConsoleComponent): void {
+        private connectConsoleView(consoleView: ConsoleView): void {
             this.consoleView = consoleView;
         }
 
         public render(): JSX.Element {
-            return <ConsoleComponent ref={(consoleView) => {
+            return <ConsoleView ref={(consoleView) => {
                 this.connectConsoleView(consoleView);
             } }>
-            </ConsoleComponent>;
+            </ConsoleView>;
         }
     }
 
     /**
      * The visual representation of the console.
      */
-    class ConsoleComponent extends React.Component<{}, {}> {
+    class ConsoleView extends React.Component<{}, ConsoleViewState> {
+        constructor() {
+            super();
+
+            this.state = {
+                lines: []
+            };
+        }
+
+        addLine(line: string): void {
+            this.state.lines.push(line);
+
+            this.setState({
+                lines: this.state.lines
+            });
+        }
 
         render() {
             return <div className="console">
-                Console
+                <div className="console-lines">
+                    {
+                        this.state.lines.map((line, index) => {
+                            console.log(line);
+                            return <p key={"line-" + index} className="console-line">{line}</p>
+                        })
+                    }
+                </div>
             </div>
         }
+    }
+
+    interface ConsoleViewState {
+        lines: string[];
     }
 }
