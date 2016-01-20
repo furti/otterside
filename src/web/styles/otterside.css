@@ -127,3 +127,23 @@ body {
 .interactive-header button:hover {
   background: #003D4D;
 }
+.console {
+  padding: 0 3px;
+}
+.console-line {
+  margin: 0;
+}
+.console-input {
+  display: flex;
+}
+.console-input .prompt {
+  margin-right: 10px;
+}
+.console-input textarea {
+  flex-grow: 1;
+  background: inherit;
+  border: none;
+  outline: none;
+  color: inherit;
+  resize: none;
+}

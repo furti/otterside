@@ -78,6 +78,13 @@ module Otterside {
         }
 
         /**
+         * Maximizes the console.
+         */
+        public maximize(): void {
+            InteractiveContent.contentComponent.maximize();
+        }
+
+        /**
          * Displays the console on the screen and sets up all event handlers.
          *
          * It also displays the Text Loading... until the content is loaded.
@@ -123,10 +130,13 @@ module Otterside {
                 <div className="console-lines">
                     {
                         this.state.lines.map((line, index) => {
-                            console.log(line);
                             return <p key={"line-" + index} className="console-line">{line}</p>
                         })
                     }
+                </div>
+                <div className="console-input">
+                    <span className="prompt">$</span>
+                    <textarea rows={1}></textarea>
                 </div>
             </div>
         }

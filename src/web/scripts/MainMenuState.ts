@@ -14,6 +14,7 @@ module Otterside {
 
         public create() {
             this.console.start().then((console: Console) => {
+                this.console.maximize();
                 this.printWelcome(console);
                 // this.game.state.start(PlayState.stateName);
 
