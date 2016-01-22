@@ -108,7 +108,7 @@ module Otterside {
     /**
      * The visual representation of the console.
      */
-    class ConsoleView extends React.Component<{}, ConsoleViewState> {
+    class ConsoleView extends React.Component<ConsoleViewProps, ConsoleViewState> {
         private textarea: ResizeableTextArea;
 
         constructor() {
@@ -186,6 +186,8 @@ module Otterside {
         }
     }
 
+    interface ConsoleViewProps extends React.Props<ConsoleView> { }
+    
     interface ConsoleViewState {
         lines: string[];
     }
