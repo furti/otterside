@@ -136,8 +136,17 @@ body {
   padding: 0 3px;
   height: 100%;
 }
-.console-line {
+.console-line p {
   margin: 0;
+}
+.console-line strong {
+  color: #3182A4;
+  font-weight: normal;
+}
+.console-line hr {
+  border: 0;
+  border-bottom-style: dashed;
+  border-bottom-width: 1px;
 }
 .console-input {
   display: flex;

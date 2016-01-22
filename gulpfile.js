@@ -40,7 +40,8 @@ gulp.task('bower', function() {
       './bower_components/q/q.js',
       './bower_components/react/react.js',
       './bower_components/react/react-dom.js',
-      './bower_components/classnames/index.js'
+      './bower_components/classnames/index.js',
+      './bower_components/marked/marked.min.js'
     ])
     .pipe(rename(function(path) {
       if (path.basename === 'index') {

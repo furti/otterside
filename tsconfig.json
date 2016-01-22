@@ -21,7 +21,8 @@
     "./src/web/scripts/refs.d.ts",
     "./src/web/scripts/Console.tsx",
     "./src/web/scripts/InteractiveContent.tsx",
-    "./src/web/scripts/Loading.tsx"
+    "./src/web/scripts/Loading.tsx",
+    "./src/web/scripts/MarkdownParagraph.tsx"
   ],
   "atom": {
     "rewriteTsconfig": true

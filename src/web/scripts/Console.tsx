@@ -144,7 +144,7 @@ module Otterside {
                 <div className="console-lines">
                     {
                         this.state.lines.map((line, index) => {
-                            return <p key={"line-" + index} className="console-line">{line}</p>
+                            return <MarkdownParagraph key={"line-" + index} markdownContent={line} className="console-line"></MarkdownParagraph>
                         })
                     }
                 </div>
@@ -187,7 +187,7 @@ module Otterside {
     }
 
     interface ConsoleViewProps extends React.Props<ConsoleView> { }
-    
+
     interface ConsoleViewState {
         lines: string[];
     }
