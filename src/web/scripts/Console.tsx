@@ -147,9 +147,25 @@ module Otterside {
         }
     }
 
-    class ResizeableTextArea extends React.Component<ResizeableTextAreaProps, {}> {
+    class ResizeableTextArea extends React.Component<ResizeableTextAreaProps, ResizeableTextAreaState> {
+
+        constructor() {
+            super();
+        }
+
+        private handleChange(e: React.FormEvent): void {
+            this.checkResize(e);
+            this.props.onChange(e);
+        }
+
+        private checkResize(e: React.FormEvent): void {
+            var textarea = e.target as HTMLTextAreaElement;
+            textarea.style.minHeight = '0'; //At first reset the min height so that scroll height is computed right
+            textarea.style.minHeight = textarea.scrollHeight + 'px';
+        }
+
         render(): JSX.Element {
-            return <textarea rows={1} onChange={this.props.onChange}></textarea>
+            return <textarea rows={1} onChange={(e) => this.checkResize(e) }></textarea>
         }
     }
 
@@ -160,4 +176,6 @@ module Otterside {
     interface ResizeableTextAreaProps {
         onChange: (e: React.FormEvent) => void
     }
+
+    interface ResizeableTextAreaState { }
 }

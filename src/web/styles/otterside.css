@@ -146,4 +146,5 @@ body {
   outline: none;
   color: inherit;
   resize: none;
+  height: auto;
 }
