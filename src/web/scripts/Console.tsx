@@ -125,6 +125,11 @@ module Otterside {
             });
         }
 
+        private handleInput(e: React.FormEvent): void {
+            var textarea = e.target as HTMLTextAreaElement;
+            console.log(textarea.value);
+        }
+
         render() {
             return <div className="console">
                 <div className="console-lines">
@@ -136,13 +141,23 @@ module Otterside {
                 </div>
                 <div className="console-input">
                     <span className="prompt">$</span>
-                    <textarea rows={1}></textarea>
+                    <ResizeableTextArea onChange={(event) => this.handleInput(event) }></ResizeableTextArea>
                 </div>
             </div>
         }
     }
 
+    class ResizeableTextArea extends React.Component<ResizeableTextAreaProps, {}> {
+        render(): JSX.Element {
+            return <textarea rows={1} onChange={this.props.onChange}></textarea>
+        }
+    }
+
     interface ConsoleViewState {
         lines: string[];
+    }
+
+    interface ResizeableTextAreaProps {
+        onChange: (e: React.FormEvent) => void
     }
 }
