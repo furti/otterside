@@ -109,6 +109,8 @@ module Otterside {
      * The visual representation of the console.
      */
     class ConsoleView extends React.Component<{}, ConsoleViewState> {
+        private textarea: ResizeableTextArea;
+
         constructor() {
             super();
 
@@ -125,13 +127,20 @@ module Otterside {
             });
         }
 
+        /**
+         * Set The focus to the command input
+         */
+        public focusInput(): void {
+            this.textarea.focus();
+        }
+
         private handleInput(e: React.FormEvent): void {
             var textarea = e.target as HTMLTextAreaElement;
             console.log(textarea.value);
         }
 
         render() {
-            return <div className="console">
+            return <div className="console" onClick={(e) => this.focusInput() }>
                 <div className="console-lines">
                     {
                         this.state.lines.map((line, index) => {
@@ -141,16 +150,24 @@ module Otterside {
                 </div>
                 <div className="console-input">
                     <span className="prompt">$</span>
-                    <ResizeableTextArea onChange={(event) => this.handleInput(event) }></ResizeableTextArea>
+                    <ResizeableTextArea onChange={(event) => this.handleInput(event) } ref={(textarea) => this.textarea = textarea}></ResizeableTextArea>
                 </div>
             </div>
         }
     }
 
     class ResizeableTextArea extends React.Component<ResizeableTextAreaProps, ResizeableTextAreaState> {
+        private textarea: HTMLTextAreaElement;
 
         constructor() {
             super();
+        }
+
+        /**
+         * Set the focus on the textarea;
+         */
+        public focus(): void {
+            this.textarea.focus();
         }
 
         private handleChange(e: React.FormEvent): void {
@@ -165,7 +182,7 @@ module Otterside {
         }
 
         render(): JSX.Element {
-            return <textarea rows={1} onChange={(e) => this.checkResize(e) }></textarea>
+            return <textarea rows={1} onChange={(e) => this.checkResize(e) } ref={(textarea) => this.textarea = textarea}></textarea>
         }
     }
 
@@ -173,7 +190,7 @@ module Otterside {
         lines: string[];
     }
 
-    interface ResizeableTextAreaProps {
+    interface ResizeableTextAreaProps extends React.Props<ResizeableTextArea> {
         onChange: (e: React.FormEvent) => void
     }
 
