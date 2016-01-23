@@ -5,6 +5,7 @@ html, body {
   padding: 0;
   box-sizing: border-box;
   font-family: Consolas;
+  font-size: 14px;
 }
 body {
   flex-direction: row;
