@@ -7,10 +7,11 @@ module Otterside {
      */
     export class Console implements InteractiveComponent {
         private consoleView: ConsoleView;
-        private contentLoaded: Q.Promise<void>;
+        private contentLoaded: Q.Promise<ConsoleContent>;
         private consoleDeferred: Q.Deferred<Console>;
         private consoleName: string;
         private running: boolean;
+        private content: ConsoleContent;
 
         /**
          * Constructs a new console with the given name.
@@ -36,12 +37,18 @@ module Otterside {
                 return this.consoleDeferred.promise;
             }
 
+            this.load();
             this.consoleDeferred = Q.defer<Console>();
             this.running = true;
 
             this.show();
-            this.contentLoaded.then(() => {
+            this.contentLoaded.then((consoleContent) => {
+                this.content = consoleContent;
+                //TODO: handle Content
                 this.consoleDeferred.resolve(this);
+            }, (errorMessage: string) => {
+                this.printLine(errorMessage);
+                this.consoleDeferred.reject(this);
             });
 
             return this.consoleDeferred.promise;
@@ -49,24 +56,21 @@ module Otterside {
 
         /**
          * Loads the content for the console.
-         *
-         * The promise will be resolved when the content was loaded successfull.
-         * If an Error occurs the promise will be rejected.
-         *
-         * @return {Q.Promise<void>} a promise for checking the loading state.
          */
-        public load(): Q.Promise<void> {
-            var path = '/console/' + this.consoleName;
+        private load(): void {
+            var path = '/console/' + this.consoleName + '/content.json';
 
-            var contentLoadDefered = Q.defer<void>();
+            var contentLoadDefered = Q.defer<ConsoleContent>();
             this.contentLoaded = contentLoadDefered.promise;
 
-            //TODO: load content from server instead of dummy timeout
-            window.setTimeout(() => {
-                contentLoadDefered.resolve();
-            }, 500);
-
-            return this.contentLoaded;
+            Http.get<ConsoleContent>(path)
+                .execute()
+                .then((response: ConsoleContent) => {
+                    console.log(response);
+                    contentLoadDefered.resolve(response);
+                }, (errorMessage: string) => {
+                    contentLoadDefered.reject(errorMessage);
+                });
         }
 
         /**
@@ -103,6 +107,13 @@ module Otterside {
             } }>
             </ConsoleView>;
         }
+    }
+
+    /**
+     * Contains all the files and folders for a console instance.
+     */
+    interface ConsoleContent {
+
     }
 
     /**

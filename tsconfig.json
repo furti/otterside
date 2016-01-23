@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "outDir": "./target/scripts/",
+    "outDir": "./target/",
     "target": "es5",
     "module": "commonjs",
-    "rootDir": "./src/web/scripts",
+    "rootDir": "./src/web",
     "jsx": "react"
   },
   "filesGlob": [
@@ -11,7 +11,10 @@
     "./src/**/*.tsx"
   ],
   "files": [
+    "./src/web/console/mainmenu/start.ts",
     "./src/web/scripts/BootState.ts",
+    "./src/web/scripts/CommandParams.ts",
+    "./src/web/scripts/Http.ts",
     "./src/web/scripts/MainMenuState.ts",
     "./src/web/scripts/MapUtils.ts",
     "./src/web/scripts/ObjectStore.ts",

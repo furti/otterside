@@ -6,19 +6,17 @@ module Otterside {
 
         public preload() {
             this.console = new Console('mainmenu');
-
-            this.console.load().then(() => {
-                Loading.hide();
-            });
         }
 
         public create() {
             this.console.start().then((console: Console) => {
+                Loading.hide();
                 this.console.maximize();
                 this.printWelcome(console);
                 this.printCommands(console);
-                // this.game.state.start(PlayState.stateName);
-
+            }, (console: Console) => {
+                Loading.hide();
+                this.console.maximize();
             });
         }
 
@@ -29,7 +27,7 @@ module Otterside {
         }
 
         private printCommands(console: Console): void {
-          console.printLine('Type **start** to start a new game.');
+            console.printLine('Type **start** to start a new game.');
         }
     }
 }
