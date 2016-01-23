@@ -6,6 +6,7 @@ var gulp = require('gulp'),
   rename = require('gulp-rename'),
   fs = require('fs'),
   eol = require('eol'),
+  path = require('path'),
   tsconfig = require('./tsconfig.json'),
   assetBase = './src/web/assets/',
   htmlSource = './src/web/**/*.html',
@@ -107,12 +108,23 @@ var specialFiles = {
   }
 };
 
-function processFile(path) {
+function processFileContent(path) {
   var fileContent = fs.readFileSync(path, 'utf8');
 
   fileContent = eol.lf(fileContent);
 
   return fileContent;
+}
+
+function createContentFile(fileName, fileContent) {
+  var parsed = path.parse(fileName);
+
+  return {
+    content: fileContent,
+    base: fileName,
+    name: parsed.name,
+    ext: parsed.ext
+  };
 }
 
 /**
@@ -138,12 +150,12 @@ function createConsoleContent() {
       };
 
       files.forEach(function(file) {
-        var fileContent = processFile(consolePath + '/' + file);
+        var fileContent = processFileContent(consolePath + '/' + file);
 
         if (specialFiles[file]) {
           specialFiles[file](fileContent, consoleContent);
         } else {
-          //TODO: add file to files
+          consoleContent.files.push(createContentFile(file, fileContent));
         }
       });
 

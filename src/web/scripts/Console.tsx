@@ -127,6 +127,35 @@ module Otterside {
          * Markdown String that should be shown on startup.
          */
         welcome?: string;
+
+        /**
+         * All files contained in the console;
+         * @type {ConsoleFile}
+         */
+        files: ConsoleFile[];
+    }
+
+    interface ConsoleFile {
+        /**
+         * The files content
+         */
+        content: string;
+        /**
+         * The files name without extension.
+         */
+        name: string;
+        /**
+         * The files extension
+         */
+        ext: string;
+        /**
+         * The filename + extension.
+         */
+        base: string;
+
+        readonly: boolean;
+
+        executable: boolean;
     }
 
     /**
