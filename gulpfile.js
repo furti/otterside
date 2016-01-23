@@ -9,7 +9,8 @@ var gulp = require('gulp'),
   tsconfig = require('./tsconfig.json'),
   assetBase = './src/web/assets/',
   htmlSource = './src/web/**/*.html',
-  styleSource = './src/web/styles/**';
+  styleSource = './src/web/styles/**',
+  consoleGlob = ['./src/web/console/**', '!./src/web/console/**/*.ts'];
 
 var tsProject = ts.createProject('./tsconfig.json');
 
@@ -61,10 +62,7 @@ gulp.task('styles', function() {
 });
 
 gulp.task('console', function() {
-  return gulp.src([
-      './src/web/console/**',
-      '!./src/web/console/**/*.ts'
-    ])
+  return gulp.src(consoleGlob)
     .pipe(gulp.dest('./target/console'));
 });
 
@@ -87,6 +85,7 @@ gulp.task('watch', ['assets', 'html', 'bower', 'styles', 'content.json'], functi
   });
 
   gulp.watch(tsconfig.filesGlob, ['content.json']);
+  gulp.watch(consoleGlob, ['content.json']);
   gulp.watch(assetBase + '**', ['assets']);
   gulp.watch(htmlSource, ['html']);
   gulp.watch(styleSource, ['styles']);
