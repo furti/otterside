@@ -10,8 +10,6 @@ module Otterside {
                 this.renderedContent = marked(this.props.markdownContent);
             }
 
-            console.log(this.renderedContent);
-
             return this.renderedContent;
         }
 
