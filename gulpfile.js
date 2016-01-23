@@ -4,6 +4,8 @@ var gulp = require('gulp'),
   svg2png = require('gulp-svg2png'),
   typedoc = require('gulp-typedoc'),
   rename = require('gulp-rename'),
+  fs = require('fs'),
+  eol = require('eol'),
   tsconfig = require('./tsconfig.json'),
   assetBase = './src/web/assets/',
   htmlSource = './src/web/**/*.html',
@@ -58,6 +60,16 @@ gulp.task('styles', function() {
     .pipe(gulp.dest('./target/styles'));
 });
 
+gulp.task('console', function() {
+  return gulp.src([
+      './src/web/console/**',
+      '!./src/web/console/**/*.ts'
+    ])
+    .pipe(gulp.dest('./target/console'));
+});
+
+gulp.task('content.json', ['ts', 'console'], createConsoleContent);
+
 gulp.task('typedoc', function() {
   return gulp.src(['./src/web/scripts/**/**.ts', './src/web/scripts/**/**.tsx'])
     .pipe(typedoc({
@@ -69,12 +81,12 @@ gulp.task('typedoc', function() {
     }));
 });
 
-gulp.task('watch', ['ts', 'assets', 'html', 'bower', 'styles'], function() {
+gulp.task('watch', ['assets', 'html', 'bower', 'styles', 'content.json'], function() {
   connect.server({
     root: 'target'
   });
 
-  gulp.watch(tsconfig.filesGlob, ['ts']);
+  gulp.watch(tsconfig.filesGlob, ['content.json']);
   gulp.watch(assetBase + '**', ['assets']);
   gulp.watch(htmlSource, ['html']);
   gulp.watch(styleSource, ['styles']);
@@ -86,3 +98,57 @@ gulp.task('connect', function() {
     root: 'target'
   });
 });
+
+var specialFiles = {
+  'welcome.md': function(fileContent, consoleContent) {
+    consoleContent.welcome = fileContent;
+  },
+  'content.json': function() {
+    //A simple no-op. if content.json exists we ignore it.
+  }
+};
+
+function processFile(path) {
+  var fileContent = fs.readFileSync(path, 'utf8');
+
+  fileContent = eol.lf(fileContent);
+
+  return fileContent;
+}
+
+/**
+ * This badass here reads all files from the console folders and creates the content.json file.
+ */
+function createConsoleContent() {
+  var basePath = './target/console';
+  var consoleFolders = fs.readdirSync(basePath);
+
+  if (!consoleFolders) {
+    return;
+  }
+
+  consoleFolders.forEach(function(folderName) {
+    var consolePath = basePath + '/' + folderName;
+    var files = fs.readdirSync(consolePath);
+
+    if (!files || files.length === 0) {
+      console.log('No files found for ' + consolePath);
+    } else {
+      var consoleContent = {
+        files: []
+      };
+
+      files.forEach(function(file) {
+        var fileContent = processFile(consolePath + '/' + file);
+
+        if (specialFiles[file]) {
+          specialFiles[file](fileContent, consoleContent);
+        } else {
+          //TODO: add file to files
+        }
+      });
+
+      fs.writeFileSync(consolePath + '/content.json', JSON.stringify(consoleContent), 'utf8');
+    }
+  });
+}
