@@ -44,7 +44,9 @@ module Otterside {
             this.show();
             this.contentLoaded.then((consoleContent) => {
                 this.content = consoleContent;
-                //TODO: handle Content
+
+                this.printWelcome();
+
                 this.consoleDeferred.resolve(this);
             }, (errorMessage: string) => {
                 this.printLine(errorMessage);
@@ -66,7 +68,6 @@ module Otterside {
             Http.get<ConsoleContent>(path)
                 .execute()
                 .then((response: ConsoleContent) => {
-                    console.log(response);
                     contentLoadDefered.resolve(response);
                 }, (errorMessage: string) => {
                     contentLoadDefered.reject(errorMessage);
@@ -86,6 +87,15 @@ module Otterside {
          */
         public maximize(): void {
             InteractiveContent.contentComponent.maximize();
+        }
+
+        /**
+         * Prints the welcome text if available.
+         */
+        private printWelcome(): void {
+            if (this.content.welcome) {
+                this.printLine(this.content.welcome);
+            }
         }
 
         /**
@@ -113,7 +123,10 @@ module Otterside {
      * Contains all the files and folders for a console instance.
      */
     interface ConsoleContent {
-
+        /**
+         * Markdown String that should be shown on startup.
+         */
+        welcome?: string;
     }
 
     /**
