@@ -74,7 +74,7 @@ module Otterside {
             this.objectGroup.enableBody = true;
 
             MapUtils.createFromObjects(this.objectGroup, this.map, 'objects');
-        };
+        }
 
         private setupPlayer() {
             var playerStart = MapUtils.findFirstObjectByType(this.map, 'objects', PlayerStart.type, PlayerStart);
