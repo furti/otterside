@@ -4,7 +4,8 @@
     "target": "es5",
     "module": "commonjs",
     "rootDir": "./src/web",
-    "jsx": "react"
+    "jsx": "react",
+    "noEmitHelpers": true
   },
   "filesGlob": [
     "./src/**/*.ts",
@@ -22,6 +23,7 @@
     "./src/web/scripts/PlayState.ts",
     "./src/web/scripts/PreloadState.ts",
     "./src/web/scripts/refs.d.ts",
+    "./src/web/scripts/typescript-helpers.ts",
     "./src/web/scripts/Console.tsx",
     "./src/web/scripts/InteractiveContent.tsx",
     "./src/web/scripts/Loading.tsx",
