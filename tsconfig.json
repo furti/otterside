@@ -9,10 +9,10 @@
   },
   "filesGlob": [
     "./src/**/*.ts",
-    "./src/**/*.tsx"
+    "./src/**/*.tsx",
+    "!./src/web/console/**"
   ],
   "files": [
-    "./src/web/console/mainmenu/start.ts",
     "./src/web/scripts/BootState.ts",
     "./src/web/scripts/CommandParams.ts",
     "./src/web/scripts/Http.ts",

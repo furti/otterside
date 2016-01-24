@@ -11,7 +11,7 @@ var gulp = require('gulp'),
   assetBase = './src/web/assets/',
   htmlSource = './src/web/**/*.html',
   styleSource = './src/web/styles/**',
-  consoleGlob = ['./src/web/console/**', '!./src/web/console/**/*.ts'];
+  consoleGlob = ['./src/web/console/**'];
 
 var tsProject = ts.createProject('./tsconfig.json');
 
