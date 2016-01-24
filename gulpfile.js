@@ -7,6 +7,7 @@ var gulp = require('gulp'),
   fs = require('fs'),
   eol = require('eol'),
   path = require('path'),
+  mkdirp = require('mkdirp'),
   tsconfig = require('./tsconfig.json'),
   assetBase = './src/web/assets/',
   htmlSource = './src/web/**/*.html',
@@ -67,12 +68,7 @@ gulp.task('styles', function() {
     .pipe(gulp.dest('./target/styles'));
 });
 
-gulp.task('console', function() {
-  return gulp.src(consoleGlob)
-    .pipe(gulp.dest('./target/console'));
-});
-
-gulp.task('content.json', ['ts', 'console'], createConsoleContent);
+gulp.task('content.json', createConsoleContent);
 
 gulp.task('typedoc', function() {
   return gulp.src(['./src/web/scripts/**/**.ts', './src/web/scripts/**/**.tsx'])
@@ -85,12 +81,12 @@ gulp.task('typedoc', function() {
     }));
 });
 
-gulp.task('watch', ['assets', 'html', 'bower', 'styles', 'content.json'], function() {
+gulp.task('watch', ['ts', 'assets', 'html', 'bower', 'styles', 'content.json'], function() {
   connect.server({
     root: 'target'
   });
 
-  gulp.watch(tsconfig.filesGlob, ['content.json']);
+  gulp.watch(tsconfig.filesGlob, ['ts']);
   gulp.watch(consoleGlob, ['content.json']);
   gulp.watch(assetBase + '**', ['assets']);
   gulp.watch(htmlSource, ['html']);
@@ -137,26 +133,29 @@ function createContentFile(fileName, fileContent) {
  * This badass here reads all files from the console folders and creates the content.json file.
  */
 function createConsoleContent() {
-  var basePath = './target/console';
-  var consoleFolders = fs.readdirSync(basePath);
+  var srcPath = './src/web/console';
+  var targetPath = './target/console';
+  var consoleFolders = fs.readdirSync(srcPath);
 
   if (!consoleFolders) {
     return;
   }
 
   consoleFolders.forEach(function(folderName) {
-    var consolePath = basePath + '/' + folderName;
-    var files = fs.readdirSync(consolePath);
+    var consoleSrcPath = srcPath + '/' + folderName;
+    var consoleTargetPath = targetPath + '/' + folderName;
+
+    var files = fs.readdirSync(consoleSrcPath);
 
     if (!files || files.length === 0) {
-      console.log('No files found for ' + consolePath);
+      console.log('No files found for ' + consoleSrcPath);
     } else {
       var consoleContent = {
         files: []
       };
 
       files.forEach(function(file) {
-        var fileContent = processFileContent(consolePath + '/' + file);
+        var fileContent = processFileContent(consoleSrcPath + '/' + file);
 
         if (specialFiles[file]) {
           specialFiles[file](fileContent, consoleContent);
@@ -165,7 +164,9 @@ function createConsoleContent() {
         }
       });
 
-      fs.writeFileSync(consolePath + '/content.json', JSON.stringify(consoleContent), 'utf8');
+      mkdirp.sync(consoleTargetPath);
+
+      fs.writeFileSync(consoleTargetPath + '/content.json', JSON.stringify(consoleContent), 'utf8');
     }
   });
 }

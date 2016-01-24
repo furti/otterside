@@ -11,7 +11,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-svg2png": "^1.0.0",
     "gulp-typedoc": "^1.2.1",
-    "gulp-typescript": "^2.10.0"
+    "gulp-typescript": "^2.10.0",
+    "mkdirp": "^0.5.1"
   },
   "repository": {
     "type": "git",
