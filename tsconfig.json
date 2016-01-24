@@ -24,6 +24,7 @@
     "./src/web/scripts/PreloadState.ts",
     "./src/web/scripts/refs.d.ts",
     "./src/web/scripts/typescript-helpers.ts",
+    "./src/web/scripts/Utils.ts",
     "./src/web/scripts/Console.tsx",
     "./src/web/scripts/InteractiveContent.tsx",
     "./src/web/scripts/Loading.tsx",

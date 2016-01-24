@@ -94,7 +94,7 @@ module Otterside {
          */
         private printWelcome(): void {
             if (this.content.welcome) {
-                this.printLine(this.content.welcome);
+                this.printLine(Utils.Base64.decode(this.content.welcome));
             }
         }
 

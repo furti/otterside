@@ -38,22 +38,27 @@ gulp.task('ts', function() {
   return result.js.pipe(gulp.dest(tsconfig.compilerOptions.outDir));
 });
 
-gulp.task('bower', function() {
+gulp.task('bower', ['classnames', 'text-encoder-lite'], function() {
   return gulp.src([
       './bower_components/phaser/build/phaser.js',
       './bower_components/q/q.js',
       './bower_components/react/react.js',
       './bower_components/react/react-dom.js',
-      './bower_components/classnames/index.js',
-      './bower_components/marked/marked.min.js'
+      './bower_components/marked/marked.min.js',
+      './bower_components/base64-js/lib/b64.js'
     ])
-    .pipe(rename(function(path) {
-      if (path.basename === 'index') {
-        path.basename = 'classnames';
-      }
+    .pipe(gulp.dest('./target/scripts'));
+});
 
-      return path;
-    }))
+gulp.task('text-encoder-lite', function() {
+  return gulp.src('./bower_components/text-encoder-lite/index.js')
+    .pipe(rename('text-encoder-lite.js'))
+    .pipe(gulp.dest('./target/scripts'));
+});
+
+gulp.task('classnames', function() {
+  return gulp.src('./bower_components/classnames/index.js')
+    .pipe(rename('classnames.js'))
     .pipe(gulp.dest('./target/scripts'));
 });
 
@@ -112,6 +117,7 @@ function processFileContent(path) {
   var fileContent = fs.readFileSync(path, 'utf8');
 
   fileContent = eol.lf(fileContent);
+  fileContent = new Buffer(fileContent).toString('base64');
 
   return fileContent;
 }
