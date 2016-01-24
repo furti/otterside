@@ -1,97 +1,41 @@
 var gulp = require('gulp'),
-  ts = require('gulp-typescript'),
-  connect = require('gulp-connect'),
-  svg2png = require('gulp-svg2png'),
-  typedoc = require('gulp-typedoc'),
-  rename = require('gulp-rename'),
-  fs = require('fs'),
-  eol = require('eol'),
-  path = require('path'),
-  mkdirp = require('mkdirp'),
-  tsconfig = require('./tsconfig.json'),
-  assetBase = './src/web/assets/',
-  htmlSource = './src/web/**/*.html',
-  styleSource = './src/web/styles/**',
-  consoleGlob = ['./src/web/console/**'];
+  assets = require('./gulptasks/assets'),
+  html = require('./gulptasks/html'),
+  typescript = require('./gulptasks/typescript'),
+  bower = require('./gulptasks/bower'),
+  styles = require('./gulptasks/styles'),
+  consolejson = require('./gulptasks/consolejson'),
+  typedoc = require('./gulptasks/typedoc'),
+  connect = require('gulp-connect');
 
-var tsProject = ts.createProject('./tsconfig.json');
+assets.task(gulp);
+html.task(gulp);
+typescript.task(gulp);
+bower.task(gulp);
+styles.task(gulp);
+typedoc.task(gulp);
+consolejson.task(gulp);
 
-gulp.task('assets', ['svg'], function() {
-  return gulp.src([assetBase + '**', '!' + assetBase + '**/*.svg'])
-    .pipe(gulp.dest('./target/assets'));
-});
 
-gulp.task('svg', function() {
-  return gulp.src(assetBase + '**/*.svg')
-    .pipe(svg2png())
-    .pipe(gulp.dest('./target/assets'));
-});
 
-gulp.task('html', function() {
-  return gulp.src(htmlSource)
-    .pipe(gulp.dest('./target'));
-});
+var allTasks = ['connect'];
 
-gulp.task('ts', function() {
-  var result = tsProject.src()
-    .pipe(ts(tsProject));
+assets.registerTasks(allTasks);
+html.registerTasks(allTasks);
+typescript.registerTasks(allTasks);
+bower.registerTasks(allTasks);
+styles.registerTasks(allTasks);
+typedoc.registerTasks(allTasks);
+consolejson.registerTasks(allTasks);
 
-  return result.js.pipe(gulp.dest(tsconfig.compilerOptions.outDir));
-});
-
-gulp.task('bower', ['classnames', 'text-encoder-lite'], function() {
-  return gulp.src([
-      './bower_components/phaser/build/phaser.js',
-      './bower_components/q/q.js',
-      './bower_components/react/react.js',
-      './bower_components/react/react-dom.js',
-      './bower_components/marked/marked.min.js',
-      './bower_components/base64-js/lib/b64.js'
-    ])
-    .pipe(gulp.dest('./target/scripts'));
-});
-
-gulp.task('text-encoder-lite', function() {
-  return gulp.src('./bower_components/text-encoder-lite/index.js')
-    .pipe(rename('text-encoder-lite.js'))
-    .pipe(gulp.dest('./target/scripts'));
-});
-
-gulp.task('classnames', function() {
-  return gulp.src('./bower_components/classnames/index.js')
-    .pipe(rename('classnames.js'))
-    .pipe(gulp.dest('./target/scripts'));
-});
-
-gulp.task('styles', function() {
-  return gulp.src(styleSource)
-    .pipe(gulp.dest('./target/styles'));
-});
-
-gulp.task('content.json', createConsoleContent);
-
-gulp.task('typedoc', function() {
-  return gulp.src(['./src/web/scripts/**/**.ts', './src/web/scripts/**/**.tsx'])
-    .pipe(typedoc({
-      name: 'Otterside',
-      module: tsconfig.compilerOptions.module,
-      target: tsconfig.compilerOptions.target,
-      out: './doc/api',
-      jsx: tsconfig.compilerOptions.jsx
-    }));
-});
-
-gulp.task('watch', ['ts', 'assets', 'html', 'bower', 'styles', 'content.json'], function() {
-  connect.server({
-    root: 'target'
-  });
-
-  gulp.watch(tsconfig.filesGlob, ['ts']);
-  gulp.watch(consoleGlob, ['content.json']);
-  gulp.watch(assetBase + '**', ['assets']);
-  gulp.watch(htmlSource, ['html']);
-  gulp.watch(styleSource, ['styles']);
-  gulp.watch('./bower', ['bower']);
+gulp.task('watch', allTasks, function() {
+  assets.watch(gulp);
+  html.watch(gulp);
+  typescript.watch(gulp);
+  bower.watch(gulp);
+  styles.watch(gulp);
+  typedoc.watch(gulp);
+  consolejson.watch(gulp);
 });
 
 gulp.task('connect', function() {
@@ -99,74 +43,3 @@ gulp.task('connect', function() {
     root: 'target'
   });
 });
-
-var specialFiles = {
-  'welcome.md': function(fileContent, consoleContent) {
-    consoleContent.welcome = fileContent;
-  },
-  'content.json': function() {
-    //A simple no-op. if content.json exists we ignore it.
-  }
-};
-
-function processFileContent(path) {
-  var fileContent = fs.readFileSync(path, 'utf8');
-
-  fileContent = eol.lf(fileContent);
-  fileContent = new Buffer(fileContent).toString('base64');
-
-  return fileContent;
-}
-
-function createContentFile(fileName, fileContent) {
-  var parsed = path.parse(fileName);
-
-  return {
-    content: fileContent,
-    base: fileName,
-    name: parsed.name,
-    ext: parsed.ext
-  };
-}
-
-/**
- * This badass here reads all files from the console folders and creates the content.json file.
- */
-function createConsoleContent() {
-  var srcPath = './src/web/console';
-  var targetPath = './target/console';
-  var consoleFolders = fs.readdirSync(srcPath);
-
-  if (!consoleFolders) {
-    return;
-  }
-
-  consoleFolders.forEach(function(folderName) {
-    var consoleSrcPath = srcPath + '/' + folderName;
-    var consoleTargetPath = targetPath + '/' + folderName;
-
-    var files = fs.readdirSync(consoleSrcPath);
-
-    if (!files || files.length === 0) {
-      console.log('No files found for ' + consoleSrcPath);
-    } else {
-      var consoleContent = {
-        files: []
-      };
-
-      files.forEach(function(file) {
-        var fileContent = processFileContent(consoleSrcPath + '/' + file);
-
-        if (specialFiles[file]) {
-          specialFiles[file](fileContent, consoleContent);
-        } else {
-          consoleContent.files.push(createContentFile(file, fileContent));
-        }
-      });
-
-      mkdirp.sync(consoleTargetPath);
-
-      fs.writeFileSync(consoleTargetPath + '/content.json', JSON.stringify(consoleContent), 'utf8');
-    }
-  });
-}
