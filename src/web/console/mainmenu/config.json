@@ -1,0 +1,6 @@
+{
+  "executables": [{
+    "command": "start",
+    "file": "start.ts"
+  }]
+}
