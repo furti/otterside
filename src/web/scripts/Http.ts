@@ -46,8 +46,6 @@ module Otterside {
 
             private parseResponse(): void {
                 if (this.request.status === 200) {
-                    console.log(this.request.responseText);
-
                     this.responseDeferred.resolve(JSON.parse(this.request.responseText));
                 }
                 else {
