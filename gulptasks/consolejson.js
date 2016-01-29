@@ -6,16 +6,16 @@ var fs = require('fs'),
 
 var specialFiles = {
   'welcome.md': function(fileContent, consoleContent) {
-    consoleContent.welcome = fileContent;
+    consoleContent.welcome = processFileContent(fileContent);
   },
-  'content.json': function() {
-    //A simple no-op. if content.json exists we ignore it.
+  'config.json': function(fileContent, consoleContent) {
+    var config = JSON.parse(fileContent);
+
+    consoleContent.executables = config.executables;
   }
 };
 
-function processFileContent(path) {
-  var fileContent = fs.readFileSync(path, 'utf8');
-
+function processFileContent(fileContent) {
   fileContent = eol.lf(fileContent);
   fileContent = new Buffer(fileContent).toString('base64');
 
@@ -26,7 +26,7 @@ function createContentFile(fileName, fileContent) {
   var parsed = path.parse(fileName);
 
   return {
-    content: fileContent,
+    content: processFileContent(fileContent),
     base: fileName,
     name: parsed.name,
     ext: parsed.ext
@@ -55,16 +55,16 @@ function createConsoleContent() {
       console.log('No files found for ' + consoleSrcPath);
     } else {
       var consoleContent = {
-        files: []
+        files: {}
       };
 
       files.forEach(function(file) {
-        var fileContent = processFileContent(consoleSrcPath + '/' + file);
+        var fileContent = fs.readFileSync(consoleSrcPath + '/' + file, 'utf8');
 
         if (specialFiles[file]) {
           specialFiles[file](fileContent, consoleContent);
         } else {
-          consoleContent.files.push(createContentFile(file, fileContent));
+          consoleContent.files[file] = createContentFile(file, fileContent);
         }
       });
 
