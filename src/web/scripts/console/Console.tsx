@@ -12,6 +12,7 @@ module Otterside {
         private consoleName: string;
         private running: boolean;
         private content: ConsoleContent;
+        private consoleEngine: ConsoleEngine;
 
         /**
          * Constructs a new console with the given name.
@@ -20,6 +21,7 @@ module Otterside {
          */
         constructor(consoleName: string) {
             this.consoleName = consoleName;
+            this.consoleEngine = new ConsoleEngine();
         }
 
         /**
@@ -46,6 +48,7 @@ module Otterside {
                 this.content = consoleContent;
 
                 this.printWelcome();
+                this.registerExecutables();
 
                 this.consoleDeferred.resolve(this);
             }, (errorMessage: string) => {
@@ -99,6 +102,21 @@ module Otterside {
         }
 
         /**
+         * Iterate over all executables and register them on the ConsoleEngine;
+         * @return {[type]} [description]
+         */
+        private registerExecutables(): void {
+            if (this.content.executables) {
+                for (let executable of this.content.executables) {
+                    this.consoleEngine.registerCommand(executable, (context: CommandExecutionContext) => {
+                        //TODO: execute script
+                        console.log(context);
+                    });
+                }
+            }
+        }
+
+        /**
          * Displays the console on the screen and sets up all event handlers.
          *
          * It also displays the Text Loading... until the content is loaded.
@@ -114,7 +132,8 @@ module Otterside {
         public render(): JSX.Element {
             return <ConsoleView ref={(consoleView) => {
                 this.connectConsoleView(consoleView);
-            } }>
+            } }
+                onExecute={(commandString) => this.consoleEngine.execute(commandString) }>
             </ConsoleView>;
         }
     }
@@ -129,10 +148,25 @@ module Otterside {
         welcome?: string;
 
         /**
+         * List of Executable scripts for the console.
+         *
+         * @type {Executable}
+         */
+        executables: Executable[];
+
+        /**
          * All files contained in the console;
          * @type {ConsoleFile}
          */
-        files: ConsoleFile[];
+        files: { [fileName: string]: ConsoleFile };
+    }
+
+    interface Executable extends Command {
+        /**
+         * The file that should be executed by this command.
+         * @type {[type]}
+         */
+        file: string;
     }
 
     interface ConsoleFile {
@@ -187,9 +221,21 @@ module Otterside {
             this.textarea.focus();
         }
 
-        private handleInput(e: React.FormEvent): void {
+        private handleUp(e: React.KeyboardEvent): void {
             var textarea = e.target as HTMLTextAreaElement;
-            console.log(textarea.value);
+
+            if (e.keyCode === 13) {
+                //Enter pressed --> execute the command
+                this.props.onExecute(textarea.value);
+                textarea.value = '';
+            }
+        }
+
+        private handleDown(e: React.KeyboardEvent): void {
+            //Prevent the default action on enter or tab. We don't want a newline in the textarea nor we want the focus to be lost.
+            if (e.keyCode === 13 || e.keyCode === 9) {
+                e.preventDefault();
+            }
         }
 
         render() {
@@ -203,7 +249,8 @@ module Otterside {
                 </div>
                 <div className="console-input">
                     <span className="prompt">$</span>
-                    <ResizeableTextArea onChange={(event) => this.handleInput(event) } ref={(textarea) => this.textarea = textarea}></ResizeableTextArea>
+                    <ResizeableTextArea onKeyUp={(event) => this.handleUp(event) } onKeyDown={(event) => this.handleDown(event) } ref={(textarea) => this.textarea = textarea}>
+                    </ResizeableTextArea>
                 </div>
             </div>
         }
@@ -223,9 +270,19 @@ module Otterside {
             this.textarea.focus();
         }
 
+        private setupTextarea(textarea: HTMLTextAreaElement): void {
+            if (!this.textarea) {
+                this.textarea = textarea;
+                // textarea.addEventListener('keydown', function(event) {
+                //     console.log(event.target);
+                //     event.preventDefault();
+                //     return false;
+                // });
+            }
+        }
+
         private handleChange(e: React.FormEvent): void {
             this.checkResize(e);
-            this.props.onChange(e);
         }
 
         private checkResize(e: React.FormEvent): void {
@@ -235,18 +292,23 @@ module Otterside {
         }
 
         render(): JSX.Element {
-            return <textarea rows={1} onChange={(e) => this.checkResize(e) } ref={(textarea) => this.textarea = textarea}></textarea>
+            return <textarea rows={1} onKeyUp={this.props.onKeyUp} onKeyDown={this.props.onKeyDown}
+                ref={(textarea) => this.setupTextarea(textarea) }></textarea>
         }
     }
 
-    interface ConsoleViewProps extends React.Props<ConsoleView> { }
+    interface ConsoleViewProps extends React.Props<ConsoleView> {
+        onExecute?: (commandString: string) => void;
+        onAutocomplete?: (commandString: string) => string;
+    }
 
     interface ConsoleViewState {
         lines: string[];
     }
 
     interface ResizeableTextAreaProps extends React.Props<ResizeableTextArea> {
-        onChange: (e: React.FormEvent) => void
+        onKeyUp: (event: React.KeyboardEvent) => void;
+        onKeyDown?: (event: React.KeyboardEvent) => void;
     }
 
     interface ResizeableTextAreaState { }
