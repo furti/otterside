@@ -116,6 +116,14 @@ namespace otterside {
             }
         }
 
+        public executeCommand(commandString: string): void {
+            var result = this.consoleEngine.execute(commandString)
+
+            if (result.state === console.CommandExecutionState.Error) {
+                this.printLine(result.message);
+            }
+        }
+
         /**
          * Displays the console on the screen and sets up all event handlers.
          *
@@ -133,8 +141,8 @@ namespace otterside {
             return <console.ConsoleView ref={(consoleView) => {
                 this.connectConsoleView(consoleView);
             } }
-                onExecute={(commandString) => this.consoleEngine.execute(commandString) }>
-            </console.ConsoleView>;
+                onExecute={(commandString) => this.executeCommand(commandString) }>
+            </console.ConsoleView >;
         }
     }
 
