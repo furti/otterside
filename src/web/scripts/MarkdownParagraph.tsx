@@ -1,4 +1,4 @@
-module Otterside {
+namespace otterside {
 
     export class MarkdownParagraph extends React.Component<MarkdownParagraphProps, {}>{
 

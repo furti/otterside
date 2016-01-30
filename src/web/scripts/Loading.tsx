@@ -1,4 +1,4 @@
-module Otterside {
+namespace otterside {
     /**
      * Shows or hides the Loading Screen.
      */

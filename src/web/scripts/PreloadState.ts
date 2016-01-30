@@ -1,4 +1,4 @@
-module Otterside {
+namespace otterside {
     export class PreloadState extends Phaser.State {
         public static stateName = 'Preload';
 

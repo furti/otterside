@@ -1,4 +1,4 @@
-module Otterside {
+namespace otterside {
     /**
      * First State that is loaded by the game. Initializes some common functionality and starts the PreloadState.
      */

@@ -1,4 +1,4 @@
-module Otterside {
+namespace otterside {
     class PlayerStart {
         public static type = 'player-start';
         public x: number;

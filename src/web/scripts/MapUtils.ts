@@ -1,6 +1,6 @@
-module Otterside {
-    export module MapUtils {
-        export function findObjectsByType<ObjectType>(map: Phaser.Tilemap, layer: string, type: string): Array<ObjectType> {
+namespace otterside {
+    export class MapUtils {
+        public static findObjectsByType<ObjectType>(map: Phaser.Tilemap, layer: string, type: string): Array<ObjectType> {
             var array: ObjectType[] = [];
 
             for (var object of map.objects[layer]) {
@@ -12,7 +12,7 @@ module Otterside {
             return array;
         }
 
-        export function findFirstObjectByType<ObjectType>(map: Phaser.Tilemap, layer: string, type: string, objectType: { new (): ObjectType }): ObjectType {
+        public static findFirstObjectByType<ObjectType>(map: Phaser.Tilemap, layer: string, type: string, objectType: { new (): ObjectType }): ObjectType {
             for (var object of map.objects[layer]) {
                 if (object.type === type) {
                     return object;
@@ -27,9 +27,9 @@ module Otterside {
          * @param {Phaser.Tilemap} map The map to read the objects from.
          * @param {string} groupName The name of the group on the map to read objects from.
          */
-        export function createFromObjects(group: Phaser.Group, map: Phaser.Tilemap, groupName: string): void {
+        public static createFromObjects(group: Phaser.Group, map: Phaser.Tilemap, groupName: string): void {
             if (!map.objects[groupName]) {
-                console.log('CreateFromObjects: No Objectsgroup with name ' + groupName + ' found.');
+                window.console.log('CreateFromObjects: No Objectsgroup with name ' + groupName + ' found.');
 
                 return;
             }

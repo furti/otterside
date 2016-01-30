@@ -1,4 +1,4 @@
-module Otterside {
+namespace otterside.console {
     export interface Command {
         /**
          * The string the user must enter to execute this command.
@@ -48,7 +48,7 @@ module Otterside {
          * @param {string} commandString the command to parse
          */
         public execute(commandString: string): void {
-            console.log(commandString);
+            window.console.log(commandString);
         }
     }
 }

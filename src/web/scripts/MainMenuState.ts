@@ -1,4 +1,4 @@
-module Otterside {
+namespace otterside {
     export class MainMenuState extends Phaser.State {
         public static stateName = 'MainMenu';
 

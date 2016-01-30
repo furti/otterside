@@ -1,4 +1,4 @@
-module Otterside {
+namespace otterside {
 
     export class InteractiveContent extends React.Component<{}, InteractiveContentState> {
         public static contentComponent: InteractiveContent;

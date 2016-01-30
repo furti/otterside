@@ -1,7 +1,7 @@
 /**
  * Main Module for the Game
  */
-module Otterside {
+namespace otterside {
 
     /**
      * Object contained in the "objects" layer of the tiled map.
