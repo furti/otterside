@@ -14,6 +14,9 @@
   "files": [
     "./src/web/scripts/BootState.ts",
     "./src/web/scripts/CommandParams.ts",
+    "./src/web/scripts/console/Command.ts",
+    "./src/web/scripts/console/CommandExecutionContext.ts",
+    "./src/web/scripts/console/CommandHandler.ts",
     "./src/web/scripts/console/ConsoleEngine.ts",
     "./src/web/scripts/console/ConsoleViewProps.ts",
     "./src/web/scripts/console/ConsoleViewState.ts",

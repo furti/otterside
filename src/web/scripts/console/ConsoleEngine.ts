@@ -1,34 +1,11 @@
 namespace otterside.console {
-    export interface Command {
-        /**
-         * The string the user must enter to execute this command.
-         * @type {[type]}
-         */
-        command: string;
-    }
-
-    export interface CommandExecutionContext {
-
-    }
-
-    declare type CommandHandler = ((context: CommandExecutionContext) => void);
-
-    class Executor {
-        private handler: (context: CommandExecutionContext) => void;
-        private command: Command;
-
-        constructor(command: Command, handler: CommandHandler) {
-            this.command = command;
-            this.handler = handler;
-        }
-    }
 
     /**
      *
      */
     export class ConsoleEngine {
 
-        private commands: { [command: string]: Executor };
+        private commands: { [command: string]: CommandExecutor };
 
         constructor() {
             this.commands = {};
@@ -40,7 +17,7 @@ namespace otterside.console {
          * @param  {CommandExecutionContext} handler the handler to execute
          */
         public registerCommand(command: Command, handler: CommandHandler): void {
-            this.commands[command.command] = new Executor(command, handler);
+            this.commands[command.command] = new CommandExecutor(command, handler);
         }
 
         /**
@@ -49,6 +26,16 @@ namespace otterside.console {
          */
         public execute(commandString: string): void {
             window.console.log(commandString);
+        }
+    }
+
+    class CommandExecutor {
+        private handler: (context: CommandExecutionContext) => void;
+        private command: Command;
+
+        constructor(command: Command, handler: CommandHandler) {
+            this.command = command;
+            this.handler = handler;
         }
     }
 }
