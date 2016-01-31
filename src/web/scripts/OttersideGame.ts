@@ -85,15 +85,13 @@ namespace otterside {
         riddle: string;
     }
 
-    module OttersideGame {
-        var game: Phaser.Game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
+    export var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
 
-        //setup all required states
-        game.state.add(BootState.stateName, BootState);
-        game.state.add(PreloadState.stateName, PreloadState);
-        game.state.add(MainMenuState.stateName, MainMenuState);
-        game.state.add(PlayState.stateName, PlayState);
+    //setup all required states
+    game.state.add(BootState.stateName, BootState);
+    game.state.add(PreloadState.stateName, PreloadState);
+    game.state.add(MainMenuState.stateName, MainMenuState);
+    game.state.add(PlayState.stateName, PlayState);
 
-        game.state.start(BootState.stateName);
-    }
+    game.state.start(BootState.stateName);
 }
