@@ -1,6 +1,7 @@
 {
   "executables": [{
     "command": "start",
-    "file": "start.ts"
+    "file": "start.ts",
+    "rootNamespace": "mainmenu"
   }]
 }

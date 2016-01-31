@@ -107,7 +107,7 @@ namespace otterside {
          */
         private registerExecutables(): void {
             if (this.content.executables) {
-                for (let executable of this.content.executables) {
+                for (var executable of this.content.executables) {
                     this.consoleEngine.registerCommand(executable, (context: console.CommandExecutionContext) => {
                         this.callExecutable(executable, context);
                     });
@@ -134,7 +134,8 @@ namespace otterside {
             var scriptContent = utils.Base64.decode(file.content);
 
             console.CodeEngine.run({
-                scripts: [scriptContent]
+                scripts: [scriptContent],
+                rootNamespace: executable.rootNamespace
             });
         }
 
@@ -189,6 +190,12 @@ namespace otterside {
          * @type {[type]}
          */
         file: string;
+
+        /**
+         * The name of the namespace that contains the run function.
+         * @type {[type]}
+         */
+        rootNamespace: string;
     }
 
     interface ConsoleFile {

@@ -12,28 +12,25 @@ namespace otterside.console {
         public static run(runConfig: RunConfig): void {
             var commandParams = CodeEngine.buildCommandParams();
 
-            var jsSources = CodeEngine.transpile(runConfig);
-            var scriptFunction = CodeEngine.buildScriptFunction(jsSources);
-
-            window.console.log(scriptFunction);
+            var scriptFunction = CodeEngine.buildScriptFunction(runConfig);
 
             var run = scriptFunction();
-            window.console.log(run);
+            run(commandParams);
         }
 
-        private static buildScriptFunction(jsSources: string[]): Function {
-            var moduleName = 'mainmenu';
+        private static buildScriptFunction(runConfig: RunConfig): Function {
+            var jsSources = CodeEngine.transpile(runConfig);
 
             var script = `
 return (function(){
-  var ${moduleName} = {};
+  var ${runConfig.rootNamespace} = {};
 
   ${jsSources.join()}
 
-  return ${moduleName}.run;
+  return ${runConfig.rootNamespace}.run;
 })();
-            `;
-
+`;
+            window.console.log(script);
             return new Function(script);
         }
 
