@@ -49,6 +49,12 @@ function createConsoleContent() {
     var consoleSrcPath = srcPath + '/' + folderName;
     var consoleTargetPath = targetPath + '/' + folderName;
 
+    var stats = fs.statSync(consoleSrcPath);
+
+    if (!stats.isDirectory()) {
+      return;
+    }
+
     var files = fs.readdirSync(consoleSrcPath);
 
     if (!files || files.length === 0) {

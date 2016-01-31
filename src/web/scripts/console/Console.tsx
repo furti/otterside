@@ -109,8 +109,7 @@ namespace otterside {
             if (this.content.executables) {
                 for (let executable of this.content.executables) {
                     this.consoleEngine.registerCommand(executable, (context: console.CommandExecutionContext) => {
-                        //TODO: execute script
-                        window.console.log(context);
+                        this.callExecutable(executable, context);
                     });
                 }
             }
@@ -122,6 +121,21 @@ namespace otterside {
             if (result.state === console.CommandExecutionState.Error) {
                 this.printLine(result.message);
             }
+        }
+
+        private callExecutable(executable: Executable, context: console.CommandExecutionContext): void {
+            var file = this.content.files[executable.file];
+
+            if (!file) {
+                this.printLine(`Script **${executable.file}** not found.`);
+                return;
+            }
+
+            var scriptContent = utils.Base64.decode(file.content);
+
+            console.CodeEngine.run({
+                scripts: [scriptContent]
+            });
         }
 
         /**

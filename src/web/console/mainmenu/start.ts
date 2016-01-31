@@ -1,6 +1,6 @@
-module MainMenu {
-    export function run(commandParams: Otterside.CommandParams): void {
+namespace mainmenu {
+    export function run(commandParams: otterside.CommandParams): void {
         //Simply start a new game when the start command is called.
-        commandParams.game.state.start(Otterside.PlayState.stateName);
+        commandParams.game.state.start(commandParams.gameStates.PlayState);
     }
 }

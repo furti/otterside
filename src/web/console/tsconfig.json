@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "noEmitHelpers": true
+  },
+  "filesGlob": [
+    "./**/*.ts"
+  ],
+  "files": [
+    "./console.d.ts",
+    "./mainmenu/start.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "compileOnSave": false
+}

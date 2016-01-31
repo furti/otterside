@@ -14,6 +14,7 @@
   "files": [
     "./src/web/scripts/BootState.ts",
     "./src/web/scripts/CommandParams.ts",
+    "./src/web/scripts/console/CodeEngine.ts",
     "./src/web/scripts/console/Command.ts",
     "./src/web/scripts/console/CommandExecutionContext.ts",
     "./src/web/scripts/console/CommandExecutionResult.ts",
@@ -23,6 +24,7 @@
     "./src/web/scripts/console/ConsoleViewState.ts",
     "./src/web/scripts/console/ResizeableTextareaProps.ts",
     "./src/web/scripts/console/ResizeableTextareaState.ts",
+    "./src/web/scripts/console/RunConfig.ts",
     "./src/web/scripts/http/Http.ts",
     "./src/web/scripts/http/HttpGetRequest.ts",
     "./src/web/scripts/http/HttpRequest.ts",

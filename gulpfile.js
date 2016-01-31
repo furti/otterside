@@ -3,6 +3,7 @@ var gulp = require('gulp'),
   html = require('./gulptasks/html'),
   typescript = require('./gulptasks/typescript'),
   bower = require('./gulptasks/bower'),
+  npm = require('./gulptasks/npm'),
   styles = require('./gulptasks/styles'),
   consolejson = require('./gulptasks/consolejson'),
   typedoc = require('./gulptasks/typedoc'),
@@ -15,6 +16,7 @@ bower.task(gulp);
 styles.task(gulp);
 typedoc.task(gulp);
 consolejson.task(gulp);
+npm.task(gulp);
 
 
 
@@ -27,6 +29,7 @@ bower.registerTasks(allTasks);
 styles.registerTasks(allTasks);
 typedoc.registerTasks(allTasks);
 consolejson.registerTasks(allTasks);
+npm.registerTasks(allTasks);
 
 gulp.task('watch', allTasks, function() {
   assets.watch(gulp);
@@ -36,6 +39,7 @@ gulp.task('watch', allTasks, function() {
   styles.watch(gulp);
   typedoc.watch(gulp);
   consolejson.watch(gulp);
+  npm.watch(gulp);
 });
 
 gulp.task('connect', function() {

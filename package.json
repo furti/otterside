@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Browser based Game with logic puzzles for everyone that likes computers and programming :)",
   "main": "gulpfile.js",
-  "dependencies": {},
+  "dependencies": {
+    "typescript": "^1.7.5"
+  },
   "devDependencies": {
     "eol": "^0.2.0",
     "gulp": "^3.9.0",
