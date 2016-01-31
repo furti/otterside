@@ -150,6 +150,7 @@ namespace otterside {
 
         private connectConsoleView(consoleView: console.ConsoleView): void {
             this.consoleView = consoleView;
+            this.consoleView.focusInput();
         }
 
         public render(): JSX.Element {
