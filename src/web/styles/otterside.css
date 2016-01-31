@@ -108,6 +108,7 @@ body {
 }
 .interactive-container {
   flex-grow: 1;
+  display: flex;
 }
 .interactive-header {
   display: flex;
@@ -135,7 +136,7 @@ body {
 }
 .console {
   padding: 0 3px;
-  height: 100%;
+  flex-grow: 1;
 }
 .console-line p {
   margin: 0;
