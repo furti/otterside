@@ -2,6 +2,6 @@
   "executables": [{
     "command": "start",
     "file": "start.ts",
-    "rootNamespace": "mainmenu"
+    "runNamespace": "mainmenu.start"
   }]
 }

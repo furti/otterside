@@ -184,7 +184,7 @@ namespace otterside {
          * The name of the namespace that contains the run function.
          * @type {[type]}
          */
-        rootNamespace: string;
+        runNamespace: string;
     }
 
     interface ConsoleFile {

@@ -19,15 +19,16 @@ namespace otterside.console {
         }
 
         private static buildScriptFunction(runConfig: RunConfig): Function {
-            var jsSources = CodeEngine.transpile(runConfig);
+            var jsSources = CodeEngine.transpile(runConfig),
+                rootNamespace = CodeEngine.getRootNamespace(runConfig);
 
             var script = `
 return (function(){
-  var ${runConfig.rootNamespace} = {};
+  var ${rootNamespace} = {};
 
   ${jsSources.join()}
 
-  return ${runConfig.rootNamespace}.run;
+  return ${runConfig.runNamespace}.run;
 })();
 `;
             window.console.log(script);
@@ -54,6 +55,17 @@ return (function(){
             });
 
             return jsSources;
+        }
+
+        private static getRootNamespace(runConfig: RunConfig): string {
+            var pointIndex = runConfig.runNamespace.indexOf('.');
+
+            if (pointIndex > -1) {
+                runConfig.runNamespace.substring(0, pointIndex);
+            }
+            else {
+                return runConfig.runNamespace;
+            }
         }
     }
 }
