@@ -16,11 +16,6 @@ namespace otterside.console {
         private setupTextarea(textarea: HTMLTextAreaElement): void {
             if (!this.textarea) {
                 this.textarea = textarea;
-                // textarea.addEventListener('keydown', function(event) {
-                //     console.log(event.target);
-                //     event.preventDefault();
-                //     return false;
-                // });
             }
         }
 
@@ -35,7 +30,7 @@ namespace otterside.console {
         }
 
         render(): JSX.Element {
-            return <textarea rows={1} onKeyUp={this.props.onKeyUp} onKeyDown={this.props.onKeyDown}
+            return <textarea rows={1} onChange={(e) => this.handleChange(e) } onKeyUp={this.props.onKeyUp} onKeyDown={this.props.onKeyDown}
                 ref={(textarea) => this.setupTextarea(textarea) }></textarea>
         }
     }
