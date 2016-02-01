@@ -1,11 +1,22 @@
 namespace otterside {
     export interface CommandParams {
         /**
-         * [game description]
+         * The phaser game object;
          * @type {Phaser.Game}
          */
         game: Phaser.Game;
+
+        /**
+         * All available game state names that can be started.
+         * @type {GameStates}
+         */
         gameStates: GameStates;
+
+        /**
+         * The console that executed the command. Can be used to output text.
+         * @type {Console}
+         */
+        console: otterside.Console;
     }
 
     export interface GameStates {

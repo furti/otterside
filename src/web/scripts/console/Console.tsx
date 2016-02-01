@@ -95,6 +95,11 @@ namespace otterside {
             InteractiveContent.contentComponent.maximize();
         }
 
+        public close(): void {
+            InteractiveContent.contentComponent.minimize();
+            InteractiveContent.contentComponent.disableActiveComponent();
+        }
+
         /**
          * Prints the welcome text if available.
          */

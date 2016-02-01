@@ -10,7 +10,7 @@ namespace otterside.console {
          * @param {RunConfig} runConfig the configuration for the current script execution
          */
         public static run(runConfig: RunConfig): void {
-            var commandParams = CodeEngine.buildCommandParams();
+            var commandParams = CodeEngine.buildCommandParams(runConfig);
 
             var scriptFunction = CodeEngine.buildScriptFunction(runConfig);
 
@@ -35,7 +35,7 @@ return (function(){
             return new Function(script);
         }
 
-        private static buildCommandParams(): CommandParams {
+        private static buildCommandParams(runConfig: RunConfig): CommandParams {
             return {
                 game: otterside.game,
                 gameStates: {
@@ -43,7 +43,8 @@ return (function(){
                     BootState: BootState.stateName,
                     MainMenuState: MainMenuState.stateName,
                     PlayState: PlayState.stateName
-                }
+                },
+                console: runConfig.console
             }
         }
 

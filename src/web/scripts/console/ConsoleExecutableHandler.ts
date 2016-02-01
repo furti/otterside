@@ -19,7 +19,8 @@ module otterside.console {
 
             console.CodeEngine.run({
                 scripts: [scriptContent],
-                runNamespace: this.executable.runNamespace
+                runNamespace: this.executable.runNamespace,
+                console: this.console
             });
         }
     }
