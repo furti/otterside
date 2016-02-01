@@ -80,7 +80,7 @@ namespace otterside.console {
     }
 
     class CommandExecutor {
-        private handler: (context: CommandExecutionContext) => void;
+        private handler: any;
         private command: Command;
 
         constructor(command: Command, handler: CommandHandler) {
@@ -88,10 +88,17 @@ namespace otterside.console {
             this.handler = handler;
         }
 
+
         public execute(parsedCommand: ParsedCommand): void {
-            this.handler({
+            var context = {
                 arguments: parsedCommand.arguments
-            });
+            };
+
+            if (typeof this.handler === 'function') {
+                this.handler(context);
+            } else {
+                this.handler.executeCommand(context);
+            }
         }
     }
 }

@@ -77,6 +77,9 @@ namespace otterside {
                 });
         }
 
+        public getFile(fileName: string) {
+            return this.content.files[fileName];
+        }
         /**
          * Prints a line on the console.
          * @param {string} line the text to print to the console
@@ -107,10 +110,9 @@ namespace otterside {
          */
         private registerExecutables(): void {
             if (this.content.executables) {
-                for (var executable of this.content.executables) {
-                    this.consoleEngine.registerCommand(executable, (context: console.CommandExecutionContext) => {
-                        this.callExecutable(executable, context);
-                    });
+                for (let executable of this.content.executables) {
+                    this.consoleEngine.registerCommand(executable,
+                        new console.ConsoleExecutableHandler(this, executable));
                 }
             }
         }
@@ -121,22 +123,6 @@ namespace otterside {
             if (result.state === console.CommandExecutionState.Error) {
                 this.printLine(result.message);
             }
-        }
-
-        private callExecutable(executable: Executable, context: console.CommandExecutionContext): void {
-            var file = this.content.files[executable.file];
-
-            if (!file) {
-                this.printLine(`Script **${executable.file}** not found.`);
-                return;
-            }
-
-            var scriptContent = utils.Base64.decode(file.content);
-
-            console.CodeEngine.run({
-                scripts: [scriptContent],
-                rootNamespace: executable.rootNamespace
-            });
         }
 
         /**
@@ -185,7 +171,7 @@ namespace otterside {
         files: { [fileName: string]: ConsoleFile };
     }
 
-    interface Executable extends console.Command {
+    export interface Executable extends console.Command {
         /**
          * The file that should be executed by this command.
          * @type {[type]}
