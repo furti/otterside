@@ -3,6 +3,7 @@ namespace otterside {
     export class InteractiveContent extends React.Component<{}, InteractiveContentState> {
         public static contentComponent: InteractiveContent;
         private nothingActive: InteractiveComponent;
+        private minMaxDeferred: Q.Deferred<void>;
 
         constructor() {
             super();
@@ -36,35 +37,70 @@ namespace otterside {
          * Sets the default "Nothing active" component as the active one
          */
         public disableActiveComponent(): void {
-            this.setState({
-                activeComponent: this.nothingActive
-            });
+            if (this.state.maximized) {
+                this.minimize().then(() => {
+                    this.setState({
+                        activeComponent: this.nothingActive
+                    });
+                });
+
+            }
+            else {
+                this.setState({
+                    activeComponent: this.nothingActive
+                });
+            }
         }
 
         /**
          * Minimize the component.
          */
-        public minimize() {
-            if (!this.isComponentActive()) {
-                return;
+        public minimize(): Q.Promise<void> {
+            var deferred = Q.defer<void>();
+
+            if (this.isComponentActive() && this.state.maximized) {
+                this.minMaxDeferred = deferred;
+
+                this.setState({
+                    maximized: false
+                });
+            }
+            else {
+                deferred.resolve();
             }
 
-            this.setState({
-                maximized: false
-            });
+            return deferred.promise;
         }
 
         /**
          * Maximize the component. If nothing is active maximizing is not possible.
          */
-        public maximize() {
-            if (!this.isComponentActive()) {
-                return;
+        public maximize(): Q.Promise<void> {
+            var deferred = Q.defer<void>();
+
+            if (this.isComponentActive() && !this.state.maximized) {
+                this.minMaxDeferred = deferred;
+
+                this.setState({
+                    maximized: true
+                });
+            }
+            else {
+                deferred.resolve();
             }
 
-            this.setState({
-                maximized: true
-            });
+            return deferred.promise;
+        }
+
+        private setupRootDiv(root: HTMLDivElement): void {
+            if (root) {
+                root.addEventListener('transitionend', () => {
+                    if (this.minMaxDeferred) {
+                        this.minMaxDeferred.resolve();
+                        this.minMaxDeferred = undefined;
+                    }
+                });
+            }
         }
 
         render() {
@@ -73,7 +109,7 @@ namespace otterside {
                 'disabled': !this.isComponentActive()
             });
 
-            return <div className={classes}>
+            return <div className={classes} ref={(div) => this.setupRootDiv(div) }>
                 <h2 className="interactive-header">
                     Otterside
                     <div className="flex">

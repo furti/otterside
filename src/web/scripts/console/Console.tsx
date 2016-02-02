@@ -96,7 +96,6 @@ namespace otterside {
         }
 
         public close(): void {
-            InteractiveContent.contentComponent.minimize();
             InteractiveContent.contentComponent.disableActiveComponent();
         }
 
