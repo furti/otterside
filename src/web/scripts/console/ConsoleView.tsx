@@ -36,7 +36,9 @@ namespace otterside.console {
 
             if (e.keyCode === 13) {
                 //Enter pressed --> execute the command
+                this.addLine(`$ ${textarea.value}`);
                 this.props.onExecute(textarea.value);
+
                 textarea.value = '';
             }
         }
