@@ -139,7 +139,7 @@ body {
   flex-grow: 1;
 }
 .console-line p {
-  margin: 0;
+  margin: 0 0 1em 0;
 }
 .console-line strong {
   color: #3182A4;
