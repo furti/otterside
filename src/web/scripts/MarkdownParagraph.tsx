@@ -7,7 +7,10 @@ namespace otterside {
 
         public renderContent(): string {
             if (!this.renderedContent) {
-                this.renderedContent = marked(this.props.markdownContent);
+                this.renderedContent = marked(this.props.markdownContent, {
+                    gfm: true,
+                    breaks: true
+                });
             }
 
             return this.renderedContent;

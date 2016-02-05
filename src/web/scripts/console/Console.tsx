@@ -49,6 +49,7 @@ namespace otterside {
 
                 this.printWelcome();
                 this.registerExecutables();
+                this.registerDefaultCommands();
 
                 this.consoleDeferred.resolve(this);
             }, (errorMessage: string) => {
@@ -119,6 +120,10 @@ namespace otterside {
                         new console.ConsoleExecutableHandler(this, executable));
                 }
             }
+        }
+
+        private registerDefaultCommands(): void {
+            this.consoleEngine.registerCommand(console.command.Read.command, new console.command.Read(this));
         }
 
         public executeCommand(commandString: string): void {
