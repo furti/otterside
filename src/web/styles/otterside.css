@@ -140,6 +140,9 @@ body {
   flex-grow: 1;
   overflow: auto;
 }
+.console-line p:only-child {
+  margin: 0;
+}
 .console-line p {
   margin: 0 0 1em 0;
 }
