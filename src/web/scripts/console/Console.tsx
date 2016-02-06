@@ -13,6 +13,7 @@ namespace otterside {
         private running: boolean;
         private content: ConsoleContent;
         private consoleEngine: console.ConsoleEngine;
+        private contexts: console.ConsoleContext[];
 
         /**
          * Constructs a new console with the given name.
@@ -22,6 +23,7 @@ namespace otterside {
         constructor(consoleName: string) {
             this.consoleName = consoleName;
             this.consoleEngine = new console.ConsoleEngine();
+            this.contexts = [];
         }
 
         /**
@@ -43,6 +45,7 @@ namespace otterside {
             this.consoleDeferred = Q.defer<Console>();
             this.running = true;
 
+            this.startContext();
             this.show();
             this.contentLoaded.then((consoleContent) => {
                 this.content = consoleContent;
@@ -86,7 +89,8 @@ namespace otterside {
          * @param {string} line the text to print to the console
          */
         public printLine(line: string): void {
-            this.consoleView.addLine(line);
+            this.getCurrentContext().lines.push(line);
+            this.rerenderView();
         }
 
         /**
@@ -98,6 +102,33 @@ namespace otterside {
 
         public close(): void {
             InteractiveContent.contentComponent.disableActiveComponent();
+        }
+
+        public startContext(): void {
+            this.contexts.push(new console.ConsoleContext());
+            this.rerenderView();
+        }
+
+        /**
+         * Removes the current context from the stack and renders the previous context.
+         * The default context cannot be removed.
+         */
+        public closeCurrentContext(): void {
+            if (this.contexts.length > 1) {
+                this.contexts.pop();
+                this.rerenderView();
+            }
+        }
+
+        private rerenderView(): void {
+            if (this.consoleView) {
+                this.consoleView.forceUpdate();
+                this.consoleView.focusInput();
+            }
+        }
+
+        private getCurrentContext(): console.ConsoleContext {
+            return this.contexts[this.contexts.length - 1];
         }
 
         /**
@@ -154,7 +185,8 @@ namespace otterside {
             return <console.ConsoleView ref={(consoleView) => {
                 this.connectConsoleView(consoleView);
             } }
-                onExecute={(commandString) => this.executeCommand(commandString) }>
+                onExecute={(commandString) => this.executeCommand(commandString) }
+                context={this.getCurrentContext() }>
             </console.ConsoleView >;
         }
     }

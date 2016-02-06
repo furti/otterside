@@ -10,25 +10,22 @@ namespace otterside.console {
             super();
 
             this.state = {
-                lines: []
+                context: null
             };
-        }
-
-        addLine(line: string): void {
-            this.state.lines.push(line);
-
-            this.setState({
-                lines: this.state.lines
-            });
-
-            this.textarea.scrollIntoView();
         }
 
         /**
          * Set The focus to the command input
          */
         public focusInput(): void {
+            this.textarea.scrollIntoView();
             this.textarea.focus();
+        }
+
+        public setContext(context: console.ConsoleContext): void {
+            this.setState({
+                context: context
+            });
         }
 
         private handleUp(e: React.KeyboardEvent): void {
@@ -36,7 +33,9 @@ namespace otterside.console {
 
             if (e.keyCode === 13) {
                 //Enter pressed --> execute the command
-                this.addLine(`$ ${textarea.value}`);
+                this.props.context.lines.push(`$ ${textarea.value}`);
+                this.forceUpdate();
+                this.focusInput();
                 this.props.onExecute(textarea.value);
 
                 textarea.value = '';
@@ -54,7 +53,7 @@ namespace otterside.console {
             return <div className="console" onClick={(e) => this.focusInput() }>
                 <div className="console-lines">
                     {
-                        this.state.lines.map((line, index) => {
+                        this.props.context.lines.map((line, index) => {
                             return <MarkdownParagraph key={"line-" + index} markdownContent={line} className="console-line"></MarkdownParagraph>
                         })
                     }

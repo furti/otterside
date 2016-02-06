@@ -20,6 +20,7 @@
     "./src/web/scripts/console/CommandExecutionResult.ts",
     "./src/web/scripts/console/CommandHandler.ts",
     "./src/web/scripts/console/commands/Read.ts",
+    "./src/web/scripts/console/ConsoleContext.ts",
     "./src/web/scripts/console/ConsoleEngine.ts",
     "./src/web/scripts/console/ConsoleExecutableHandler.ts",
     "./src/web/scripts/console/ConsoleViewProps.ts",
