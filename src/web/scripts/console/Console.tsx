@@ -8,6 +8,7 @@ namespace otterside {
     export class Console implements InteractiveComponent {
         private consoleView: console.ConsoleView;
         private contentLoaded: Q.Promise<ConsoleContent>;
+        private consoleConnected: Q.Deferred<void>;
         private consoleDeferred: Q.Deferred<Console>;
         private consoleName: string;
         private running: boolean;
@@ -45,19 +46,21 @@ namespace otterside {
             this.consoleDeferred = Q.defer<Console>();
             this.running = true;
 
-            this.startContext();
             this.show();
             this.contentLoaded.then((consoleContent) => {
                 this.content = consoleContent;
 
-                this.printWelcome();
                 this.registerExecutables();
                 this.registerDefaultCommands();
-
-                this.consoleDeferred.resolve(this);
             }, (errorMessage: string) => {
                 this.printLine(errorMessage);
                 this.consoleDeferred.reject(this);
+            });
+
+            Q.all<any>([this.contentLoaded, this.consoleConnected.promise]).then(() => {
+                this.startContext();
+                this.printWelcome();
+                this.consoleDeferred.resolve(this);
             });
 
             return this.consoleDeferred.promise;
@@ -106,7 +109,7 @@ namespace otterside {
 
         public startContext(): void {
             this.contexts.push(new console.ConsoleContext());
-            this.rerenderView();
+            this.setCurrentContext();
         }
 
         /**
@@ -116,7 +119,7 @@ namespace otterside {
         public closeCurrentContext(): void {
             if (this.contexts.length > 1) {
                 this.contexts.pop();
-                this.rerenderView();
+                this.setCurrentContext();
             }
         }
 
@@ -125,6 +128,11 @@ namespace otterside {
                 this.consoleView.forceUpdate();
                 this.consoleView.focusInput();
             }
+        }
+
+        private setCurrentContext(): void {
+            this.consoleView.setContext(this.getCurrentContext());
+            this.rerenderView();
         }
 
         private getCurrentContext(): console.ConsoleContext {
@@ -171,6 +179,8 @@ namespace otterside {
          * It also displays the Text Loading... until the content is loaded.
          */
         private show(): void {
+            this.consoleConnected = Q.defer<void>();
+
             InteractiveContent.contentComponent.activateComponent(this);
         }
 
@@ -178,6 +188,7 @@ namespace otterside {
             if (consoleView) {
                 this.consoleView = consoleView;
                 this.consoleView.focusInput();
+                this.consoleConnected.resolve();
             }
         }
 
@@ -185,8 +196,7 @@ namespace otterside {
             return <console.ConsoleView ref={(consoleView) => {
                 this.connectConsoleView(consoleView);
             } }
-                onExecute={(commandString) => this.executeCommand(commandString) }
-                context={this.getCurrentContext() }>
+                onExecute={(commandString) => this.executeCommand(commandString) }>
             </console.ConsoleView >;
         }
     }

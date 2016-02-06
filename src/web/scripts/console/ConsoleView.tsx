@@ -33,7 +33,7 @@ namespace otterside.console {
 
             if (e.keyCode === 13) {
                 //Enter pressed --> execute the command
-                this.props.context.lines.push(`$ ${textarea.value}`);
+                this.state.context.lines.push(`$ ${textarea.value}`);
                 this.forceUpdate();
                 this.focusInput();
                 this.props.onExecute(textarea.value);
@@ -50,10 +50,13 @@ namespace otterside.console {
         }
 
         render() {
+            var lines = this.state.context && this.state.context.lines ? this.state.context.lines : [];
+
             return <div className="console" onClick={(e) => this.focusInput() }>
                 <div className="console-lines">
                     {
-                        this.props.context.lines.map((line, index) => {
+
+                        lines.map((line, index) => {
                             return <MarkdownParagraph key={"line-" + index} markdownContent={line} className="console-line"></MarkdownParagraph>
                         })
                     }

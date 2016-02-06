@@ -28,6 +28,7 @@ namespace otterside.console.command {
                 return;
             }
 
+            this.console.startContext();
             this.console.printLine(utils.Base64.decode(file.content));
         }
     }
