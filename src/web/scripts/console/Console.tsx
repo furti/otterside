@@ -108,7 +108,7 @@ namespace otterside {
         }
 
         public startContext(): void {
-            this.contexts.push(new console.ConsoleContext());
+            this.contexts.push(new console.ConsoleContext(this.contexts.length));
             this.setCurrentContext();
         }
 

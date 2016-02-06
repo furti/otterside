@@ -57,7 +57,7 @@ namespace otterside.console {
                     {
 
                         lines.map((line, index) => {
-                            return <MarkdownParagraph key={"line-" + index} markdownContent={line} className="console-line"></MarkdownParagraph>
+                            return <MarkdownParagraph key={this.state.context.id + "-line-" + index} markdownContent={line} className="console-line"></MarkdownParagraph>
                         })
                     }
                 </div>
