@@ -58,7 +58,10 @@ namespace otterside {
             });
 
             Q.all<any>([this.contentLoaded, this.consoleConnected.promise]).then(() => {
-                this.startContext();
+                this.startContext({
+                    showInput: true
+                });
+
                 this.printWelcome();
                 this.consoleDeferred.resolve(this);
             });
@@ -96,6 +99,10 @@ namespace otterside {
             this.rerenderView();
         }
 
+        public scrollTop(): void {
+            this.consoleView.scrollTop();
+        }
+
         /**
          * Maximizes the console.
          */
@@ -107,8 +114,8 @@ namespace otterside {
             InteractiveContent.contentComponent.disableActiveComponent();
         }
 
-        public startContext(): void {
-            this.contexts.push(new console.ConsoleContext(this.contexts.length));
+        public startContext(config: console.ConsoleContextConfig): void {
+            this.contexts.push(new console.ConsoleContext(this.contexts.length, config));
             this.setCurrentContext();
         }
 

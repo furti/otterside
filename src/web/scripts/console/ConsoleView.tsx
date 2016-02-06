@@ -3,8 +3,8 @@ namespace otterside.console {
      * The visual representation of the console.
      */
     export class ConsoleView extends React.Component<ConsoleViewProps, ConsoleViewState> {
-
         private textarea: ResizeableTextarea;
+        private root: HTMLDivElement;
 
         constructor() {
             super();
@@ -18,14 +18,20 @@ namespace otterside.console {
          * Set The focus to the command input
          */
         public focusInput(): void {
-            this.textarea.scrollIntoView();
-            this.textarea.focus();
+            if (this.textarea) {
+                this.textarea.scrollIntoView();
+                this.textarea.focus();
+            }
         }
 
         public setContext(context: console.ConsoleContext): void {
             this.setState({
                 context: context
             });
+        }
+
+        public scrollTop(): void {
+            this.root.scrollTop = 0;
         }
 
         private handleUp(e: React.KeyboardEvent): void {
@@ -49,10 +55,16 @@ namespace otterside.console {
             }
         }
 
+        private connectRoot(root: HTMLDivElement): void {
+            if (root) {
+                this.root = root;
+            }
+        }
+
         render() {
             var lines = this.state.context && this.state.context.lines ? this.state.context.lines : [];
 
-            return <div className="console" onClick={(e) => this.focusInput() }>
+            return <div className="console" onClick={(e) => this.focusInput() } ref={(root) => this.connectRoot(root) }>
                 <div className="console-lines">
                     {
 
@@ -61,11 +73,17 @@ namespace otterside.console {
                         })
                     }
                 </div>
-                <div className="console-input">
-                    <span className="prompt">$</span>
-                    <ResizeableTextarea onKeyUp={(event) => this.handleUp(event) } onKeyDown={(event) => this.handleDown(event) } ref={(textarea) => this.textarea = textarea}>
-                    </ResizeableTextarea>
-                </div>
+                {
+                    (() => {
+                        if (this.state.context && this.state.context.config.showInput) {
+                            return <div className="console-input">
+                                <span className="prompt">$</span>
+                                <ResizeableTextarea onKeyUp={(event) => this.handleUp(event) } onKeyDown={(event) => this.handleDown(event) } ref={(textarea) => this.textarea = textarea}></ResizeableTextarea>
+                            </div>
+                        }
+                    })()
+                }
+
             </div>
         }
     }
