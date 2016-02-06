@@ -13,7 +13,6 @@ namespace otterside {
         private consoleName: string;
         private running: boolean;
         private content: ConsoleContent;
-        private consoleEngine: console.ConsoleEngine;
         private contexts: console.ConsoleContext[];
 
         /**
@@ -23,7 +22,6 @@ namespace otterside {
          */
         constructor(consoleName: string) {
             this.consoleName = consoleName;
-            this.consoleEngine = new console.ConsoleEngine();
             this.contexts = [];
         }
 
@@ -49,9 +47,6 @@ namespace otterside {
             this.show();
             this.contentLoaded.then((consoleContent) => {
                 this.content = consoleContent;
-
-                this.registerExecutables();
-                this.registerDefaultCommands();
             }, (errorMessage: string) => {
                 this.printLine(errorMessage);
                 this.consoleDeferred.reject(this);
@@ -62,6 +57,8 @@ namespace otterside {
                     showInput: true
                 });
 
+                this.registerExecutables();
+                this.registerDefaultCommands();
                 this.printWelcome();
                 this.consoleDeferred.resolve(this);
             });
@@ -115,7 +112,7 @@ namespace otterside {
         }
 
         public startContext(config: console.ConsoleContextConfig): void {
-            this.contexts.push(new console.ConsoleContext(this.contexts.length, config));
+            this.contexts.push(new console.ConsoleContext(this.contexts.length, this, config));
             this.setCurrentContext();
         }
 
@@ -161,23 +158,19 @@ namespace otterside {
          */
         private registerExecutables(): void {
             if (this.content.executables) {
+                var currentContext = this.getCurrentContext();
+
                 for (let executable of this.content.executables) {
-                    this.consoleEngine.registerCommand(executable,
+                    currentContext.registerCommand(executable,
                         new console.ConsoleExecutableHandler(this, executable));
                 }
             }
         }
 
         private registerDefaultCommands(): void {
-            this.consoleEngine.registerCommand(console.command.Read.command, new console.command.Read(this));
-        }
+            var currentContext = this.getCurrentContext();
 
-        public executeCommand(commandString: string): void {
-            var result = this.consoleEngine.execute(commandString)
-
-            if (result.state === console.CommandExecutionState.Error) {
-                this.printLine(result.message);
-            }
+            currentContext.registerCommand(console.command.Read.command, new console.command.Read(this));
         }
 
         /**
@@ -202,8 +195,7 @@ namespace otterside {
         public render(): JSX.Element {
             return <console.ConsoleView ref={(consoleView) => {
                 this.connectConsoleView(consoleView);
-            } }
-                onExecute={(commandString) => this.executeCommand(commandString) }>
+            } }>
             </console.ConsoleView >;
         }
     }

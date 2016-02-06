@@ -42,7 +42,7 @@ namespace otterside.console {
                 this.state.context.lines.push(`$ ${textarea.value}`);
                 this.forceUpdate();
                 this.focusInput();
-                this.props.onExecute(textarea.value);
+                this.state.context.executeCommand(textarea.value);
 
                 textarea.value = '';
             }
