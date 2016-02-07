@@ -84,7 +84,7 @@ namespace otterside {
                 });
         }
 
-        public getFile(fileName: string) {
+        public getFile(fileName: string): ConsoleFile {
             return this.content.files[fileName];
         }
         /**
@@ -112,9 +112,13 @@ namespace otterside {
             InteractiveContent.contentComponent.disableActiveComponent();
         }
 
-        public startContext(config: console.ConsoleContextConfig): void {
-            this.contexts.push(new console.ConsoleContext(this.contexts.length, this, config));
+        public startContext(config: console.ConsoleContextConfig): console.ConsoleContext {
+            var newContext = new console.ConsoleContext(this.contexts.length, this, config);
+
+            this.contexts.push(newContext);
             this.setCurrentContext();
+
+            return newContext;
         }
 
         /**
@@ -238,7 +242,7 @@ namespace otterside {
         runNamespace: string;
     }
 
-    interface ConsoleFile {
+    export interface ConsoleFile {
         /**
          * The files content
          */

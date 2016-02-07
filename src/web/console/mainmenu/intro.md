@@ -25,3 +25,6 @@ This section lists all the availabel objects you will encounter in the game.
 * To walk around with Edit you use the arrow keys.
 * When you come close to a terminal you can press "e" to activate the terminal. It will be connected to the console to the right of the game.
 * Press the "ESC" key to open the Main Menu. This does not work while connected to a terminal.
+
+## What's next?
+Type **quit** to close the intro and then you may start a new game 😆.
