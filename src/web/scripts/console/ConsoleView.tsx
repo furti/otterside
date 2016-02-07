@@ -3,6 +3,7 @@ namespace otterside.console {
      * The visual representation of the console.
      */
     export class ConsoleView extends React.Component<ConsoleViewProps, ConsoleViewState> {
+        private scrollTimeout: number;
         private textarea: ResizeableTextarea;
         private linesContainer: HTMLDivElement;
 
@@ -30,18 +31,26 @@ namespace otterside.console {
         }
 
         public scrollTop(): void {
-            this.linesContainer.scrollTop = 0;
+            if (this.scrollTimeout) {
+                window.clearTimeout(this.scrollTimeout);
+            }
+
+            this.scrollTimeout = window.setTimeout(() => this.linesContainer.scrollTop = 0, 1);
         }
 
         public scrollBottom(): void {
-            window.setTimeout(() => this.linesContainer.scrollTop = this.linesContainer.scrollHeight, 1);
+            if (this.scrollTimeout) {
+                window.clearTimeout(this.scrollTimeout);
+            }
+
+            this.scrollTimeout = window.setTimeout(() => this.linesContainer.scrollTop = this.linesContainer.scrollHeight, 1);
         }
 
         private handleUp(e: React.KeyboardEvent): void {
             var textarea = e.target as HTMLTextAreaElement;
 
-            if (e.keyCode === 13) {
-                //Enter pressed --> execute the command
+            if (e.keyCode === 13 && textarea.value.trim().length > 0) {
+                //Enter pressed and we have some text --> execute the command
                 this.state.context.lines.push(`$ ${textarea.value}`);
                 this.forceUpdate();
                 this.focusInput();
