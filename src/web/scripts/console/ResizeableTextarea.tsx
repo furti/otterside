@@ -13,14 +13,6 @@ namespace otterside.console {
             this.textarea.focus();
         }
 
-        public scrollIntoView(): void {
-            //We need a little timeout here.
-            //Maybe not all content is rendered in the console now and so we are still in the visible area.
-            window.setTimeout(() => {
-                this.textarea.scrollIntoView();
-            }, 1);
-        }
-
         private setupTextarea(textarea: HTMLTextAreaElement): void {
             if (!this.textarea) {
                 this.textarea = textarea;

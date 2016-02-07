@@ -94,6 +94,7 @@ namespace otterside {
         public printLine(line: string): void {
             this.getCurrentContext().lines.push(line);
             this.rerenderView();
+            this.consoleView.scrollBottom();
         }
 
         public scrollTop(): void {

@@ -4,7 +4,7 @@ namespace otterside.console {
      */
     export class ConsoleView extends React.Component<ConsoleViewProps, ConsoleViewState> {
         private textarea: ResizeableTextarea;
-        private root: HTMLDivElement;
+        private linesContainer: HTMLDivElement;
 
         constructor() {
             super();
@@ -19,7 +19,6 @@ namespace otterside.console {
          */
         public focusInput(): void {
             if (this.textarea) {
-                this.textarea.scrollIntoView();
                 this.textarea.focus();
             }
         }
@@ -31,7 +30,11 @@ namespace otterside.console {
         }
 
         public scrollTop(): void {
-            this.root.scrollTop = 0;
+            this.linesContainer.scrollTop = 0;
+        }
+
+        public scrollBottom(): void {
+            window.setTimeout(() => this.linesContainer.scrollTop = this.linesContainer.scrollHeight, 1);
         }
 
         private handleUp(e: React.KeyboardEvent): void {
@@ -55,17 +58,17 @@ namespace otterside.console {
             }
         }
 
-        private connectRoot(root: HTMLDivElement): void {
-            if (root) {
-                this.root = root;
+        private connectLinesContainer(linesContainer: HTMLDivElement): void {
+            if (linesContainer) {
+                this.linesContainer = linesContainer;
             }
         }
 
         render() {
             var lines = this.state.context && this.state.context.lines ? this.state.context.lines : [];
 
-            return <div className="console" onClick={(e) => this.focusInput() } ref={(root) => this.connectRoot(root) }>
-                <div className="console-lines">
+            return <div className="console" onClick={(e) => this.focusInput() } >
+                <div className="console-lines" ref={(linesContainer) => this.connectLinesContainer(linesContainer) }>
                     {
 
                         lines.map((line, index) => {
