@@ -29,6 +29,7 @@
     "./src/web/scripts/console/ResizeableTextareaProps.ts",
     "./src/web/scripts/console/ResizeableTextareaState.ts",
     "./src/web/scripts/console/RunConfig.ts",
+    "./src/web/scripts/HotKeys.ts",
     "./src/web/scripts/http/Http.ts",
     "./src/web/scripts/http/HttpGetRequest.ts",
     "./src/web/scripts/http/HttpRequest.ts",
