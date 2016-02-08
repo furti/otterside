@@ -176,6 +176,7 @@ namespace otterside {
             var currentContext = this.getCurrentContext();
 
             currentContext.registerCommand(console.command.Read.command, new console.command.Read(this));
+            currentContext.registerCommand(console.command.Exit.command, new console.command.Exit(this));
         }
 
         /**
