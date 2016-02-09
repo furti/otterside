@@ -32,36 +32,7 @@ namespace otterside {
         }
 
         public update() {
-            var body: Phaser.Physics.Arcade.Body = this.player.body;
-
-            body.velocity.x = 0;
-            body.velocity.y = 0;
-
-
-            if (this.cursorKeys.up.isDown) {
-                body.velocity.y -= 100;
-
-                this.player.animations.play('faced');
-            }
-            else if (this.cursorKeys.down.isDown) {
-                body.velocity.y += 100;
-
-                this.player.animations.play('faced');
-            }
-            else if (this.cursorKeys.right.isDown) {
-                body.velocity.x += 100;
-
-                this.player.animations.play('right');
-            }
-            else if (this.cursorKeys.left.isDown) {
-                body.velocity.x -= 100;
-
-                this.player.animations.play('left');
-            }
-            else {
-                this.player.animations.stop();
-                this.player.frame = 2;
-            }
+            this.movePlayer();
 
             this.physics.arcade.collide(this.player, this.wallLayer);
             this.physics.arcade.collide(this.player, this.objectGroup);
@@ -90,6 +61,41 @@ namespace otterside {
             this.camera.follow(this.player);
 
             this.cursorKeys = this.input.keyboard.createCursorKeys();
+        }
+        private movePlayer(): void {
+            var body: Phaser.Physics.Arcade.Body = this.player.body;
+
+            body.velocity.x = 0;
+            body.velocity.y = 0;
+
+            if (InteractiveContent.isComponentActive()) {
+                return;
+            }
+
+            if (this.cursorKeys.up.isDown) {
+                body.velocity.y -= 100;
+
+                this.player.animations.play('faced');
+            }
+            else if (this.cursorKeys.down.isDown) {
+                body.velocity.y += 100;
+
+                this.player.animations.play('faced');
+            }
+            else if (this.cursorKeys.right.isDown) {
+                body.velocity.x += 100;
+
+                this.player.animations.play('right');
+            }
+            else if (this.cursorKeys.left.isDown) {
+                body.velocity.x -= 100;
+
+                this.player.animations.play('left');
+            }
+            else {
+                this.player.animations.stop();
+                this.player.frame = 2;
+            }
         }
     }
 }
