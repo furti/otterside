@@ -7,7 +7,8 @@ namespace otterside {
         UP = 38,
         DOWN = 40,
         LEFT = 37,
-        RIGHT = 39
+        RIGHT = 39,
+        C = 67
     }
 
     export declare type HotkeyHandler = (event: KeyboardEvent) => boolean;

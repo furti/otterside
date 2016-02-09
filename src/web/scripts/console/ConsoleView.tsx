@@ -51,18 +51,25 @@ namespace otterside.console {
 
             if (e.keyCode === Key.ENTER && textarea.value.trim().length > 0) {
                 //Enter pressed and we have some text --> execute the command
-                this.state.context.lines.push(`$ ${textarea.value}`);
-                this.forceUpdate();
-                this.focusInput();
+                this.printActualValue(textarea.value);
                 this.state.context.executeCommand(textarea.value);
-
+                textarea.value = '';
+            }
+            else if (e.keyCode === Key.C && e.ctrlKey) {
+                this.printActualValue(textarea.value);
                 textarea.value = '';
             }
         }
 
+        private printActualValue(actualValue: string) {
+            this.state.context.lines.push(`$ ${actualValue}`);
+            this.forceUpdate();
+            this.focusInput();
+        }
+
         private handleDown(e: React.KeyboardEvent): void {
-            //Prevent the default action on enter or tab. We don't want a newline in the textarea nor we want the focus to be lost.
-            if (e.keyCode === Key.ENTER || e.keyCode === Key.TAB) {
+            //Prevent the default action for some key combinations
+            if (e.keyCode === Key.ENTER || e.keyCode === Key.TAB || e.ctrlKey) {
                 e.preventDefault();
             }
         }
