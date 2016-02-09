@@ -114,6 +114,7 @@ body {
 .interactive-header {
   display: flex;
   justify-content: space-between;
+  flex-shrink: 0;
   padding: 0 10px;
   margin: 0;
   border-bottom: 1px solid #EEE8D5;
@@ -163,6 +164,7 @@ body {
 }
 .console-input {
   display: flex;
+  flex-shrink: 0;
   border-top-style: solid;
   border-top-width: 1px;
   padding: 5px 3px;
