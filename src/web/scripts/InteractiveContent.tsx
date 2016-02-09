@@ -16,6 +16,14 @@ namespace otterside {
         }
 
         /**
+         * Checks if a interactive component is currently active.
+         * @return {Boolean} true if a component is actie
+         */
+        public static isComponentActive(): boolean {
+            return InteractiveContent.contentComponent.isComponentActive();
+        }
+
+        /**
          * Checks if a component is active now.
          * @return {Boolean} true if a component is active. False if the default "Nothing connected" message is shown.
          */

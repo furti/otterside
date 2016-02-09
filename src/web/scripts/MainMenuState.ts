@@ -39,7 +39,7 @@ namespace otterside {
     }
 
     HotKeys.registerHotkey(Key.ESC, (event) => {
-        if (!InteractiveContent.contentComponent.isComponentActive()) {
+        if (!InteractiveContent.isComponentActive()) {
             MainMenuConsole.createConsole();
             MainMenuConsole.start();
         }
