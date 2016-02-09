@@ -63,15 +63,18 @@ namespace otterside {
     export interface GameObjectProperties {
         /**
          * The Index of the sprite to render for this object.
-         * @type {string}
          */
         spriteIndex: string;
 
         /**
          * If "true" the object can be pushed by the player to move. Otherwise it blocks the player.
-         * @type {[type]}
          */
         moveable?: string;
+
+        /**
+         * If true the player can interact with this component;
+         */
+        interactive?: string;
     }
 
     /**

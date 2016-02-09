@@ -79,6 +79,7 @@
                  "name":"riddle-firstpassword",
                  "properties":
                     {
+                     "interactive":"true",
                      "riddle":"firstpassword",
                      "spriteIndex":"18"
                     },

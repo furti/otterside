@@ -6,15 +6,24 @@ namespace otterside {
         public type: string;
     }
 
+    interface Keys {
+        up: Phaser.Key;
+        down: Phaser.Key;
+        right: Phaser.Key;
+        left: Phaser.Key;
+        e: Phaser.Key;
+    }
+
     export class PlayState extends Phaser.State {
         public static stateName = 'Play';
 
-        private cursorKeys: Phaser.CursorKeys;
+        private keys: Keys;
         private player: Phaser.Sprite;
         private boardLayer: Phaser.TilemapLayer;
         private wallLayer: Phaser.TilemapLayer;
         private map: Phaser.Tilemap;
         private objectGroup: Phaser.Group;
+        private currentInteractible: GameObject<GameObjectProperties>;
 
         public create() {
             this.map = this.game.add.tilemap('ottersidemap');
@@ -33,6 +42,7 @@ namespace otterside {
 
         public update() {
             this.movePlayer();
+            this.checkForInteractiveObject();
 
             this.physics.arcade.collide(this.player, this.wallLayer);
             this.physics.arcade.collide(this.player, this.objectGroup);
@@ -60,8 +70,15 @@ namespace otterside {
 
             this.camera.follow(this.player);
 
-            this.cursorKeys = this.input.keyboard.createCursorKeys();
+            this.keys = this.input.keyboard.addKeys({
+                'e': Phaser.Keyboard.E,
+                'up': Phaser.Keyboard.UP,
+                'down': Phaser.Keyboard.DOWN,
+                'left': Phaser.Keyboard.LEFT,
+                'right': Phaser.Keyboard.RIGHT
+            });
         }
+
         private movePlayer(): void {
             var body: Phaser.Physics.Arcade.Body = this.player.body;
 
@@ -72,22 +89,22 @@ namespace otterside {
                 return;
             }
 
-            if (this.cursorKeys.up.isDown) {
+            if (this.keys.up.isDown) {
                 body.velocity.y -= 100;
 
                 this.player.animations.play('faced');
             }
-            else if (this.cursorKeys.down.isDown) {
+            else if (this.keys.down.isDown) {
                 body.velocity.y += 100;
 
                 this.player.animations.play('faced');
             }
-            else if (this.cursorKeys.right.isDown) {
+            else if (this.keys.right.isDown) {
                 body.velocity.x += 100;
 
                 this.player.animations.play('right');
             }
-            else if (this.cursorKeys.left.isDown) {
+            else if (this.keys.left.isDown) {
                 body.velocity.x -= 100;
 
                 this.player.animations.play('left');
@@ -96,6 +113,28 @@ namespace otterside {
                 this.player.animations.stop();
                 this.player.frame = 2;
             }
+        }
+
+        private checkForInteractiveObject(): void {
+            if (InteractiveContent.isComponentActive()) {
+                return;
+            }
+
+            if (this.currentInteractible) {
+                if (this.keys.e.isDown) {
+                    alert('connection to console');
+                }
+
+                //Release the interactive component if the player moves away from it
+                var distance = Phaser.Math.distance(this.currentInteractible.x, this.currentInteractible.y, this.player.x, this.player.y);
+                if (distance > 40) {
+                    this.currentInteractible = undefined;
+                }
+
+                return;
+            }
+
+            this.currentInteractible = MapUtils.findInteractibleObject(this.map, 'objects', this.player.x, this.player.y);
         }
     }
 }
