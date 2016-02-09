@@ -30,7 +30,7 @@ namespace otterside {
         }
     }
 
-    document.addEventListener('keypress', function(event: KeyboardEvent) {
+    document.addEventListener('keydown', function(event: KeyboardEvent) {
         if (!registeredHandlers[event.keyCode]) {
             return;
         }
