@@ -72,9 +72,9 @@ namespace otterside {
             }
         }
 
-        public static activateInteractiveComponent(object: GameObject<GameObjectProperties>, keyboard: Phaser.Keyboard): void {
+        public static activateInteractiveComponent(object: GameObject<GameObjectProperties>, keyboard: Phaser.Keyboard): Q.Promise<void> {
             if (object.type === 'terminal') {
-                new Terminal(object, keyboard).connect();
+                return new Terminal(object, keyboard).connect();
             }
             else {
                 throw `Interactive components of type ${object.type} not supported yet.`

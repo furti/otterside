@@ -6,16 +6,18 @@ namespace otterside {
             this.console = new Console(object.name);
         }
 
-        public connect(): void {
-            this.keyboard.stop();
+        public connect(): Q.Promise<void> {
+            var defered = Q.defer<void>();
 
             this.console.start().finally(() => {
                 this.console.maximize();
             });
 
             this.console.on(ConsoleEvent.CLOSE, () => {
-                this.keyboard.start();
+                defered.resolve();
             });
+
+            return defered.promise;
         }
     }
 }

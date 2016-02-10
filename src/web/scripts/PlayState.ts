@@ -123,9 +123,15 @@ namespace otterside {
             var body = this.player.body;
             var playerMoved = body.velocity.x !== 0 || body.velocity.y !== 0;
 
-            if (this.currentInteractible) {
+            if (this.currentInteractible && !InteractiveContent.isComponentActive()) {
                 if (this.keys.e.isDown) {
-                    MapUtils.activateInteractiveComponent(this.currentInteractible, this.input.keyboard);
+                    this.input.enabled = false;
+                    this.keys.e.isDown = false; //We have to disable the e key as the input is not enabled anymore
+
+                    MapUtils.activateInteractiveComponent(this.currentInteractible, this.input.keyboard).then(() => {
+                        this.input.enabled = true;
+
+                    });
                 }
 
                 if (playerMoved) {
