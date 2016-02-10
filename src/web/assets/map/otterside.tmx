@@ -224,7 +224,7 @@
     <property name="spriteIndex" value="13"/>
    </properties>
   </object>
-  <object id="20" name="riddle-firstpassword" type="terminal" x="1120" y="3040" width="32" height="32">
+  <object id="20" name="riddle-1" type="terminal" x="1120" y="3040" width="32" height="32">
    <properties>
     <property name="interactive" value="true"/>
     <property name="riddle" value="firstpassword"/>
