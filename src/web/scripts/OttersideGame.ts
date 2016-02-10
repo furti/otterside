@@ -88,7 +88,7 @@ namespace otterside {
         riddle: string;
     }
 
-    export var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
+    export var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game');
 
     //setup all required states
     game.state.add(BootState.stateName, BootState);
