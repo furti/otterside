@@ -116,25 +116,29 @@ namespace otterside {
         }
 
         private checkForInteractiveObject(): void {
-            if (InteractiveContent.isComponentActive()) {
-                return;
-            }
+            var body = this.player.body;
+            var playerMoved = body.velocity.x !== 0 || body.velocity.y !== 0;
 
             if (this.currentInteractible) {
                 if (this.keys.e.isDown) {
                     alert('connection to console');
                 }
 
-                //Release the interactive component if the player moves away from it
-                var distance = Phaser.Math.distance(this.currentInteractible.x, this.currentInteractible.y, this.player.x, this.player.y);
-                if (distance > 40) {
-                    this.currentInteractible = undefined;
+                if (playerMoved) {
+                    //Release the interactive component if the player moves away from it
+                    var distance = Phaser.Math.distance(this.currentInteractible.x, this.currentInteractible.y, this.player.x, this.player.y);
+                    if (distance > 40) {
+                        this.currentInteractible = undefined;
+                    }
                 }
 
                 return;
             }
 
-            this.currentInteractible = MapUtils.findInteractibleObject(this.map, 'objects', this.player.x, this.player.y);
+            //Only check for new interactive component if the player moved
+            if (playerMoved) {
+                this.currentInteractible = MapUtils.findInteractibleObject(this.map, 'objects', this.player.x, this.player.y);
+            }
         }
     }
 }
