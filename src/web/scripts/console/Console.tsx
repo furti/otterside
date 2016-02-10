@@ -1,5 +1,9 @@
 namespace otterside {
 
+    export const enum ConsoleEvent {
+        CLOSE
+    }
+
     /**
      * The Console that is used for interacting with the user.
      *
@@ -14,6 +18,7 @@ namespace otterside {
         private running: boolean;
         private content: ConsoleContent;
         private contexts: console.ConsoleContext[];
+        private eventHandlers: { [event: number]: () => void } = {};
 
         /**
          * Constructs a new console with the given name.
@@ -45,22 +50,21 @@ namespace otterside {
             this.running = true;
 
             this.show();
-            this.contentLoaded.then((consoleContent) => {
-                this.content = consoleContent;
-            }, (errorMessage: string) => {
-                this.printLine(errorMessage);
-                this.consoleDeferred.reject(this);
-            });
 
-            Q.all<any>([this.contentLoaded, this.consoleConnected.promise]).then(() => {
+            Q.all<any>([this.contentLoaded, this.consoleConnected.promise]).finally(() => {
                 this.startContext({
                     showInput: true
                 });
 
-                this.registerExecutables();
                 this.registerDefaultCommands();
+            }).then((resolvedData: any[]) => {
+                this.content = resolvedData[0];
+                this.registerExecutables();
                 this.printWelcome();
                 this.consoleDeferred.resolve(this);
+            }, (errorMessage: string) => {
+                this.printLine(errorMessage);
+                this.consoleDeferred.reject(this);
             });
 
             return this.consoleDeferred.promise;
@@ -109,6 +113,10 @@ namespace otterside {
         }
 
         public close(): void {
+            if (this.eventHandlers[ConsoleEvent.CLOSE]) {
+                this.eventHandlers[ConsoleEvent.CLOSE]();
+            }
+
             InteractiveContent.contentComponent.disableActiveComponent();
         }
 
@@ -119,6 +127,10 @@ namespace otterside {
             this.setCurrentContext();
 
             return newContext;
+        }
+
+        public on(event: ConsoleEvent, handler: () => void): void {
+            this.eventHandlers[event] = handler;
         }
 
         /**
