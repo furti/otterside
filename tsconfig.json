@@ -42,6 +42,7 @@
     "./src/web/scripts/PlayState.ts",
     "./src/web/scripts/PreloadState.ts",
     "./src/web/scripts/refs.d.ts",
+    "./src/web/scripts/Terminal.ts",
     "./src/web/scripts/typescript-helpers.ts",
     "./src/web/scripts/Utils.ts",
     "./src/web/scripts/console/Console.tsx",

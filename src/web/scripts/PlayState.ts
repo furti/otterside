@@ -24,6 +24,13 @@ namespace otterside {
         private map: Phaser.Tilemap;
         private objectGroup: Phaser.Group;
         private currentInteractible: GameObject<GameObjectProperties>;
+        private keyMapping = {
+            'e': Phaser.Keyboard.E,
+            'up': Phaser.Keyboard.UP,
+            'down': Phaser.Keyboard.DOWN,
+            'left': Phaser.Keyboard.LEFT,
+            'right': Phaser.Keyboard.RIGHT
+        };
 
         public create() {
             this.map = this.game.add.tilemap('ottersidemap');
@@ -38,6 +45,7 @@ namespace otterside {
             this.boardLayer.resizeWorld();
             this.setupSpritesForObjects();
             this.setupPlayer();
+            this.registerKeys();
         }
 
         public update() {
@@ -57,6 +65,10 @@ namespace otterside {
             MapUtils.createFromObjects(this.objectGroup, this.map, 'objects');
         }
 
+        private registerKeys(): void {
+            this.keys = this.input.keyboard.addKeys(this.keyMapping);
+        }
+
         private setupPlayer() {
             var playerStart = MapUtils.findFirstObjectByType(this.map, 'objects', PlayerStart.type, PlayerStart);
 
@@ -69,14 +81,6 @@ namespace otterside {
             this.physics.arcade.enable(this.player);
 
             this.camera.follow(this.player);
-
-            this.keys = this.input.keyboard.addKeys({
-                'e': Phaser.Keyboard.E,
-                'up': Phaser.Keyboard.UP,
-                'down': Phaser.Keyboard.DOWN,
-                'left': Phaser.Keyboard.LEFT,
-                'right': Phaser.Keyboard.RIGHT
-            });
         }
 
         private movePlayer(): void {
@@ -121,7 +125,7 @@ namespace otterside {
 
             if (this.currentInteractible) {
                 if (this.keys.e.isDown) {
-                    alert('connection to console');
+                    MapUtils.activateInteractiveComponent(this.currentInteractible, this.input.keyboard);
                 }
 
                 if (playerMoved) {

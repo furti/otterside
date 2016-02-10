@@ -71,5 +71,14 @@ namespace otterside {
                 return closestInteractible;
             }
         }
+
+        public static activateInteractiveComponent(object: GameObject<GameObjectProperties>, keyboard: Phaser.Keyboard): void {
+            if (object.type === 'terminal') {
+                new Terminal(object, keyboard).connect();
+            }
+            else {
+                throw `Interactive components of type ${object.type} not supported yet.`
+            }
+        }
     }
 }
