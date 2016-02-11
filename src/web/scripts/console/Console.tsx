@@ -91,6 +91,25 @@ namespace otterside {
         public getFile(fileName: string): ConsoleFile {
             return this.content.files[fileName];
         }
+
+        /**
+         * Returns a list of all files inside the console.
+         * @return {ConsoleFile[]} List of files
+         */
+        public getFiles(): ConsoleFile[] {
+            if (!this.content.files) {
+                return [];
+            }
+
+            var files: ConsoleFile[] = [];
+
+            for (let fileName of Object.getOwnPropertyNames(this.content.files)) {
+                files.push(this.content.files[fileName]);
+            }
+
+            return files;
+        }
+
         /**
          * Prints a line on the console.
          * @param {string} line the text to print to the console
@@ -189,6 +208,7 @@ namespace otterside {
 
             currentContext.registerCommand(console.command.Read.command, new console.command.Read(this));
             currentContext.registerCommand(console.command.Exit.command, new console.command.Exit(this));
+            currentContext.registerCommand(console.command.List.command, new console.command.List(this));
         }
 
         /**

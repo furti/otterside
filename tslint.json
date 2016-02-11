@@ -1,5 +1,12 @@
 {
   "rules": {
-    "quotemark": [true]
+    "class-name": true,
+    "quotemark": [true],
+    "curly": true,
+    "eofline": true,
+    "no-internal-module": true,
+    "no-shadowed-variable": true,
+    "no-unused-expression": true,
+    "no-unused-variable": true
   }
 }
