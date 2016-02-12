@@ -44,7 +44,6 @@
     "./src/web/scripts/PreloadState.ts",
     "./src/web/scripts/refs.d.ts",
     "./src/web/scripts/Terminal.ts",
-    "./src/web/scripts/typescript-helpers.ts",
     "./src/web/scripts/Utils.ts",
     "./src/web/scripts/console/Console.tsx",
     "./src/web/scripts/console/ConsoleView.tsx",

@@ -9,11 +9,14 @@
   "devDependencies": {
     "eol": "^0.2.0",
     "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
     "gulp-connect": "^2.3.1",
     "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
     "gulp-svg2png": "^1.0.0",
     "gulp-typedoc": "^1.2.1",
     "gulp-typescript": "^2.10.0",
+    "gulp-uglify": "^1.5.2",
     "mkdirp": "^0.5.1"
   },
   "repository": {

@@ -1,3 +1,8 @@
+/// <reference path="./BootState.ts"/>
+/// <reference path="./PreloadState.ts"/>
+/// <reference path="./MainMenuState.ts"/>
+/// <reference path="./PlayState.ts"/>
+
 /**
  * Main Module for the Game
  */

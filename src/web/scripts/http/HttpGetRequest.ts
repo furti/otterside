@@ -1,3 +1,4 @@
+/// <reference path="./HttpRequestBase.ts"/>
 module otterside.http {
     export class HttpGetRequest<ResponseType> extends HttpRequestBase<ResponseType> {
         constructor(url: string) {

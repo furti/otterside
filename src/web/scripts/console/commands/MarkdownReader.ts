@@ -1,3 +1,4 @@
+/// <reference path="./Read.ts"/>
 namespace otterside.console.command.read {
     export class MarkdownReader extends console.command.Reader {
 
