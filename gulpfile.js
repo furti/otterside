@@ -1,9 +1,7 @@
 var gulp = require('gulp'),
   assets = require('./gulptasks/assets'),
   html = require('./gulptasks/html'),
-  typescript = require('./gulptasks/typescript'),
-  bower = require('./gulptasks/bower'),
-  npm = require('./gulptasks/npm'),
+  scripts = require('./gulptasks/scripts'),
   styles = require('./gulptasks/styles'),
   consolejson = require('./gulptasks/consolejson'),
   typedoc = require('./gulptasks/typedoc'),
@@ -11,35 +9,27 @@ var gulp = require('gulp'),
 
 assets.task(gulp);
 html.task(gulp);
-typescript.task(gulp);
-bower.task(gulp);
+scripts.task(gulp);
 styles.task(gulp);
 typedoc.task(gulp);
 consolejson.task(gulp);
-npm.task(gulp);
-
-
 
 var allTasks = ['connect'];
 
 assets.registerTasks(allTasks);
 html.registerTasks(allTasks);
-typescript.registerTasks(allTasks);
-bower.registerTasks(allTasks);
+scripts.registerTasks(allTasks);
 styles.registerTasks(allTasks);
 typedoc.registerTasks(allTasks);
 consolejson.registerTasks(allTasks);
-npm.registerTasks(allTasks);
 
 gulp.task('watch', allTasks, function() {
   assets.watch(gulp);
   html.watch(gulp);
-  typescript.watch(gulp);
-  bower.watch(gulp);
+  scripts.watch(gulp);
   styles.watch(gulp);
   typedoc.watch(gulp);
   consolejson.watch(gulp);
-  npm.watch(gulp);
 });
 
 gulp.task('connect', function() {
