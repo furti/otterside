@@ -34,6 +34,11 @@ gulp.task('watch', allTasks, function() {
 
 gulp.task('connect', function() {
   connect.server({
-    root: 'target'
+    root: 'target',
+    middleware: function() {
+      return [
+        require('connect-gzip').gzip()
+      ];
+    }
   });
 });
