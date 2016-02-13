@@ -81,6 +81,8 @@ namespace otterside.console {
         }
 
         private showHelp(parsedCommand: ParsedCommand): void {
+            this.console.printLine('Parameters are shown with _emphasis_. Optional parameters in [_square brackets_]')
+
             for (let commandName of this.getCommandNamesOrdered()) {
                 let commandExecutor = this.commands[commandName];
 
