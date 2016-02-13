@@ -18,7 +18,7 @@ namespace otterside {
         private running: boolean;
         private content: ConsoleContent;
         private contexts: console.ConsoleContext[];
-        private eventHandlers: { [event: number]: () => void } = {};
+        private events: Events;
 
         /**
          * Constructs a new console with the given name.
@@ -28,6 +28,7 @@ namespace otterside {
         constructor(consoleName: string) {
             this.consoleName = consoleName;
             this.contexts = [];
+            this.events = new Events();
         }
 
         /**
@@ -132,9 +133,7 @@ namespace otterside {
         }
 
         public close(): void {
-            if (this.eventHandlers[ConsoleEvent.CLOSE]) {
-                this.eventHandlers[ConsoleEvent.CLOSE]();
-            }
+            this.events.fire(ConsoleEvent.CLOSE);
 
             InteractiveContent.contentComponent.disableActiveComponent();
         }
@@ -149,7 +148,7 @@ namespace otterside {
         }
 
         public on(event: ConsoleEvent, handler: () => void): void {
-            this.eventHandlers[event] = handler;
+            this.events.on(event, handler);
         }
 
         /**
