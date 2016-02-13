@@ -5,7 +5,19 @@ var gulp = require('gulp'),
   styles = require('./gulptasks/styles'),
   consolejson = require('./gulptasks/consolejson'),
   typedoc = require('./gulptasks/typedoc'),
+  plumber = require('gulp-plumber'),
   connect = require('gulp-connect');
+
+(function monkeyPatchGulpSourceToUsePlumber(gulp) {
+  var _gulpsrc = gulp.src;
+
+  gulp.src = function() {
+    return _gulpsrc.apply(gulp, arguments)
+    .pipe(plumber());
+  };
+
+  console.log('🐒 patched gulp src to use plumber.');
+})(gulp);
 
 assets.task(gulp);
 html.task(gulp);
