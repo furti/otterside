@@ -5,5 +5,12 @@ namespace otterside.console {
          * @type {[type]}
          */
         command: string;
+
+        /**
+         * The text that is shown when the help command is called without parameters.
+         * Should be a one liner that describes the command.
+         * @type {string}
+         */
+        helpText: string;
     }
 }

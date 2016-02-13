@@ -15,7 +15,7 @@ namespace otterside.console {
             this.lines = [];
             this.id = id;
             this.config = config;
-            this.consoleEngine = new console.ConsoleEngine();
+            this.consoleEngine = new console.ConsoleEngine(connectedConsole);
             this.console = connectedConsole;
         }
 

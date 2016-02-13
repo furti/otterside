@@ -6,7 +6,8 @@ namespace otterside.console.command {
         private reader: Reader;
 
         public static command: console.Command = {
-            command: 'read'
+            command: 'read',
+            helpText: 'Shows the content of a file.'
         };
 
         private console: Console;
@@ -51,7 +52,8 @@ namespace otterside.console.command {
 
         private registerCommands(consoleContext: console.ConsoleContext): void {
             consoleContext.registerCommand({
-                command: 'quit'
+                command: 'quit',
+                helpText: 'Close the current file.'
             }, (context) => this.quit());
         }
     }

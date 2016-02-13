@@ -4,10 +4,9 @@ namespace otterside.console {
      * The core of the console that supports command execution and autocomplete.
      */
     export class ConsoleEngine {
-
         private commands: { [command: string]: CommandExecutor };
 
-        constructor() {
+        constructor(private console: Console) {
             this.commands = {};
         }
 
@@ -35,6 +34,14 @@ namespace otterside.console {
                 return {
                     state: CommandExecutionState.Error,
                     message: `Command **${commandString}** could not be parsed`
+                };
+            }
+
+            if (parsedCommand.command === 'help') {
+                this.showHelp(parsedCommand);
+
+                return {
+                    state: CommandExecutionState.Success
                 };
             }
 
@@ -72,6 +79,18 @@ namespace otterside.console {
                 arguments: parts.length > 1 ? parts.slice(1) : undefined
             }
         }
+
+        private showHelp(parsedCommand: ParsedCommand): void {
+            for (let commandName of this.getCommandNamesOrdered()) {
+                let commandExecutor = this.commands[commandName];
+
+                this.console.printLine(commandExecutor.help());
+            }
+        }
+
+        private getCommandNamesOrdered(): string[] {
+            return Object.keys(this.commands).sort();
+        }
     }
 
     interface ParsedCommand {
@@ -88,7 +107,6 @@ namespace otterside.console {
             this.handler = handler;
         }
 
-
         public execute(parsedCommand: ParsedCommand): void {
             var context = {
                 arguments: parsedCommand.arguments
@@ -99,6 +117,10 @@ namespace otterside.console {
             } else {
                 this.handler.executeCommand(context);
             }
+        }
+
+        public help(): string {
+            return `**${this.command.command}** - ${this.command.helpText}`
         }
     }
 }

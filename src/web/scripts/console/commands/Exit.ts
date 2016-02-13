@@ -6,7 +6,8 @@ namespace otterside.console.command {
         private reader: Reader;
 
         public static command: console.Command = {
-            command: 'exit'
+            command: 'exit',
+            helpText: 'Close the console'
         };
 
         private console: Console;

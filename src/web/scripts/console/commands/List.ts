@@ -4,7 +4,8 @@ namespace otterside.console.command {
      */
     export class List {
         public static command: console.Command = {
-            command: 'list'
+            command: 'list',
+            helpText: 'List files inside the terminal.'
         };
 
         private console: Console;
