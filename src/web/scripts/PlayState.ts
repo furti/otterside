@@ -67,6 +67,26 @@ namespace otterside {
 
         private registerKeys(): void {
             this.keys = this.input.keyboard.addKeys(this.keyMapping);
+
+            InteractiveContent.on(InteractiveContentEvent.ACTIVATED, () => {
+                this.input.enabled = false;
+                this.removeKeyPressForKeys();
+            });
+
+            InteractiveContent.on(InteractiveContentEvent.DEACTIVATED, () => {
+                this.input.enabled = true;
+            });
+        }
+
+        /**
+         * Somethimes w have to disable all keys because when the input is disabled it does not update the release of keys.
+         */
+        private removeKeyPressForKeys(): void {
+            this.keys.up.isDown = false;
+            this.keys.down.isDown = false;
+            this.keys.right.isDown = false;
+            this.keys.left.isDown = false;
+            this.keys.e.isDown = false;
         }
 
         private setupPlayer() {
@@ -125,13 +145,7 @@ namespace otterside {
 
             if (this.currentInteractible && !InteractiveContent.isComponentActive()) {
                 if (this.keys.e.isDown) {
-                    this.input.enabled = false;
-                    this.keys.e.isDown = false; //We have to disable the e key as the input is not enabled anymore
-
-                    MapUtils.activateInteractiveComponent(this.currentInteractible, this.input.keyboard).then(() => {
-                        this.input.enabled = true;
-
-                    });
+                    MapUtils.activateInteractiveComponent(this.currentInteractible, this.input.keyboard);
                 }
 
                 if (playerMoved) {

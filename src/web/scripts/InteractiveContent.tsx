@@ -1,7 +1,12 @@
 namespace otterside {
+    export const enum InteractiveContentEvent {
+        ACTIVATED,
+        DEACTIVATED
+    }
 
     export class InteractiveContent extends React.Component<{}, InteractiveContentState> {
         public static contentComponent: InteractiveContent;
+        public static events = new Events();
         private nothingActive: InteractiveComponent;
         private minMaxDeferred: Q.Deferred<void>;
 
@@ -24,6 +29,15 @@ namespace otterside {
         }
 
         /**
+         * Registere a event handler that will be called when the given event occurs;
+         * @param  {InteractiveContentEvent} event The event to listen for
+         * @param  {EventHandler} callback           The event handler
+         */
+        public static on(event: InteractiveContentEvent, callback: EventHandler): void {
+            InteractiveContent.events.on(event, callback);
+        }
+
+        /**
          * Checks if a component is active now.
          * @return {Boolean} true if a component is active. False if the default "Nothing connected" message is shown.
          */
@@ -39,6 +53,8 @@ namespace otterside {
             this.setState({
                 activeComponent: component
             });
+
+            InteractiveContent.events.fire(InteractiveContentEvent.ACTIVATED);
         }
 
         /**
@@ -50,13 +66,16 @@ namespace otterside {
                     this.setState({
                         activeComponent: this.nothingActive
                     });
-                });
 
+                    InteractiveContent.events.fire(InteractiveContentEvent.DEACTIVATED);
+                });
             }
             else {
                 this.setState({
                     activeComponent: this.nothingActive
                 });
+
+                InteractiveContent.events.fire(InteractiveContentEvent.DEACTIVATED);
             }
         }
 
