@@ -120,7 +120,22 @@ namespace otterside.console {
         }
 
         public help(): string {
-            return `**${this.command.command}** - ${this.command.helpText}`
+            return `**${this.command.command} ${this.commandParamsToString()} **- ${this.command.helpText}`
+        }
+
+        private commandParamsToString(): string {
+            if (!this.command.params || this.command.params.length === 0) {
+                return '';
+            }
+
+            return this.command.params.map((param) => {
+                if (param.required) {
+                    return `_${param.name}_`;
+                }
+                else {
+                    return `[_${param.name}_]`;
+                }
+            }).join(' ');
         }
     }
 }
