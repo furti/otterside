@@ -10,7 +10,8 @@ namespace otterside.console.command {
             helpText: 'Shows the content of a file.',
             params: [{
                 name: 'file',
-                required: true
+                required: true,
+                helpText: 'The name of the file to show.'
             }]
         };
 

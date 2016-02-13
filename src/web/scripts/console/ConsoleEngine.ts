@@ -81,12 +81,26 @@ namespace otterside.console {
         }
 
         private showHelp(parsedCommand: ParsedCommand): void {
-            this.console.printLine('Parameters are shown with _emphasis_. Optional parameters in [_square brackets_]')
+            if (!parsedCommand.arguments || parsedCommand.arguments.length === 0) {
 
-            for (let commandName of this.getCommandNamesOrdered()) {
-                let commandExecutor = this.commands[commandName];
+                this.console.printLine('Parameters are shown with _emphasis_. Optional parameters in [_square brackets_]')
 
-                this.console.printLine(commandExecutor.help());
+                for (let commandName of this.getCommandNamesOrdered()) {
+                    let commandExecutor = this.commands[commandName];
+
+                    this.console.printLine(commandExecutor.help(false));
+                }
+            }
+            else {
+                var commandName = parsedCommand.arguments[0];
+                var command = this.commands[commandName];
+
+                if (!command) {
+                    this.console.printLine(`Command **${commandName}** not found!`);
+                }
+                else {
+                    this.console.printLine(command.help(true));
+                }
             }
         }
 
@@ -121,8 +135,34 @@ namespace otterside.console {
             }
         }
 
-        public help(): string {
-            return `**${this.command.command} ${this.commandParamsToString()} **- ${this.command.helpText}`
+        /**
+         * Prints the help text for the command.
+         * @param  {boolean} extended if true informations for all parameters will be added.
+         * @return {string}           the help text.
+         */
+        public help(extended: boolean): string {
+            var helpText = `**${this.command.command} ${this.commandParamsToString()} **- ${this.command.helpText}`
+
+            if (extended && this.command.params && this.command.params.length > 0) {
+                helpText += '\n\n### Arguments\n';
+
+                helpText += this.command.params.map((param) => {
+                    let paramHelpText = '';
+
+                    if (param.required) {
+                        paramHelpText += `**${param.name}**`;
+                    }
+                    else {
+                        paramHelpText += `**[${param.name}]**`;
+                    }
+
+                    paramHelpText += ` - ${param.helpText}`;
+
+                    return paramHelpText;
+                }).join('\n\n');
+            }
+
+            return helpText;
         }
 
         private commandParamsToString(): string {
