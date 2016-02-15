@@ -13,7 +13,7 @@ namespace otterside {
                 this.console.maximize();
             });
 
-            this.console.on(ConsoleEvent.CLOSE, () => {
+            this.console.on.close(() => {
                 defered.resolve();
             });
 

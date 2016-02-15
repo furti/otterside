@@ -62,7 +62,7 @@ return (function(){
             var pointIndex = runConfig.runNamespace.indexOf('.');
 
             if (pointIndex > -1) {
-                runConfig.runNamespace.substring(0, pointIndex);
+                return runConfig.runNamespace.substring(0, pointIndex);
             }
             else {
                 return runConfig.runNamespace;

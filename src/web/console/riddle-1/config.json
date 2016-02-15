@@ -1,0 +1,8 @@
+{
+  "executables": [{
+    "command": "tutorial",
+    "helpText": "Starts the tutorial.",
+    "file": "tutorial.ts",
+    "runNamespace": "riddle1.tutorial"
+  }]
+}

@@ -41,7 +41,8 @@ namespace otterside.console {
                 this.showHelp(parsedCommand);
 
                 return {
-                    state: CommandExecutionState.Success
+                    state: CommandExecutionState.Success,
+                    command: parsedCommand
                 };
             }
 
@@ -107,11 +108,6 @@ namespace otterside.console {
         private getCommandNamesOrdered(): string[] {
             return Object.keys(this.commands).sort();
         }
-    }
-
-    interface ParsedCommand {
-        command: string;
-        arguments?: any[];
     }
 
     class CommandExecutor {

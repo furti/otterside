@@ -9,7 +9,8 @@
   ],
   "files": [
     "./console.d.ts",
-    "./mainmenu/start.ts"
+    "./mainmenu/start.ts",
+    "./riddle-1/tutorial.ts"
   ],
   "atom": {
     "rewriteTsconfig": true

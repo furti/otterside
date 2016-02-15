@@ -1,20 +1,21 @@
 namespace otterside {
-    export type EventHandler = () => void;
+    export type EventHandler = (event?: any) => void;
 
     export class Events {
         private eventHandlers: { [event: number]: EventHandler[] } = {};
 
         /**
          * Fires all registered Event handlers in the chain.
-         * @param {number} event the event to fire.
+         * @param {number} eventName the event to fire.
+         * @param {any} event the parameters that are supplied to the event
          */
-        public fire(event: number): void {
-            if (!this.eventHandlers[event]) {
+        public fire(eventName: number, event?: any): void {
+            if (!this.eventHandlers[eventName]) {
                 return;
             }
 
-            this.eventHandlers[event].forEach((event) => {
-                event();
+            this.eventHandlers[eventName].forEach((eventHandler) => {
+                eventHandler(event);
             });
         }
 

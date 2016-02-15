@@ -1,4 +1,4 @@
-module otterside.console {
+namespace otterside.console {
     export enum CommandExecutionState {
         Success, Error
     }
@@ -6,5 +6,6 @@ module otterside.console {
     export interface CommandExecutionResult {
         state: CommandExecutionState;
         message?: string;
+        command?: ParsedCommand;
     }
 }

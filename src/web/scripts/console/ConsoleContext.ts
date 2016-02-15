@@ -29,6 +29,9 @@ namespace otterside.console {
             if (result.state === console.CommandExecutionState.Error) {
                 this.console.printLine(result.message);
             }
+            else {
+                this.console.events.fire(ConsoleEvent.COMMAND_EXECUTED, result.command);
+            }
         }
     }
 }

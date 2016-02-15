@@ -1,7 +1,26 @@
 namespace otterside {
 
     export const enum ConsoleEvent {
-        CLOSE
+        CLOSE = 1,
+        COMMAND_EXECUTED = 2
+    }
+
+    export interface CommandExecutedEvent {
+
+    }
+
+    export class ConsoleEventRegistrar {
+        constructor(private events: Events) {
+
+        }
+
+        public commandExecuted(handler: (event?: CommandExecutedEvent) => void): void {
+            this.events.on(ConsoleEvent.COMMAND_EXECUTED, handler);
+        }
+
+        public close(handler: () => void): void {
+            this.events.on(ConsoleEvent.CLOSE, handler);
+        }
     }
 
     /**
@@ -18,7 +37,8 @@ namespace otterside {
         private running: boolean;
         private content: ConsoleContent;
         private contexts: console.ConsoleContext[];
-        private events: Events;
+        public events: Events;
+        public on: ConsoleEventRegistrar;
 
         /**
          * Constructs a new console with the given name.
@@ -29,6 +49,7 @@ namespace otterside {
             this.consoleName = consoleName;
             this.contexts = [];
             this.events = new Events();
+            this.on = new ConsoleEventRegistrar(this.events);
         }
 
         /**
@@ -121,6 +142,17 @@ namespace otterside {
             this.consoleView.scrollBottom();
         }
 
+        public printFile(fileName: string): void {
+            var file = this.getFile(fileName);
+
+            if (file) {
+                this.printLine(utils.Base64.decode(file.content));
+            }
+            else {
+                this.printLine(`File ${fileName} not found!`);
+            }
+        }
+
         public scrollTop(): void {
             this.consoleView.scrollTop();
         }
@@ -145,10 +177,6 @@ namespace otterside {
             this.setCurrentContext();
 
             return newContext;
-        }
-
-        public on(event: ConsoleEvent, handler: () => void): void {
-            this.events.on(event, handler);
         }
 
         /**
