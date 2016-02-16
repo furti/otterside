@@ -5,16 +5,12 @@ namespace otterside {
         COMMAND_EXECUTED = 2
     }
 
-    export interface CommandExecutedEvent {
-
-    }
-
     export class ConsoleEventRegistrar {
         constructor(private events: Events) {
 
         }
 
-        public commandExecuted(handler: (event?: CommandExecutedEvent) => void): void {
+        public commandExecuted(handler: (event?: ParsedCommand) => void): void {
             this.events.on(ConsoleEvent.COMMAND_EXECUTED, handler);
         }
 
