@@ -39,6 +39,7 @@
     "./src/web/scripts/http/HttpGetRequest.ts",
     "./src/web/scripts/http/HttpRequest.ts",
     "./src/web/scripts/http/HttpRequestBase.ts",
+    "./src/web/scripts/Logger.ts",
     "./src/web/scripts/MainMenuState.ts",
     "./src/web/scripts/MapUtils.ts",
     "./src/web/scripts/ObjectStore.ts",

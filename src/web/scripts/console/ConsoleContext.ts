@@ -30,6 +30,7 @@ namespace otterside.console {
                 this.console.printLine(result.message);
             }
             else {
+                Logger.debug('ConsoleContext', `Fire COMMAND_EXECUTED for result %o`, result);
                 this.console.events.fire(ConsoleEvent.COMMAND_EXECUTED, result.command);
             }
         }

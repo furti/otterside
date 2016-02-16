@@ -9,13 +9,15 @@ namespace otterside {
          * @param {number} eventName the event to fire.
          * @param {any} event the parameters that are supplied to the event
          */
-        public fire(eventName: number, event?: any): void {
+        public fire(eventName: number, data?: any): void {
             if (!this.eventHandlers[eventName]) {
+                Logger.debug('Events', `No event handler for ${eventName} registered.`);
                 return;
             }
 
             this.eventHandlers[eventName].forEach((eventHandler) => {
-                eventHandler(event);
+                Logger.debug('Events', 'Calling event handler %o with data %o.', eventHandler, data);
+                eventHandler(data);
             });
         }
 
@@ -31,6 +33,8 @@ namespace otterside {
             }
 
             this.eventHandlers[event].push(handler);
+
+            Logger.debug('Events', `Event handler %o for ${event} registered.`, handler);
         }
     }
 }

@@ -57,7 +57,8 @@ namespace otterside.console {
                 this.commands[parsedCommand.command].execute(parsedCommand);
 
                 return {
-                    state: CommandExecutionState.Success
+                    state: CommandExecutionState.Success,
+                    command: parsedCommand
                 };
             }
             catch (e) {
