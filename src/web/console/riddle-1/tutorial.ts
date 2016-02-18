@@ -58,7 +58,8 @@ namespace riddle1.tutorial {
         private setupStates(): TutorialState[] {
             return [
                 new TutorialState('tutorial-help1.md', 'help'),
-                new TutorialState('tutorial-help2.md', 'help', ['read'])
+                new TutorialState('tutorial-help2.md', 'help', ['read']),
+                new TutorialState('tutorial-list1.md', 'list')
             ];
         }
     }
