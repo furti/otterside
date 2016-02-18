@@ -316,8 +316,8 @@ namespace otterside {
          */
         base: string;
 
-        readonly: boolean;
-
+        readable: boolean;
+        writeable: boolean;
         executable: boolean;
     }
 }

@@ -26,8 +26,24 @@ namespace otterside.console.command {
             this.console.printLine(`Total **${files.length}** files`)
 
             files.forEach((file) => {
-                this.console.printLine(`${file.name}${file.ext}`);
+                this.console.printLine(this.printFile(file));
             });
+        }
+
+        private printFile(file: ConsoleFile): string {
+            return `${this.readpermission(file)}${this.writepermission(file)}${this.executepermission(file)} ${file.name}${file.ext}`
+        }
+
+        private readpermission(file: ConsoleFile): string {
+            return file.readable ? 'r' : '-';
+        }
+
+        private writepermission(file: ConsoleFile): string {
+            return file.writeable ? 'w' : '-';
+        }
+
+        private executepermission(file: ConsoleFile): string {
+            return file.executable ? 'e' : '-';
         }
 
         private filterFiles(files: ConsoleFile[]): ConsoleFile[] {

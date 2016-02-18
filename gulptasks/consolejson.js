@@ -12,6 +12,8 @@ var specialFiles = {
     var config = JSON.parse(fileContent);
 
     consoleContent.executables = config.executables;
+
+    consoleContent.__config = config;
   }
 };
 
@@ -31,6 +33,42 @@ function createContentFile(fileName, fileContent) {
     name: parsed.name,
     ext: parsed.ext
   };
+}
+
+function hasExecutableForFile(executables, fileName) {
+  if (!executables) {
+    return false;
+  }
+
+  for (var i in executables) {
+    if (executables[i].file === fileName) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function setFilePermissions(files, config) {
+  if (!files) {
+    return;
+  }
+
+  for (var fileName in files) {
+    var file = files[fileName];
+
+    if (!config.readonly || config.readonly.indexOf(file.base) === -1) {
+      file.readable = true;
+    }
+
+    if (config.writeable && config.writeable.indexOf(file.base) !== -1) {
+      file.writeable = true;
+    }
+
+    if (hasExecutableForFile(config.executables, file.base)) {
+      file.executable = true;
+    }
+  }
 }
 
 /**
@@ -73,6 +111,11 @@ function createConsoleContent() {
           consoleContent.files[file] = createContentFile(file, fileContent);
         }
       });
+
+      if (consoleContent.__config) {
+        setFilePermissions(consoleContent.files, consoleContent.__config);
+        delete consoleContent.__config;
+      }
 
       mkdirp.sync(consoleTargetPath);
 
