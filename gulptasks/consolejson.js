@@ -57,7 +57,7 @@ function setFilePermissions(files, config) {
   for (var fileName in files) {
     var file = files[fileName];
 
-    if (!config.readonly || config.readonly.indexOf(file.base) === -1) {
+    if (!config.noRead || config.noRead.indexOf(file.base) === -1) {
       file.readable = true;
     }
 

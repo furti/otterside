@@ -4,5 +4,6 @@
     "helpText": "Starts the tutorial.",
     "file": "tutorial.ts",
     "runNamespace": "riddle1.tutorial"
-  }]
+  }],
+  "noRead": ["a-file-you-cannot-read-write-execute"]
 }
