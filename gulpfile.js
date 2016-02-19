@@ -13,7 +13,7 @@ var gulp = require('gulp'),
 
   gulp.src = function() {
     return _gulpsrc.apply(gulp, arguments)
-    .pipe(plumber());
+      .pipe(plumber());
   };
 
   console.log('🐒 patched gulp src to use plumber.');
@@ -26,7 +26,7 @@ styles.task(gulp);
 typedoc.task(gulp);
 consolejson.task(gulp);
 
-var allTasks = ['connect'];
+var allTasks = [];
 
 assets.registerTasks(allTasks);
 html.registerTasks(allTasks);
@@ -35,7 +35,9 @@ styles.registerTasks(allTasks);
 typedoc.registerTasks(allTasks);
 consolejson.registerTasks(allTasks);
 
-gulp.task('watch', allTasks, function() {
+gulp.task('build', allTasks);
+
+gulp.task('watch', ['connect'], function() {
   assets.watch(gulp);
   html.watch(gulp);
   scripts.watch(gulp);
