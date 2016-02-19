@@ -2,7 +2,7 @@ var fs = require('fs'),
   eol = require('eol'),
   path = require('path'),
   mkdirp = require('mkdirp'),
-  consoleGlob = ['./src/web/console/**'];
+  consoleGlob = ['./src/web/console/**', './src/web/console/**/.*'];
 
 var specialFiles = {
   'welcome.md': function(fileContent, consoleContent) {
