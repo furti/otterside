@@ -5,7 +5,12 @@ namespace otterside.console.command {
     export class List {
         public static command: console.Command = {
             command: 'list',
-            helpText: 'List files inside the terminal.'
+            helpText: 'List files inside the terminal.',
+            arguments: [{
+                name: 'all',
+                required: false,
+                helpText: 'Also shows hidden files if specified.'
+            }]
         };
 
         private console: Console;
@@ -21,7 +26,7 @@ namespace otterside.console.command {
                 this.console.printLine('There are no files in the terminal.');
             }
 
-            files = this.filterFiles(files);
+            files = this.filterFiles(files, context.arguments);
 
             this.console.printLine(`Total **${files.length}** files`)
 
@@ -46,7 +51,12 @@ namespace otterside.console.command {
             return file.executable ? 'e' : '-';
         }
 
-        private filterFiles(files: ConsoleFile[]): ConsoleFile[] {
+        private filterFiles(files: ConsoleFile[], commandArgs?: string[]): ConsoleFile[] {
+            //Also show hidden files if the users wants it
+            if (commandArgs && commandArgs.indexOf('all') !== -1) {
+                return files;
+            }
+
             //Only show hidden files when the all option is specified
             return files.filter((file) => {
                 return file.name.charAt(0) !== '.';
