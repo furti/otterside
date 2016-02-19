@@ -8,7 +8,7 @@ namespace otterside.console.command {
         public static command: console.Command = {
             command: 'read',
             helpText: 'Shows the content of a file.',
-            params: [{
+            arguments: [{
                 name: 'file',
                 required: true,
                 helpText: 'The name of the file to show.'

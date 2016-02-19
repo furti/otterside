@@ -140,10 +140,10 @@ namespace otterside.console {
         public help(extended: boolean): string {
             var helpText = `**${this.command.command} ${this.commandParamsToString()} **- ${this.command.helpText}`
 
-            if (extended && this.command.params && this.command.params.length > 0) {
+            if (extended && this.command.arguments && this.command.arguments.length > 0) {
                 helpText += '\n\n### Arguments\n';
 
-                helpText += this.command.params.map((param) => {
+                helpText += this.command.arguments.map((param) => {
                     let paramHelpText = '';
 
                     if (param.required) {
@@ -163,11 +163,11 @@ namespace otterside.console {
         }
 
         private commandParamsToString(): string {
-            if (!this.command.params || this.command.params.length === 0) {
+            if (!this.command.arguments || this.command.arguments.length === 0) {
                 return '';
             }
 
-            return this.command.params.map((param) => {
+            return this.command.arguments.map((param) => {
                 if (param.required) {
                     return `_${param.name}_`;
                 }

@@ -1,5 +1,5 @@
 module otterside.console {
-    export interface CommandParameter {
+    export interface CommandArgument {
         name: string;
         required: boolean;
         helpText: string;

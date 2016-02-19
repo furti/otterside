@@ -13,6 +13,6 @@ namespace otterside.console {
          */
         helpText: string;
 
-        params?: CommandParameter[]
+        arguments?: CommandArgument[]
     }
 }
