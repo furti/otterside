@@ -39,7 +39,7 @@ namespace riddle1.tutorial {
         }
 
         public start(): void {
-            this.console.printFile('tutorial-start.md');
+            this.console.printFile('tutorial-1.md');
         }
 
         public commandExecuted(event: otterside.ParsedCommand): void {
@@ -57,10 +57,10 @@ namespace riddle1.tutorial {
 
         private setupStates(): TutorialState[] {
             return [
-                new TutorialState('tutorial-help1.md', 'help'),
-                new TutorialState('tutorial-help2.md', 'help', ['read']),
-                new TutorialState('tutorial-list1.md', 'list'),
-                new TutorialState('tutorial-list2.md', 'list', ['all'])
+                new TutorialState('tutorial-2.md', 'help'),
+                new TutorialState('tutorial-3.md', 'help', ['read']),
+                new TutorialState('tutorial-4.md', 'list'),
+                new TutorialState('tutorial-5.md', 'list', ['all'])
             ];
         }
     }
