@@ -38,6 +38,7 @@ return (function(){
         private static buildCommandParams(runConfig: RunConfig): CommandParams {
             return {
                 game: otterside.game,
+                gameManager: otterside.gameManager,
                 gameStates: {
                     PreloadState: PreloadState.stateName,
                     BootState: BootState.stateName,

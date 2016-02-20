@@ -1,23 +1,39 @@
 namespace otterside {
     export class MapUtils {
-        public static findObjectsByType<ObjectType>(map: Phaser.Tilemap, layer: string, type: string): Array<ObjectType> {
-            var array: ObjectType[] = [];
+        private static OBJECT_LAYER_NAME = 'objects';
 
-            for (var object of map.objects[layer]) {
-                if (object.type === type) {
+        public static findObjectsByType(map: Phaser.Tilemap, type: string): Array<GameObject<GameObjectProperties>> {
+            return MapUtils.findObjects(map, (object) => {
+                return object.type === type;
+            });
+        }
+
+        public static findObjects(map: Phaser.Tilemap, filter: (object: GameObject<GameObjectProperties>) => boolean, breakAfterFirst?: boolean) {
+            var array: GameObject<GameObjectProperties>[] = [];
+
+            for (var object of map.objects[MapUtils.OBJECT_LAYER_NAME]) {
+                if (filter(object)) {
                     array.push(object);
+
+                    if (breakAfterFirst) {
+                        break;
+                    }
                 }
             }
 
             return array;
         }
 
-        public static findFirstObjectByType<ObjectType>(map: Phaser.Tilemap, layer: string, type: string, objectType: { new (): ObjectType }): ObjectType {
-            for (var object of map.objects[layer]) {
-                if (object.type === type) {
-                    return object;
-                }
+        public static findFirstObjectByType(map: Phaser.Tilemap, type: string): GameObject<GameObjectProperties> {
+            var found = MapUtils.findObjects(map, (object) => {
+                return object.type === type;
+            }, true);
+
+            if (found.length >= 1) {
+                return found[0];
             }
+
+            return null;
         }
 
         /**

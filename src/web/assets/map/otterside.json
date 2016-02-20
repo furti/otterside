@@ -45,9 +45,10 @@
                 {
                  "height":32,
                  "id":18,
-                 "name":"door-riddle-firstpassword",
+                 "name":"door-riddle-1-2",
                  "properties":
                     {
+                     "riddle":"riddle-1",
                      "spriteIndex":"13"
                     },
                  "rotation":0,
@@ -60,10 +61,10 @@
                 {
                  "height":32,
                  "id":19,
-                 "name":"door-riddle-firstpassword",
+                 "name":"door-riddle-1-1",
                  "properties":
                     {
-                     "riddle":"firstpassword",
+                     "riddle":"riddle-1",
                      "spriteIndex":"13"
                     },
                  "rotation":0,
@@ -80,7 +81,7 @@
                  "properties":
                     {
                      "interactive":"true",
-                     "riddle":"firstpassword",
+                     "riddle":"riddle-1",
                      "spriteIndex":"18"
                     },
                  "rotation":0,

@@ -17,6 +17,8 @@ namespace otterside {
          * @type {Console}
          */
         console: otterside.Console;
+
+        gameManager: otterside.GameManager;
     }
 
     export interface GameStates {

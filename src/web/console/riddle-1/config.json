@@ -4,6 +4,11 @@
     "helpText": "Starts the tutorial.",
     "file": "tutorial.ts",
     "runNamespace": "riddle1.tutorial"
+  },{
+    "command": "opensesame",
+    "helpText": "Mystical command that opens something.",
+    "file": "opensesame.ts",
+    "runNamespace": "riddle1.finish"
   }],
   "noRead": ["a-file-you-cannot-read-write-execute"]
 }

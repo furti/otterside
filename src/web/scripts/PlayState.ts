@@ -1,9 +1,6 @@
 namespace otterside {
     class PlayerStart {
         public static type = 'player-start';
-        public x: number;
-        public y: number;
-        public type: string;
     }
 
     interface Keys {
@@ -36,6 +33,8 @@ namespace otterside {
             this.map = this.game.add.tilemap('ottersidemap');
 
             this.map.addTilesetImage('otterside-tiles', 'ottersideTiles');
+
+            OttersideGameManager.initialize(this.game, this.map);
 
             this.boardLayer = this.map.createLayer('ground');
             this.wallLayer = this.map.createLayer('walls');
@@ -90,7 +89,7 @@ namespace otterside {
         }
 
         private setupPlayer() {
-            var playerStart = MapUtils.findFirstObjectByType(this.map, 'objects', PlayerStart.type, PlayerStart);
+            var playerStart = MapUtils.findFirstObjectByType(this.map, PlayerStart.type);
 
             //Add the player
             this.player = this.add.sprite(playerStart.x, playerStart.y, 'player');

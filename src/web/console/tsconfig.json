@@ -10,6 +10,7 @@
   "files": [
     "./console.d.ts",
     "./mainmenu/start.ts",
+    "./riddle-1/opensesame.ts",
     "./riddle-1/tutorial.ts"
   ],
   "atom": {

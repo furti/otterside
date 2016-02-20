@@ -80,6 +80,11 @@ namespace otterside {
          * If true the player can interact with this component;
          */
         interactive?: string;
+
+        /**
+         * The name of the riddle the object belongs to.
+         */
+        riddle?: string;
     }
 
     /**
@@ -94,6 +99,7 @@ namespace otterside {
     }
 
     export var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game');
+    window.console.log(OttersideGameManager);
 
     //setup all required states
     game.state.add(BootState.stateName, BootState);
