@@ -43,15 +43,15 @@ namespace otterside {
          * @param {Phaser.Tilemap} map The map to read the objects from.
          * @param {string} groupName The name of the group on the map to read objects from.
          */
-        public static createFromObjects(group: Phaser.Group, map: Phaser.Tilemap, groupName: string): void {
-            if (!map.objects[groupName]) {
-                window.console.log('CreateFromObjects: No Objectsgroup with name ' + groupName + ' found.');
+        public static createFromObjects(group: Phaser.Group, map: Phaser.Tilemap, hiddenObjectNames: string[]): void {
+            if (!map.objects[MapUtils.OBJECT_LAYER_NAME]) {
+                window.console.log('CreateFromObjects: No Objectsgroup with name ' + MapUtils.OBJECT_LAYER_NAME + ' found.');
 
                 return;
             }
 
-            map.objects[groupName].forEach((object: GameObject<GameObjectProperties>) => {
-                if (object.properties.spriteIndex) {
+            map.objects[MapUtils.OBJECT_LAYER_NAME].forEach((object: GameObject<GameObjectProperties>) => {
+                if (object.properties.spriteIndex && hiddenObjectNames.indexOf(object.name) === -1) {
                     object.sprite = group.create(object.x, object.y, 'ottersideTiles', parseInt(object.properties.spriteIndex));
 
                     if (object.properties.moveable !== 'true') {

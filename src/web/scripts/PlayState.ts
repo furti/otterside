@@ -1,3 +1,5 @@
+/// <reference path="./OttersideGameManager.ts"/>
+
 namespace otterside {
     class PlayerStart {
         public static type = 'player-start';
@@ -61,7 +63,7 @@ namespace otterside {
             //Add physics for objects
             this.objectGroup.enableBody = true;
 
-            MapUtils.createFromObjects(this.objectGroup, this.map, 'objects');
+            MapUtils.createFromObjects(this.objectGroup, this.map, gameManager.getHiddenGameObjectNames());
         }
 
         private registerKeys(): void {
