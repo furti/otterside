@@ -116,7 +116,7 @@ namespace otterside {
             return gameObjectState;
         }
 
-        private save(): void {
+        public save(): void {
             this.addPlayerPosition();
             localStorage.setItem(OttersideGameManager.SAVEGAME_KEY, JSON.stringify(this.saveGame));
         }

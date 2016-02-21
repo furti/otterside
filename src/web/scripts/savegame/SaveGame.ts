@@ -8,10 +8,7 @@ namespace otterside.savegame {
         /**
          * Save the last position of the player.
          */
-        playerPosition?: {
-            x: number;
-            y: number;
-        };
+        playerPosition?: Point;
 
         riddleState?: { [riddleName: string]: RiddleState };
     }

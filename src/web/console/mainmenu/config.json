@@ -4,5 +4,10 @@
     "helpText": "Starts the game and loads the last save game.",
     "file": "start.ts",
     "runNamespace": "mainmenu.start"
+  },{
+    "command": "save",
+    "helpText": "Save the game",
+    "file": "save.ts",
+    "runNamespace": "mainmenu.save"
   }]
 }
