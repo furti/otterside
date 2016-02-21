@@ -1,7 +1,7 @@
 {
   "executables": [{
     "command": "start",
-    "helpText": "Start a new game.",
+    "helpText": "Starts the game and loads the last save game.",
     "file": "start.ts",
     "runNamespace": "mainmenu.start"
   }]
