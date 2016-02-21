@@ -1,10 +1,6 @@
 /// <reference path="./OttersideGameManager.ts"/>
 
 namespace otterside {
-    class PlayerStart {
-        public static type = 'player-start';
-    }
-
     interface Keys {
         up: Phaser.Key;
         down: Phaser.Key;
@@ -35,17 +31,17 @@ namespace otterside {
             this.map = this.game.add.tilemap('ottersidemap');
 
             this.map.addTilesetImage('otterside-tiles', 'ottersideTiles');
-
-            OttersideGameManager.initialize(this.game, this.map);
+            gameManager.setMap(this.map);
 
             this.boardLayer = this.map.createLayer('ground');
             this.wallLayer = this.map.createLayer('walls');
 
             this.map.setCollisionBetween(1, 20, true, 'walls');
 
+            this.setupPlayer();
             this.boardLayer.resizeWorld();
             this.setupSpritesForObjects();
-            this.setupPlayer();
+
             this.registerKeys();
         }
 
@@ -91,10 +87,10 @@ namespace otterside {
         }
 
         private setupPlayer() {
-            var playerStart = MapUtils.findFirstObjectByType(this.map, PlayerStart.type);
+            var playerPosition = gameManager.playerPosition();
 
             //Add the player
-            this.player = this.add.sprite(playerStart.x, playerStart.y, 'player');
+            this.player = this.add.sprite(playerPosition.x, playerPosition.y, 'player');
             this.player.animations.add('left', [0, 1], 15, true);
             this.player.animations.add('right', [4, 5], 15, true);
             this.player.animations.add('faced', [2, 3], 15, true);
@@ -102,6 +98,8 @@ namespace otterside {
             this.physics.arcade.enable(this.player);
 
             this.camera.follow(this.player);
+
+            gameManager.setPlayer(this.player);
         }
 
         private movePlayer(): void {

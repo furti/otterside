@@ -1,22 +1,28 @@
 namespace otterside {
-    export var gameManager: OttersideGameManager;
-
     export class OttersideGameManager implements GameManager {
         private static SAVEGAME_KEY = "savegame";
+        private static PLAYERSTART_TYPE = 'player-start';
         private currentRiddle: string;
+        private map: Phaser.Tilemap;
+        private player: Phaser.Sprite;
         private saveGame: savegame.SaveGame;
 
-        constructor(private game: Phaser.Game, private map: Phaser.Tilemap) {
+        constructor() {
             this.saveGame = this.load();
         }
 
         /**
-         * Initialize the game manager
-         * @param  {Phaser.Game}    game The game
-         * @param  {Phaser.Tilemap} map  The map is used to interact with the object layer.
+         * @param  {Phaser.Sprite}  player The player.
          */
-        public static initialize(game: Phaser.Game, map: Phaser.Tilemap): void {
-            gameManager = new OttersideGameManager(game, map);
+        public setPlayer(player: Phaser.Sprite): void {
+            this.player = player;
+        }
+
+        /**
+         * @param {Phaser.Tilemap} map the map used in the game;
+         */
+        public setMap(map: Phaser.Tilemap): void {
+            this.map = map;
         }
 
         /**
@@ -81,6 +87,14 @@ namespace otterside {
             }
         }
 
+        public playerPosition(): savegame.Point {
+            if (this.saveGame && this.saveGame.playerPosition) {
+                return this.saveGame.playerPosition;
+            }
+
+            return MapUtils.findFirstObjectByType(this.map, OttersideGameManager.PLAYERSTART_TYPE);
+        }
+
         /**
          * Checks if the GameObjectState for the given objectName exists and returns it.
          * If no state exists a new one will be created and added to the SaveGame;
@@ -103,8 +117,14 @@ namespace otterside {
         }
 
         private save(): void {
-            if (this.saveGame) {
-                localStorage.setItem(OttersideGameManager.SAVEGAME_KEY, JSON.stringify(this.saveGame));
+            this.addPlayerPosition();
+            localStorage.setItem(OttersideGameManager.SAVEGAME_KEY, JSON.stringify(this.saveGame));
+        }
+
+        private addPlayerPosition(): void {
+            this.saveGame.playerPosition = {
+                x: this.player.x,
+                y: this.player.y
             }
         }
 
@@ -119,4 +139,6 @@ namespace otterside {
             }
         }
     }
+
+    export var gameManager: OttersideGameManager = new OttersideGameManager();
 }

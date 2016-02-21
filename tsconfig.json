@@ -50,6 +50,7 @@
     "./src/web/scripts/PreloadState.ts",
     "./src/web/scripts/refs.d.ts",
     "./src/web/scripts/savegame/GameObjectState.ts",
+    "./src/web/scripts/savegame/Point.ts",
     "./src/web/scripts/savegame/RiddleState.ts",
     "./src/web/scripts/savegame/SaveGame.ts",
     "./src/web/scripts/Terminal.ts",
