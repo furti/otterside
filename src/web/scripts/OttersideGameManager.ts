@@ -41,23 +41,27 @@ namespace otterside {
         }
 
         /**
-         * @return {string[]} the names of all hidden gameObjects;
+         * Create sprites from the objects group in the tiled map.
+         *
+         * @param {Phaser.Group} group The group to add the sprites to.
+         * @param {Phaser.Tilemap} map The map to read the objects from.
          */
-        public getHiddenGameObjectNames(): string[] {
-            if (!this.saveGame.gameObjectState) {
-                return [];
-            }
-            else {
-                var hiddenNames = [];
+        public createFromObjects(group: Phaser.Group, map: Phaser.Tilemap): void {
+            if (!map.objects[MapUtils.OBJECT_LAYER_NAME]) {
+                window.console.log('CreateFromObjects: No Objectsgroup with name ' + MapUtils.OBJECT_LAYER_NAME + ' found.');
 
-                for (let objectName of Object.keys(this.saveGame.gameObjectState)) {
-                    if (this.saveGame.gameObjectState[objectName].deleted) {
-                        hiddenNames.push(objectName);
+                return;
+            }
+
+            map.objects[MapUtils.OBJECT_LAYER_NAME].forEach((object: GameObject<GameObjectProperties>) => {
+                if (object.properties.spriteIndex && !this.isHidden(object)) {
+                    object.sprite = group.create(object.x, object.y, 'ottersideTiles', this.getSpriteIndex(object));
+
+                    if (object.properties.moveable !== 'true') {
+                        object.sprite.body.immovable = true;
                     }
                 }
-
-                return hiddenNames;
-            }
+            });
         }
 
         /**
@@ -79,12 +83,19 @@ namespace otterside {
             else {
                 //Remove the sprites for every door
                 doors.forEach((door) => {
-                    door.sprite.kill();
-                    this.getOrCreateGameObjectState(door.name).deleted = true;
+                    if (door.sprite) {
+                        door.sprite.kill();
+                        this.getOrCreateGameObjectState(door.name).deleted = true;
+                    }
                 });
 
                 this.save();
             }
+        }
+
+        public finishRiddle(): void {
+            this.getOrCreateRiddleState(this.currentRiddle).finished = true;
+            this.save();
         }
 
         public playerPosition(): savegame.Point {
@@ -116,6 +127,27 @@ namespace otterside {
             return gameObjectState;
         }
 
+        /**
+         * Checks if the RiddleState for the given riddleName exists and returns it.
+         * If no state exists a new one will be created and added to the SaveGame;
+         * @param {string} riddleName The riddles name
+         * @return {savegame.RiddleState} The saved state for the riddle.
+         */
+        private getOrCreateRiddleState(riddleName: string): savegame.RiddleState {
+            if (!this.saveGame.riddleState) {
+                this.saveGame.riddleState = {};
+            }
+
+            var riddleState = this.saveGame.riddleState[riddleName];
+
+            if (!riddleState) {
+                riddleState = {};
+                this.saveGame.riddleState[riddleName] = riddleState;
+            }
+
+            return riddleState;
+        }
+
         public save(): void {
             this.addPlayerPosition();
             localStorage.setItem(OttersideGameManager.SAVEGAME_KEY, JSON.stringify(this.saveGame));
@@ -137,6 +169,27 @@ namespace otterside {
             else {
                 return {};
             }
+        }
+
+        private isHidden(gameObject: GameObject<GameObjectProperties>): boolean {
+            if (!this.saveGame.gameObjectState || !this.saveGame.gameObjectState[gameObject.name]) {
+                return false;
+            }
+            else {
+                return this.saveGame.gameObjectState[gameObject.name].deleted;
+            }
+        }
+
+        private getSpriteIndex(gameObject: GameObject<GameObjectProperties>): number {
+            let spriteIndex = parseInt(gameObject.properties.spriteIndex);
+
+            if (gameObject.type === 'terminal' && this.saveGame.riddleState
+                && this.saveGame.riddleState[gameObject.name]
+                && this.saveGame.riddleState[gameObject.name].finished) {
+                return spriteIndex + 1;
+            }
+
+            return spriteIndex;
         }
     }
 

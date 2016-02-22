@@ -1,6 +1,6 @@
 namespace otterside {
     export class MapUtils {
-        private static OBJECT_LAYER_NAME = 'objects';
+        public static OBJECT_LAYER_NAME = 'objects';
 
         public static findObjectsByType(map: Phaser.Tilemap, type: string): Array<GameObject<GameObjectProperties>> {
             return MapUtils.findObjects(map, (object) => {
@@ -34,31 +34,6 @@ namespace otterside {
             }
 
             return null;
-        }
-
-        /**
-         * Create sprites from an objects group in the tiled map.
-         *
-         * @param {Phaser.Group} group The group to add the sprites to.
-         * @param {Phaser.Tilemap} map The map to read the objects from.
-         * @param {string} groupName The name of the group on the map to read objects from.
-         */
-        public static createFromObjects(group: Phaser.Group, map: Phaser.Tilemap, hiddenObjectNames: string[]): void {
-            if (!map.objects[MapUtils.OBJECT_LAYER_NAME]) {
-                window.console.log('CreateFromObjects: No Objectsgroup with name ' + MapUtils.OBJECT_LAYER_NAME + ' found.');
-
-                return;
-            }
-
-            map.objects[MapUtils.OBJECT_LAYER_NAME].forEach((object: GameObject<GameObjectProperties>) => {
-                if (object.properties.spriteIndex && hiddenObjectNames.indexOf(object.name) === -1) {
-                    object.sprite = group.create(object.x, object.y, 'ottersideTiles', parseInt(object.properties.spriteIndex));
-
-                    if (object.properties.moveable !== 'true') {
-                        object.sprite.body.immovable = true;
-                    }
-                }
-            });
         }
 
         public static findInteractibleObject(map: Phaser.Tilemap, groupName: string, x: number, y: number): GameObject<GameObjectProperties> {

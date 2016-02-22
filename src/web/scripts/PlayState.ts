@@ -58,8 +58,7 @@ namespace otterside {
 
             //Add physics for objects
             this.objectGroup.enableBody = true;
-
-            MapUtils.createFromObjects(this.objectGroup, this.map, gameManager.getHiddenGameObjectNames());
+            gameManager.createFromObjects(this.objectGroup, this.map);
         }
 
         private registerKeys(): void {
