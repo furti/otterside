@@ -21,6 +21,8 @@ This section lists all the availabel objects you will encounter in the game.
 
 ![Terminal](/assets/gameobjects/terminal.png) This is a terminal. Terminals are objects you will interact with. They contain the riddles you will have to solve.
 
+![Terminalchecked](/assets/gameobjects/terminal-checked.png) This is a terminal after the containing riddle is solved. You can still use the terminal.
+
 ## Controls
 - To walk around with Edit you use the arrow keys.
 - When you come close to a terminal you can press "e" to activate the terminal. It will be connected to the console to the right of the game.
