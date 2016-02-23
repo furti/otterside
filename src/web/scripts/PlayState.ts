@@ -19,6 +19,7 @@ namespace otterside {
         private map: Phaser.Tilemap;
         private objectGroup: Phaser.Group;
         private currentInteractible: GameObject<GameObjectProperties>;
+        private minimap: MiniMap;
         private keyMapping = {
             'e': Phaser.Keyboard.E,
             'up': Phaser.Keyboard.UP,
@@ -43,9 +44,11 @@ namespace otterside {
             this.setupSpritesForObjects();
 
             this.registerKeys();
+            this.minimap = new MiniMap(this.game, this.map);
         }
 
         public update() {
+            this.minimap.update();
             this.movePlayer();
             this.checkForInteractiveObject();
 
