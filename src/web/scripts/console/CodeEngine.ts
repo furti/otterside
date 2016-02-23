@@ -1,7 +1,10 @@
 namespace otterside.console {
     export class CodeEngine {
+        private static allowedGlobals = ['Math'];
+
         private static compilerOptions: ts.CompilerOptions = {
             module: ts.ModuleKind.CommonJS,
+            noLib: true,
             charset: 'UTF-8'
         };
 
@@ -31,7 +34,9 @@ return (function(){
   return ${runConfig.runNamespace}.run;
 })();
 `;
-            window.console.log(script);
+            script = CodeEngine.sandbox(script);
+            Logger.debug('CodeEngine', script);
+
             return new Function(script);
         }
 
@@ -68,6 +73,31 @@ return (function(){
             else {
                 return runConfig.runNamespace;
             }
+        }
+
+        /**
+         * Sandboxes the script by setting window and all its properties to undefined
+         * @param {string} script The script to sandbox
+         * @return {string} The sandboxed script
+         */
+        private static sandbox(script: string): string {
+            var undefinds = 'var window = undefined';
+
+            Object.getOwnPropertyNames(window).forEach((propertyName) => {
+                if (CodeEngine.allowedGlobals.indexOf(propertyName) === -1) {
+                    undefinds += `,\n${propertyName} = undefined`;
+                }
+            });
+
+            undefinds += ';';
+
+            return `
+return (function(){
+  ${undefinds}
+
+  ${script}
+})();
+`;
         }
     }
 }
