@@ -55,7 +55,8 @@ namespace otterside {
 
             map.objects[MapUtils.OBJECT_LAYER_NAME].forEach((object: GameObject<GameObjectProperties>) => {
                 if (object.properties.spriteIndex && !this.isHidden(object)) {
-                    object.sprite = group.create(object.x, object.y, 'ottersideTiles', this.getSpriteIndex(object));
+                    this.prepareSpriteIndex(object);
+                    object.sprite = group.create(object.x, object.y, 'ottersideTiles', object.actualSpriteIndex - 1);
 
                     if (object.properties.moveable !== 'true') {
                         object.sprite.body.immovable = true;
@@ -180,16 +181,17 @@ namespace otterside {
             }
         }
 
-        private getSpriteIndex(gameObject: GameObject<GameObjectProperties>): number {
+        private prepareSpriteIndex(gameObject: GameObject<GameObjectProperties>): void {
             let spriteIndex = parseInt(gameObject.properties.spriteIndex);
 
             if (gameObject.type === 'terminal' && this.saveGame.riddleState
                 && this.saveGame.riddleState[gameObject.name]
                 && this.saveGame.riddleState[gameObject.name].finished) {
-                return spriteIndex + 1;
+                gameObject.actualSpriteIndex = spriteIndex + 1;
             }
-
-            return spriteIndex;
+            else {
+                gameObject.actualSpriteIndex = spriteIndex;
+            }
         }
     }
 

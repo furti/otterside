@@ -56,6 +56,11 @@ namespace otterside {
         sprite?: Phaser.Sprite;
 
         /**
+         * The acutal spriteIndex used. E.g. finished riddles have a other sprite than open ones.
+         */
+        actualSpriteIndex?: number;
+
+        /**
          * Further properties for the object.
          * @type {PROPS}
          */

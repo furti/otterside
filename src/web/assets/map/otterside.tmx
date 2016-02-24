@@ -216,39 +216,39 @@
   <object id="18" name="door-riddle-1-2" type="door" x="1184" y="3008" width="32" height="32">
    <properties>
     <property name="riddle" value="riddle-1"/>
-    <property name="spriteIndex" value="13"/>
+    <property name="spriteIndex" value="14"/>
    </properties>
   </object>
   <object id="19" name="door-riddle-1-1" type="door" x="1216" y="3008" width="32" height="32">
    <properties>
     <property name="riddle" value="riddle-1"/>
-    <property name="spriteIndex" value="13"/>
+    <property name="spriteIndex" value="14"/>
    </properties>
   </object>
   <object id="20" name="riddle-1" type="terminal" x="1120" y="3040" width="32" height="32">
    <properties>
     <property name="interactive" value="true"/>
     <property name="riddle" value="riddle-1"/>
-    <property name="spriteIndex" value="18"/>
+    <property name="spriteIndex" value="19"/>
    </properties>
   </object>
   <object id="26" name="riddle-2" type="terminal" x="1280" y="2976" width="32" height="32">
    <properties>
     <property name="interactive" value="true"/>
     <property name="riddle" value="riddle-2"/>
-    <property name="spriteIndex" value="18"/>
+    <property name="spriteIndex" value="19"/>
    </properties>
   </object>
   <object id="27" name="door-riddle-2-2" type="door" x="1280" y="2912" width="32" height="32">
    <properties>
     <property name="riddle" value="riddle-2"/>
-    <property name="spriteIndex" value="16"/>
+    <property name="spriteIndex" value="17"/>
    </properties>
   </object>
   <object id="28" name="door-riddle-2-1" type="door" x="1280" y="2880" width="32" height="32">
    <properties>
     <property name="riddle" value="riddle-2"/>
-    <property name="spriteIndex" value="16"/>
+    <property name="spriteIndex" value="17"/>
    </properties>
   </object>
  </objectgroup>

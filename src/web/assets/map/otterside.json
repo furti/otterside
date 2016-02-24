@@ -49,7 +49,7 @@
                  "properties":
                     {
                      "riddle":"riddle-1",
-                     "spriteIndex":"13"
+                     "spriteIndex":"14"
                     },
                  "rotation":0,
                  "type":"door",
@@ -65,7 +65,7 @@
                  "properties":
                     {
                      "riddle":"riddle-1",
-                     "spriteIndex":"13"
+                     "spriteIndex":"14"
                     },
                  "rotation":0,
                  "type":"door",
@@ -82,7 +82,7 @@
                     {
                      "interactive":"true",
                      "riddle":"riddle-1",
-                     "spriteIndex":"18"
+                     "spriteIndex":"19"
                     },
                  "rotation":0,
                  "type":"terminal",
@@ -99,7 +99,7 @@
                     {
                      "interactive":"true",
                      "riddle":"riddle-2",
-                     "spriteIndex":"18"
+                     "spriteIndex":"19"
                     },
                  "rotation":0,
                  "type":"terminal",
@@ -115,7 +115,7 @@
                  "properties":
                     {
                      "riddle":"riddle-2",
-                     "spriteIndex":"16"
+                     "spriteIndex":"17"
                     },
                  "rotation":0,
                  "type":"door",
@@ -131,7 +131,7 @@
                  "properties":
                     {
                      "riddle":"riddle-2",
-                     "spriteIndex":"16"
+                     "spriteIndex":"17"
                     },
                  "rotation":0,
                  "type":"door",
