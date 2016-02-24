@@ -44,11 +44,10 @@ namespace otterside {
             this.setupSpritesForObjects();
 
             this.registerKeys();
-            this.minimap = new MiniMap(this.game, this.map);
+            this.minimap = new MiniMap(this.game, this.map, this.player);
         }
 
         public update() {
-            this.minimap.update();
             this.movePlayer();
             this.checkForInteractiveObject();
 

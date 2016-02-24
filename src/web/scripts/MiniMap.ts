@@ -1,6 +1,6 @@
 namespace otterside {
     var tileColor = {
-        0: '#1F6D2F',
+        0: '#FFFFFF',
         1: '#1F6D2F',
         2: '#1F6D2F',
         3: '#1F6D2F',
@@ -11,52 +11,67 @@ namespace otterside {
         8: '#1F6D2F',
         9: '#1F6D2F',
         10: '#1F6D2F',
-        11: '#000000',
+        11: '#1F6D2F',
         12: '#000000',
+        13: '#000000',
         15: '#000000',
         16: '#000000',
-        18: '#000000'
+        18: '#000000',
+        14: '#E95D17',
+        17: '#E95D17',
+        19: '#129AC7',
+        20: '#17A91F'
     };
 
     export class MiniMap {
-        private minimapTileSize = 2;
+        private minimapTileSize = 3;
         private borderWidth = 8;
         private staticBitmapData: Phaser.BitmapData;
-        private minimapSprite: Phaser.Sprite;
+        private objectBitmapData: Phaser.BitmapData;
+        private staticSprite: Phaser.Sprite;
+        private objectSprite: Phaser.Sprite;
         private visible: boolean = false;
+        private timer: Phaser.Timer;
 
-        constructor(private game: Phaser.Game, private map: Phaser.Tilemap) {
+        constructor(private game: Phaser.Game, private map: Phaser.Tilemap, private player: Phaser.Sprite) {
             this.staticBitmapData = game.add.bitmapData(map.width * this.minimapTileSize + this.borderWidth, map.height * this.minimapTileSize + this.borderWidth);
+            this.objectBitmapData = game.add.bitmapData(map.width * this.minimapTileSize + this.borderWidth, map.height * this.minimapTileSize + this.borderWidth);
 
             this.addBorder();
             this.renderLayer('ground', this.staticBitmapData);
             this.renderLayer('walls', this.staticBitmapData);
+            this.renderObjectLayer(MapUtils.OBJECT_LAYER_NAME, this.objectBitmapData);
+            this.positionPlayer();
 
-            this.minimapSprite = new Phaser.Sprite(this.game, 0, 0, this.staticBitmapData);
+            this.staticSprite = new Phaser.Sprite(this.game, 0, 0, this.staticBitmapData);
+            this.staticSprite.fixedToCamera = true;
+
+            this.objectSprite = new Phaser.Sprite(this.game, 0, 0, this.objectBitmapData);
+            this.objectSprite.fixedToCamera = true;
 
             HotKeys.registerHotkey(Key.M, () => {
                 this.toggle();
                 return true;
             });
 
-            // dynamic bmd where I draw mobile stuff like friends and enemies
-            // g_game.miniMapOverlay = this.game.add.bitmapData(g_game.tileMap.width * g_game.miniMapSize, g_game.tileMap.height * g_game.miniMapSize);
-            // this.game.add.sprite(g_game.miniMap.x, g_game.miniMap.y, g_game.miniMapOverlay);
-        }
-
-        public update(): void {
-            if (this.visible) {
-                this.minimapSprite.x = this.game.camera.x;
-                this.minimapSprite.y = this.game.camera.y;
-            }
+            this.timer = game.time.create(false);
+            this.timer.loop(5 * 1000, () => {
+                this.renderObjectLayer(MapUtils.OBJECT_LAYER_NAME, this.objectBitmapData, true);
+                this.positionPlayer();
+            });
+            this.timer.pause();
         }
 
         public toggle(): void {
             if (this.visible) {
-                this.game.world.remove(this.minimapSprite);
+                this.game.world.remove(this.staticSprite);
+                this.game.world.remove(this.objectSprite);
+                this.timer.pause();
                 this.visible = false;
             } else {
-                this.game.world.add(this.minimapSprite);
+                this.game.world.add(this.staticSprite);
+                this.game.world.add(this.objectSprite);
+                this.timer.start();
                 this.visible = true;
             }
         }
@@ -72,28 +87,59 @@ namespace otterside {
             this.staticBitmapData.ctx.fillRect(0, height - this.borderWidth / 2, width, this.borderWidth / 2);
         }
 
-        private renderLayer(layerName: string, bitmapData: Phaser.BitmapData): void {
+        private renderObjectLayer(layerName: string, bitmapData: Phaser.BitmapData, clear?: boolean): void {
+            if (clear) {
+                bitmapData.clear();
+            }
+
+            if (!this.map.objects[layerName]) {
+                window.console.log('CreateFromObjects: No Objectsgroup with name ' + MapUtils.OBJECT_LAYER_NAME + ' found.');
+
+                return;
+            }
+
+            this.map.objects[layerName].forEach((object: GameObject<GameObjectProperties>) => {
+                //Only if the object is shown on screen
+                if (object.sprite && object.sprite.alive) {
+                    this.renderSpriteIndex(object.actualSpriteIndex, object.sprite.x / 32, object.sprite.y / 32, bitmapData);
+                }
+            });
+        }
+
+        private positionPlayer(): void {
+            this.renderSpriteIndex(0, this.player.x / 32, this.player.y / 32, this.objectBitmapData);
+        }
+
+        private renderLayer(layerName: string, bitmapData: Phaser.BitmapData, clear?: boolean): void {
+            if (clear) {
+                bitmapData.ctx.clearRect(0, 0, this.map.width * this.minimapTileSize, this.map.height * this.minimapTileSize);
+            }
+
             for (let x = 0; x < this.map.width; x++) {
                 for (let y = 0; y < this.map.height; y++) {
                     var tile = this.map.getTile(x, y, layerName);
 
                     if (tile) {
-                        var color = tileColor[tile.index];
-
-                        if (!color) {
-                            Logger.error('MiniMap', `No color for tile index ${tile.index}`);
-                            color = '#000000';
-                        }
-
-                        this.staticBitmapData.ctx.fillStyle = color;
-                        this.staticBitmapData.ctx.fillRect(
-                            (x * this.minimapTileSize) + (this.borderWidth / 2),
-                            (y * this.minimapTileSize) + (this.borderWidth / 2),
-                            this.minimapTileSize,
-                            this.minimapTileSize);
+                        this.renderSpriteIndex(tile.index, x, y, bitmapData);
                     }
                 }
             }
+        }
+
+        private renderSpriteIndex(spriteIndex: number, x: number, y: number, bitmapData: Phaser.BitmapData): void {
+            var color = tileColor[spriteIndex];
+
+            if (!color) {
+                Logger.error('MiniMap', `No color for spriteIndex ${spriteIndex}`);
+                color = 'red';
+            }
+
+            bitmapData.ctx.fillStyle = color;
+            bitmapData.ctx.fillRect(
+                x * this.minimapTileSize,
+                y * this.minimapTileSize,
+                this.minimapTileSize,
+                this.minimapTileSize);
         }
     }
 }
