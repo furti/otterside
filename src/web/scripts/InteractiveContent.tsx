@@ -166,7 +166,18 @@ namespace otterside {
 
     class NothingActiveComponent implements InteractiveComponent {
         render(): JSX.Element {
-            return <div>There is no Terminal connected at the moment.</div>;
+            return <div>
+                There is no Terminal connected at the moment.
+                <h3>Controls</h3>
+                <dl>
+                    <dt>Arrow Keys</dt>
+                    <dd>Move around.</dd>
+                    <dt>m</dt>
+                    <dd>Display/Hide the minimap.</dd>
+                    <dt>e</dt>
+                    <dd>Use a console when you are standing next to it.</dd>
+                </dl>
+            </div>;
         }
     }
 }
