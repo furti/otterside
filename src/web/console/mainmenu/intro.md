@@ -31,5 +31,15 @@ This section lists all the availabel objects you will encounter in the game.
 ## Save the game
 The game is saved every thime you perform a important action (e.g. you solve a riddle). Nevertheless you should use the **save** command in the main menu before you leave. Otherwise some progress might be lost. Especially the last player position is not saved automatically.
 
+## Minimap
+You can toggle the minimap with the **m** key. There are different colored pixels on the map.
+
+* **dark green** The ground
+* **black** The walls
+* **white flashing** You
+* **orange** Doors
+* **yellow** Terminals
+* **light green** Solved Terminals
+
 ## What's next?
 Type **quit** to close the intro and then you may start a new game 😆.
