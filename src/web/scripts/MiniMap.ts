@@ -27,26 +27,31 @@ namespace otterside {
         private minimapTileSize = 3;
         private borderWidth = 8;
         private staticBitmapData: Phaser.BitmapData;
-        private objectBitmapData: Phaser.BitmapData;
+        private dynamicBitmapData: Phaser.BitmapData;
         private staticSprite: Phaser.Sprite;
         private objectSprite: Phaser.Sprite;
         private visible: boolean = false;
         private timer: Phaser.Timer;
+        private minimapWidth: number;
+        private minimapHeight: number;
 
         constructor(private game: Phaser.Game, private map: Phaser.Tilemap, private player: Phaser.Sprite) {
-            this.staticBitmapData = game.add.bitmapData(map.width * this.minimapTileSize + this.borderWidth, map.height * this.minimapTileSize + this.borderWidth);
-            this.objectBitmapData = game.add.bitmapData(map.width * this.minimapTileSize + this.borderWidth, map.height * this.minimapTileSize + this.borderWidth);
+            this.minimapWidth = map.width * this.minimapTileSize;
+            this.minimapHeight = map.height * this.minimapTileSize;
 
-            this.addBorder();
+            this.staticBitmapData = game.add.bitmapData(this.minimapWidth + this.borderWidth, this.minimapHeight + this.borderWidth);
+            this.dynamicBitmapData = game.add.bitmapData(map.width * this.minimapTileSize + this.borderWidth, map.height * this.minimapTileSize + this.borderWidth);
+
+            this.addShadow();
             this.renderLayer('ground', this.staticBitmapData);
             this.renderLayer('walls', this.staticBitmapData);
-            this.renderObjectLayer(MapUtils.OBJECT_LAYER_NAME, this.objectBitmapData);
+            this.renderObjectLayer(MapUtils.OBJECT_LAYER_NAME, this.dynamicBitmapData);
             this.positionPlayer();
 
             this.staticSprite = new Phaser.Sprite(this.game, 0, 0, this.staticBitmapData);
             this.staticSprite.fixedToCamera = true;
 
-            this.objectSprite = new Phaser.Sprite(this.game, 0, 0, this.objectBitmapData);
+            this.objectSprite = new Phaser.Sprite(this.game, 0, 0, this.dynamicBitmapData);
             this.objectSprite.fixedToCamera = true;
 
             HotKeys.registerHotkey(Key.M, () => {
@@ -56,7 +61,7 @@ namespace otterside {
 
             this.timer = game.time.create(false);
             this.timer.loop(5 * 1000, () => {
-                this.renderObjectLayer(MapUtils.OBJECT_LAYER_NAME, this.objectBitmapData, true);
+                this.renderObjectLayer(MapUtils.OBJECT_LAYER_NAME, this.dynamicBitmapData, true);
                 this.positionPlayer();
             });
             this.timer.pause();
@@ -76,15 +81,18 @@ namespace otterside {
             }
         }
 
-        private addBorder(): void {
+        private addShadow(): void {
             var height = this.map.height * this.minimapTileSize + this.borderWidth;
             var width = this.map.width * this.minimapTileSize + this.borderWidth;
-            this.staticBitmapData.ctx.fillStyle = '#B2B6B8';
 
-            this.staticBitmapData.ctx.fillRect(0, 0, this.borderWidth / 2, height);
-            this.staticBitmapData.ctx.fillRect(0, 0, width, this.borderWidth / 2);
-            this.staticBitmapData.ctx.fillRect(width - this.borderWidth / 2, 0, this.borderWidth / 2, height);
-            this.staticBitmapData.ctx.fillRect(0, height - this.borderWidth / 2, width, this.borderWidth / 2);
+            this.staticBitmapData.ctx.save();
+
+            this.staticBitmapData.ctx.globalAlpha = 0.2;
+            this.staticBitmapData.ctx.fillStyle = '#000000';
+
+            this.staticBitmapData.ctx.fillRect(0, 0, this.minimapWidth + this.borderWidth, this.minimapHeight + this.borderWidth);
+
+            this.staticBitmapData.ctx.restore();
         }
 
         private renderObjectLayer(layerName: string, bitmapData: Phaser.BitmapData, clear?: boolean): void {
@@ -107,12 +115,12 @@ namespace otterside {
         }
 
         private positionPlayer(): void {
-            this.renderSpriteIndex(0, this.player.x / 32, this.player.y / 32, this.objectBitmapData);
+            this.renderSpriteIndex(0, this.player.x / 32, this.player.y / 32, this.dynamicBitmapData);
         }
 
         private renderLayer(layerName: string, bitmapData: Phaser.BitmapData, clear?: boolean): void {
             if (clear) {
-                bitmapData.ctx.clearRect(0, 0, this.map.width * this.minimapTileSize, this.map.height * this.minimapTileSize);
+                bitmapData.ctx.clearRect(0, 0, this.minimapWidth, this.minimapHeight);
             }
 
             for (let x = 0; x < this.map.width; x++) {
