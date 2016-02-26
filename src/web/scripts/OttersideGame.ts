@@ -103,7 +103,7 @@ namespace otterside {
         riddle: string;
     }
 
-    export var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game');
+    export var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
     window.console.log(OttersideGameManager);
 
     //setup all required states

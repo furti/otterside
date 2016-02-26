@@ -34,10 +34,13 @@ namespace otterside {
         private timer: Phaser.Timer;
         private minimapWidth: number;
         private minimapHeight: number;
+        private playerVisible: boolean;
+        private lastPlayerPosition: otterside.savegame.Point;
 
         constructor(private game: Phaser.Game, private map: Phaser.Tilemap, private player: Phaser.Sprite) {
             this.minimapWidth = map.width * this.minimapTileSize;
             this.minimapHeight = map.height * this.minimapTileSize;
+            this.playerVisible = false;
 
             this.staticBitmapData = game.add.bitmapData(this.minimapWidth + this.borderWidth, this.minimapHeight + this.borderWidth);
             this.dynamicBitmapData = game.add.bitmapData(map.width * this.minimapTileSize + this.borderWidth, map.height * this.minimapTileSize + this.borderWidth);
@@ -46,7 +49,6 @@ namespace otterside {
             this.renderLayer('ground', this.staticBitmapData);
             this.renderLayer('walls', this.staticBitmapData);
             this.renderObjectLayer(MapUtils.OBJECT_LAYER_NAME, this.dynamicBitmapData);
-            this.positionPlayer();
 
             this.staticSprite = new Phaser.Sprite(this.game, 0, 0, this.staticBitmapData);
             this.staticSprite.fixedToCamera = true;
@@ -60,11 +62,9 @@ namespace otterside {
             });
 
             this.timer = game.time.create(false);
-            this.timer.loop(5 * 1000, () => {
-                this.renderObjectLayer(MapUtils.OBJECT_LAYER_NAME, this.dynamicBitmapData, true);
-                this.positionPlayer();
+            this.timer.loop(800, () => {
+                this.updatePlayer();
             });
-            this.timer.pause();
         }
 
         public toggle(): void {
@@ -73,10 +73,23 @@ namespace otterside {
                 this.game.world.remove(this.objectSprite);
                 this.timer.pause();
                 this.visible = false;
+
+                //Clear the last player position if needed. Otherwise we have a lost player point on the minimap
+                if (this.playerVisible) {
+                    this.updatePlayer();
+                    this.playerVisible = false;
+                }
             } else {
                 this.game.world.add(this.staticSprite);
                 this.game.world.add(this.objectSprite);
-                this.timer.start();
+
+                if (!this.timer.running) {
+                    this.timer.start();
+                }
+                else {
+                    this.timer.resume();
+                }
+
                 this.visible = true;
             }
         }
@@ -114,8 +127,23 @@ namespace otterside {
             });
         }
 
-        private positionPlayer(): void {
-            this.renderSpriteIndex(0, this.player.x / 32, this.player.y / 32, this.dynamicBitmapData);
+        private updatePlayer(): void {
+            window.console.log('update player');
+            if (this.playerVisible) {
+                this.dynamicBitmapData.ctx.clearRect(this.lastPlayerPosition.x * this.minimapTileSize, this.lastPlayerPosition.y * this.minimapTileSize, this.minimapTileSize, this.minimapTileSize);
+                this.playerVisible = false;
+            }
+            else {
+                this.lastPlayerPosition = {
+                    x: Math.round(this.player.x / 32),
+                    y: Math.round(this.player.y / 32)
+                };
+
+                this.renderSpriteIndex(0, this.lastPlayerPosition.x, this.lastPlayerPosition.y, this.dynamicBitmapData);
+                this.playerVisible = true;
+            }
+
+            this.dynamicBitmapData.dirty = true;
         }
 
         private renderLayer(layerName: string, bitmapData: Phaser.BitmapData, clear?: boolean): void {
@@ -138,7 +166,7 @@ namespace otterside {
             var color = tileColor[spriteIndex];
 
             if (!color) {
-                Logger.error('MiniMap', `No color for spriteIndex ${spriteIndex}`);
+                Logger.error('MiniMap', `No color for spriteIndex ${spriteIndex} at point {x: ${x}, y: ${y}}`);
                 color = 'red';
             }
 
