@@ -6,6 +6,7 @@ namespace otterside {
         private map: Phaser.Tilemap;
         private player: Phaser.Sprite;
         private saveGame: savegame.SaveGame;
+        private objectsGroup: Phaser.Group;
 
         constructor() {
             this.saveGame = this.load();
@@ -47,6 +48,12 @@ namespace otterside {
          * @param {Phaser.Tilemap} map The map to read the objects from.
          */
         public createFromObjects(group: Phaser.Group, map: Phaser.Tilemap): void {
+            if (this.objectsGroup) {
+                Logger.warn('OttersideGameManager', `Objects already created`);
+                return;
+            }
+            this.objectsGroup = group;
+
             if (!map.objects[MapUtils.OBJECT_LAYER_NAME]) {
                 window.console.log('CreateFromObjects: No Objectsgroup with name ' + MapUtils.OBJECT_LAYER_NAME + ' found.');
 
@@ -56,7 +63,7 @@ namespace otterside {
             map.objects[MapUtils.OBJECT_LAYER_NAME].forEach((object: GameObject<GameObjectProperties>) => {
                 if (object.properties.spriteIndex && !this.isHidden(object)) {
                     this.prepareSpriteIndex(object);
-                    object.sprite = group.create(object.x, object.y, 'ottersideTiles', object.actualSpriteIndex - 1);
+                    object.sprite = this.createSpriteForObject(object);
 
                     if (object.properties.moveable !== 'true') {
                         object.sprite.body.immovable = true;
@@ -95,8 +102,28 @@ namespace otterside {
         }
 
         public finishRiddle(): void {
-            this.getOrCreateRiddleState(this.currentRiddle).finished = true;
+            var riddleState = this.getOrCreateRiddleState(this.currentRiddle);
+
+            //Already finsihed. Nothing to do here.
+            if (riddleState.finished) {
+                return;
+            }
+
+            riddleState.finished = true;
             this.save();
+
+            let terminal = MapUtils.findObjects(this.map, (object) => {
+                return object.type === 'terminal' && object.name === this.currentRiddle;
+            }, true)[0];
+
+            if (!terminal) {
+                Logger.error('OttersideGameManager', `Terminal ${this.currentRiddle} not found.`);
+            }
+            else {
+                terminal.actualSpriteIndex = terminal.actualSpriteIndex + 1;
+                terminal.sprite.kill();
+                terminal.sprite = this.createSpriteForObject(terminal);
+            }
         }
 
         public playerPosition(): savegame.Point {
@@ -179,6 +206,10 @@ namespace otterside {
             else {
                 return this.saveGame.gameObjectState[gameObject.name].deleted;
             }
+        }
+
+        private createSpriteForObject(gameObject: GameObject<GameObjectProperties>): Phaser.Sprite {
+            return this.objectsGroup.create(gameObject.x, gameObject.y, 'ottersideTiles', gameObject.actualSpriteIndex - 1)
         }
 
         private prepareSpriteIndex(gameObject: GameObject<GameObjectProperties>): void {
