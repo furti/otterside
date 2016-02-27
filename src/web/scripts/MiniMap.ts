@@ -65,6 +65,13 @@ namespace otterside {
             this.timer.loop(800, () => {
                 this.updatePlayer();
             });
+
+            gameManager.setMinimap(this);
+        }
+
+        public updateObjects(): void {
+            this.renderObjectLayer(MapUtils.OBJECT_LAYER_NAME, this.dynamicBitmapData, true);
+            this.dynamicBitmapData.dirty = true;
         }
 
         public toggle(): void {
@@ -128,7 +135,6 @@ namespace otterside {
         }
 
         private updatePlayer(): void {
-            window.console.log('update player');
             if (this.playerVisible) {
                 this.dynamicBitmapData.ctx.clearRect(this.lastPlayerPosition.x * this.minimapTileSize, this.lastPlayerPosition.y * this.minimapTileSize, this.minimapTileSize, this.minimapTileSize);
                 this.playerVisible = false;

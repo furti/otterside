@@ -7,6 +7,7 @@ namespace otterside {
         private player: Phaser.Sprite;
         private saveGame: savegame.SaveGame;
         private objectsGroup: Phaser.Group;
+        private minimap: MiniMap;
 
         constructor() {
             this.saveGame = this.load();
@@ -24,6 +25,10 @@ namespace otterside {
          */
         public setMap(map: Phaser.Tilemap): void {
             this.map = map;
+        }
+
+        public setMinimap(minimap: MiniMap): void {
+            this.minimap = minimap;
         }
 
         /**
@@ -98,6 +103,7 @@ namespace otterside {
                 });
 
                 this.save();
+                this.minimap.updateObjects();
             }
         }
 
@@ -123,6 +129,7 @@ namespace otterside {
                 terminal.actualSpriteIndex = terminal.actualSpriteIndex + 1;
                 terminal.sprite.kill();
                 terminal.sprite = this.createSpriteForObject(terminal);
+                this.minimap.updateObjects();
             }
         }
 
