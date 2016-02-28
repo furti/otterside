@@ -1,6 +1,6 @@
 namespace otterside.console {
     export class CodeEngine {
-        private static allowedGlobals = ['Math'];
+        private static allowedGlobals = ['Math', 'NaN', 'Infinity', 'parseInt', 'parseFloat', 'isNaN', 'isFinite', 'Date'];
 
         private static compilerOptions: ts.CompilerOptions = {
             module: ts.ModuleKind.CommonJS,

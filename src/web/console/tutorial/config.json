@@ -3,12 +3,12 @@
     "command": "tutorial",
     "helpText": "Starts the tutorial.",
     "file": "tutorial.ts",
-    "runNamespace": "riddle1.tutorial"
+    "runNamespace": "tutorial.tutorial"
   },{
     "command": "opensesame",
     "helpText": "Mystical command that opens something.",
     "file": "opensesame.ts",
-    "runNamespace": "riddle1.finish"
+    "runNamespace": "tutorial.finish"
   }],
   "noRead": ["a-file-you-cannot-read-write-execute"]
 }

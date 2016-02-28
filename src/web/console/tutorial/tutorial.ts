@@ -1,4 +1,4 @@
-namespace riddle1.tutorial {
+namespace tutorial.tutorial {
     class TutorialState {
         constructor(public file: string, private command: string, private args?: string[]) {
 

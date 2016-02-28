@@ -213,22 +213,22 @@
  </layer>
  <objectgroup name="objects">
   <object id="5" name="PlayerStart" type="player-start" x="1184" y="3136" width="33" height="30"/>
-  <object id="18" name="door-riddle-1-2" type="door" x="1184" y="3008" width="32" height="32">
+  <object id="18" name="tutorial-door-1" type="door" x="1184" y="3008" width="32" height="32">
    <properties>
-    <property name="riddle" value="riddle-1"/>
+    <property name="riddle" value="tutorial"/>
     <property name="spriteIndex" value="14"/>
    </properties>
   </object>
-  <object id="19" name="door-riddle-1-1" type="door" x="1216" y="3008" width="32" height="32">
+  <object id="19" name="tutorial-door-2" type="door" x="1216" y="3008" width="32" height="32">
    <properties>
-    <property name="riddle" value="riddle-1"/>
+    <property name="riddle" value="tutorial"/>
     <property name="spriteIndex" value="14"/>
    </properties>
   </object>
-  <object id="20" name="riddle-1" type="terminal" x="1120" y="3040" width="32" height="32">
+  <object id="20" name="tutorial" type="terminal" x="1120" y="3040" width="32" height="32">
    <properties>
     <property name="interactive" value="true"/>
-    <property name="riddle" value="riddle-1"/>
+    <property name="riddle" value="tutorial"/>
     <property name="spriteIndex" value="19"/>
    </properties>
   </object>

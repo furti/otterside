@@ -45,10 +45,10 @@
                 {
                  "height":32,
                  "id":18,
-                 "name":"door-riddle-1-2",
+                 "name":"tutorial-door-1",
                  "properties":
                     {
-                     "riddle":"riddle-1",
+                     "riddle":"tutorial",
                      "spriteIndex":"14"
                     },
                  "rotation":0,
@@ -61,10 +61,10 @@
                 {
                  "height":32,
                  "id":19,
-                 "name":"door-riddle-1-1",
+                 "name":"tutorial-door-2",
                  "properties":
                     {
-                     "riddle":"riddle-1",
+                     "riddle":"tutorial",
                      "spriteIndex":"14"
                     },
                  "rotation":0,
@@ -77,11 +77,11 @@
                 {
                  "height":32,
                  "id":20,
-                 "name":"riddle-1",
+                 "name":"tutorial",
                  "properties":
                     {
                      "interactive":"true",
-                     "riddle":"riddle-1",
+                     "riddle":"tutorial",
                      "spriteIndex":"19"
                     },
                  "rotation":0,
