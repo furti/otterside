@@ -15,6 +15,8 @@ namespace otterside.console {
         public static run(runConfig: RunConfig): void {
             var commandParams = CodeEngine.buildCommandParams(runConfig);
 
+            Logger.debug('CodeEngine', 'commandParams: %o', commandParams);
+
             var scriptFunction = CodeEngine.buildScriptFunction(runConfig);
 
             var run = scriptFunction();
@@ -41,6 +43,8 @@ return (function(){
         }
 
         private static buildCommandParams(runConfig: RunConfig): CommandParams {
+            Logger.debug('CodeEngine', 'runconfig: %o', runConfig);
+
             return {
                 game: otterside.game,
                 gameManager: otterside.gameManager,
@@ -50,7 +54,8 @@ return (function(){
                     MainMenuState: MainMenuState.stateName,
                     PlayState: PlayState.stateName
                 },
-                console: runConfig.console
+                console: runConfig.console,
+                arguments: runConfig.context.arguments || []
             }
         }
 

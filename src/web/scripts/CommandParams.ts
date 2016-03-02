@@ -18,7 +18,16 @@ namespace otterside {
          */
         console: otterside.Console;
 
+        /**
+         * The Game Manager used to change the game state.
+         */
         gameManager: otterside.GameManager;
+
+        /**
+         * The list of arguments entered for this command
+         * @type {string[]}
+         */
+        arguments: string[];
     }
 
     export interface GameStates {

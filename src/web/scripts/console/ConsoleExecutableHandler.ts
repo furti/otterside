@@ -1,4 +1,4 @@
-module otterside.console {
+namespace otterside.console {
     export class ConsoleExecutableHandler {
         private console: Console;
         private executable: Executable;
@@ -20,7 +20,8 @@ module otterside.console {
             console.CodeEngine.run({
                 scripts: [scriptContent],
                 runNamespace: this.executable.runNamespace,
-                console: this.console
+                console: this.console,
+                context: context
             });
         }
     }

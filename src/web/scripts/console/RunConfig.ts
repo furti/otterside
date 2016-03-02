@@ -3,5 +3,6 @@ namespace otterside.console {
         scripts: string[];
         runNamespace: string;
         console: Console;
+        context: CommandExecutionContext;
     }
 }

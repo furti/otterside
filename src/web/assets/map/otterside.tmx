@@ -232,22 +232,22 @@
     <property name="spriteIndex" value="19"/>
    </properties>
   </object>
-  <object id="26" name="riddle-2" type="terminal" x="1280" y="2976" width="32" height="32">
+  <object id="26" name="read-1" type="terminal" x="1280" y="2976" width="32" height="32">
    <properties>
     <property name="interactive" value="true"/>
-    <property name="riddle" value="riddle-2"/>
+    <property name="riddle" value="read-1"/>
     <property name="spriteIndex" value="19"/>
    </properties>
   </object>
-  <object id="27" name="door-riddle-2-2" type="door" x="1280" y="2912" width="32" height="32">
+  <object id="27" name="read-1-door-1" type="door" x="1280" y="2912" width="32" height="32">
    <properties>
-    <property name="riddle" value="riddle-2"/>
+    <property name="riddle" value="read-1"/>
     <property name="spriteIndex" value="17"/>
    </properties>
   </object>
-  <object id="28" name="door-riddle-2-1" type="door" x="1280" y="2880" width="32" height="32">
+  <object id="28" name="read-1-door-1" type="door" x="1280" y="2880" width="32" height="32">
    <properties>
-    <property name="riddle" value="riddle-2"/>
+    <property name="riddle" value="read-1"/>
     <property name="spriteIndex" value="17"/>
    </properties>
   </object>

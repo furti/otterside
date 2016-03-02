@@ -13,6 +13,7 @@
     "./console.d.ts",
     "./mainmenu/save.ts",
     "./mainmenu/start.ts",
+    "./read-1/open.ts",
     "./tutorial/opensesame.ts",
     "./tutorial/tutorial.ts"
   ],

@@ -1,0 +1,14 @@
+{
+  "executables": [{
+    "command": "open",
+    "helpText": "Opens the door.",
+    "file": "open.ts",
+    "runNamespace": "read1.open",
+    "arguments": [{
+      "name": "password",
+      "required": true,
+      "helpText": "The password to unlock the door."
+    }]
+  }],
+  "noRead": ["open.ts"]
+}

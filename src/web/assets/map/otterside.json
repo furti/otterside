@@ -94,11 +94,11 @@
                 {
                  "height":32,
                  "id":26,
-                 "name":"riddle-2",
+                 "name":"read-1",
                  "properties":
                     {
                      "interactive":"true",
-                     "riddle":"riddle-2",
+                     "riddle":"read-1",
                      "spriteIndex":"19"
                     },
                  "rotation":0,
@@ -111,10 +111,10 @@
                 {
                  "height":32,
                  "id":27,
-                 "name":"door-riddle-2-2",
+                 "name":"read-1-door-1",
                  "properties":
                     {
-                     "riddle":"riddle-2",
+                     "riddle":"read-1",
                      "spriteIndex":"17"
                     },
                  "rotation":0,
@@ -127,10 +127,10 @@
                 {
                  "height":32,
                  "id":28,
-                 "name":"door-riddle-2-1",
+                 "name":"read-1-door-1",
                  "properties":
                     {
-                     "riddle":"riddle-2",
+                     "riddle":"read-1",
                      "spriteIndex":"17"
                     },
                  "rotation":0,
