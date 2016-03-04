@@ -5,6 +5,7 @@ namespace otterside.console {
     export class ConsoleView extends React.Component<ConsoleViewProps, ConsoleViewState> {
         private scrollTimeout: number;
         private textarea: ResizeableTextarea;
+        private autocomplete: AutocompleteView;
         private linesContainer: HTMLDivElement;
 
         constructor() {
@@ -59,6 +60,9 @@ namespace otterside.console {
                 this.printActualValue(textarea.value);
                 textarea.value = '';
             }
+            else if (e.keyCode === Key.TAB) {
+                this.autocomplete.show(this.state.context.autocomplete(textarea.value));
+            }
         }
 
         private printActualValue(actualValue: string) {
@@ -98,6 +102,7 @@ namespace otterside.console {
                             return <div className="console-input">
                                 <span className="prompt">$</span>
                                 <ResizeableTextarea onKeyUp={(event) => this.handleUp(event) } onKeyDown={(event) => this.handleDown(event) } ref={(textarea) => this.textarea = textarea}></ResizeableTextarea>
+                                <AutocompleteView ref={(autocomplete) => this.autocomplete = autocomplete}></AutocompleteView>
                             </div>
                         }
                     })()

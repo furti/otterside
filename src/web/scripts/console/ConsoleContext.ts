@@ -4,7 +4,6 @@ namespace otterside.console {
     }
 
     export class ConsoleContext {
-
         public lines: string[];
         public id: number;
         public config: ConsoleContextConfig;
@@ -33,6 +32,10 @@ namespace otterside.console {
                 Logger.debug('ConsoleContext', `Fire COMMAND_EXECUTED for result %o`, result);
                 this.console.events.fire(ConsoleEvent.COMMAND_EXECUTED, result.command);
             }
+        }
+
+        public autocomplete(current: string): string[] {
+            return [current, 'test abc', 'test test test'];
         }
     }
 }

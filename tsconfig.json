@@ -56,6 +56,7 @@
     "./src/web/scripts/savegame/SaveGame.ts",
     "./src/web/scripts/Terminal.ts",
     "./src/web/scripts/Utils.ts",
+    "./src/web/scripts/console/AutocompleteView.tsx",
     "./src/web/scripts/console/Console.tsx",
     "./src/web/scripts/console/ConsoleView.tsx",
     "./src/web/scripts/console/ResizeableTextarea.tsx",
