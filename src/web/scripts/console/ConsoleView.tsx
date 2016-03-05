@@ -50,11 +50,21 @@ namespace otterside.console {
         private handleUp(e: React.KeyboardEvent): void {
             var textarea = e.target as HTMLTextAreaElement;
 
-            if (e.keyCode === Key.ENTER && textarea.value.trim().length > 0) {
-                //Enter pressed and we have some text --> execute the command
-                this.printActualValue(textarea.value);
-                this.state.context.executeCommand(textarea.value);
-                textarea.value = '';
+            if (e.keyCode === Key.ENTER) {
+                if (this.autocomplete.isVisible()) {
+                    /*
+                     * When the autocomplete is shown we have to take the currently selected value.
+                     * No need to execute the command.
+                     */
+                    textarea.value = this.autocomplete.getCurrentValue();
+                    this.autocomplete.hide();
+                }
+                else if (textarea.value.trim().length > 0) {
+                    //Enter pressed and we have some text --> execute the command
+                    this.printActualValue(textarea.value);
+                    this.state.context.executeCommand(textarea.value);
+                    textarea.value = '';
+                }
             }
             else if (e.keyCode === Key.C && e.ctrlKey) {
                 this.printActualValue(textarea.value);
@@ -62,6 +72,21 @@ namespace otterside.console {
             }
             else if (e.keyCode === Key.TAB) {
                 this.autocomplete.show(this.state.context.autocomplete(textarea.value));
+            }
+            else if (e.keyCode === Key.ESC) {
+                if (this.autocomplete.isVisible()) {
+                    this.autocomplete.hide();
+                }
+            }
+            else if (e.keyCode === Key.UP) {
+                if (this.autocomplete.isVisible()) {
+                    this.autocomplete.selectNext();
+                }
+            }
+            else if (e.keyCode === Key.DOWN) {
+                if (this.autocomplete.isVisible()) {
+                    this.autocomplete.selectPrevious();
+                }
             }
         }
 
@@ -73,7 +98,8 @@ namespace otterside.console {
 
         private handleDown(e: React.KeyboardEvent): void {
             //Prevent the default action for some key combinations
-            if (e.keyCode === Key.ENTER || e.keyCode === Key.TAB || e.ctrlKey) {
+            if (e.keyCode === Key.ENTER || e.keyCode === Key.TAB || e.ctrlKey || e.keyCode === Key.ESC ||
+                e.keyCode === Key.UP || e.keyCode === Key.DOWN) {
                 e.preventDefault();
             }
         }
@@ -100,9 +126,11 @@ namespace otterside.console {
                     (() => {
                         if (this.state.context && this.state.context.config.showInput) {
                             return <div className="console-input">
-                                <span className="prompt">$</span>
-                                <ResizeableTextarea onKeyUp={(event) => this.handleUp(event) } onKeyDown={(event) => this.handleDown(event) } ref={(textarea) => this.textarea = textarea}></ResizeableTextarea>
                                 <AutocompleteView ref={(autocomplete) => this.autocomplete = autocomplete}></AutocompleteView>
+                                <div className="input-container">
+                                    <span className="prompt">$</span>
+                                    <ResizeableTextarea onKeyUp={(event) => this.handleUp(event) } onKeyDown={(event) => this.handleDown(event) } ref={(textarea) => this.textarea = textarea}></ResizeableTextarea>
+                                </div>
                             </div>
                         }
                     })()

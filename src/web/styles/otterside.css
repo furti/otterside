@@ -3,9 +3,11 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   font-family: Consolas;
   font-size: 14px;
+}
+* {
+  box-sizing: border-box;
 }
 body {
   flex-direction: row;
@@ -168,10 +170,15 @@ body {
 }
 .console-input {
   display: flex;
+  flex-direction: column;
   flex-shrink: 0;
   border-top-style: solid;
   border-top-width: 1px;
   padding: 5px 3px;
+}
+.console-input .input-container {
+  display: flex;
+  flex-shrink: 0;
 }
 .console-input .prompt {
   margin-right: 10px;
@@ -186,4 +193,27 @@ body {
   height: auto;
   font-size: 14px;
   overflow: hidden;
+}
+.autocomplete {
+  position: relative;
+  ;
+}
+.autocomplete ul {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 300px;
+  margin: 6px 0;
+  padding: 0;
+  background-color: #EEE8D5;
+  color: #002B36;
+}
+.autocomplete ul li {
+  list-style: none;
+  padding: 3px;
+}
+.autocomplete ul li.active {
+  color: #3182A4;
+  background-color: #003D4D;
 }
