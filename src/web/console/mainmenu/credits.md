@@ -7,6 +7,7 @@
 - <a href="https://github.com/JedWatson/classnames" target="_blank">classnames</a> is used for class names in React. <a href="https://github.com/JedWatson/classnames/blob/master/LICENSE" target="_blank">MIT LICENSE</a>
 - <a href="https://github.com/beatgammit/base64-js" target="_blank">base64-js</a> and <a href="https://github.com/coolaj86/TextEncoderLite" target="_blank">TextEncoderLite</a> are used for Base64 encoding and decoding. <a href="https://github.com/beatgammit/base64-js/blob/master/LICENSE.MIT" target="_blank">MIT LICENSE</a> <a href="https://github.com/coolaj86/TextEncoderLite/blob/master/LICENSE.md" target="_blank">Apache 2.0 LICENSE</a>
 - <a href="https://github.com/Microsoft/TypeScript" target="_blank">Typescript</a> is used for compiling code you write. <a href="https://github.com/Microsoft/TypeScript/blob/master/LICENSE.txt" target="_blank">Apache 2.0 LICENSE</a>
+- <a href="https://github.com/hiddentao/fast-levenshtein" target="_blank">fast-levenshtein</a> is used for finding similar words in autocomplete. <a href="https://github.com/hiddentao/fast-levenshtein/blob/master/LICENSE.md" target="_blank">MIT LICENSE</a>
 
 Thanks for reading the credits. Here is a little otter for your patience.
 
