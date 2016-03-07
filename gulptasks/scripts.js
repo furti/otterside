@@ -16,7 +16,8 @@ var vendorSources = [
   './bower_components/base64-js/lib/b64.js',
   './bower_components/classnames/index.js',
   './bower_components/text-encoder-lite/index.js',
-  './node_modules/typescript/lib/typescript.js'
+  './node_modules/typescript/lib/typescript.js',
+  './bower_components/fast-levenshtein/levenshtein.min.js'
 ];
 
 module.exports = {

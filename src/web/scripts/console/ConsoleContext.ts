@@ -35,7 +35,7 @@ namespace otterside.console {
         }
 
         public autocomplete(current: string): string[] {
-            return [current, 'test abc', 'test test test'];
+            return this.consoleEngine.autocomplete(current);
         }
     }
 }

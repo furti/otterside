@@ -17,3 +17,9 @@ declare class TextDecoderLite {
     constructor(encoding: string);
     decode: (uint8Array: Uint8Array) => string;
 }
+
+interface FastLevenshtein {
+    get(a: string, b: string): number;
+}
+
+declare var Levenshtein: FastLevenshtein;

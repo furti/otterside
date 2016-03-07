@@ -30,6 +30,7 @@
     "./src/web/scripts/console/ConsoleViewProps.ts",
     "./src/web/scripts/console/ConsoleViewState.ts",
     "./src/web/scripts/console/ParsedCommand.ts",
+    "./src/web/scripts/console/QueryingEntry.ts",
     "./src/web/scripts/console/ResizeableTextareaProps.ts",
     "./src/web/scripts/console/ResizeableTextareaState.ts",
     "./src/web/scripts/console/RunConfig.ts",

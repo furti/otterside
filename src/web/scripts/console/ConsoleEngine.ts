@@ -69,6 +69,54 @@ namespace otterside.console {
             }
         }
 
+        public autocomplete(current: string): string[] {
+            if (!current) {
+                return [];
+            }
+
+            var parsedCommand = this.parseCommand(current);
+
+            if (!parsedCommand.arguments || parsedCommand.arguments.length === 0) {
+                return this.queryCommands(parsedCommand.command);
+            }
+            else {
+                throw 'Argument autocomplete Not implemented yet';
+            }
+        }
+
+        private queryCommands(query: string): string[] {
+            if (!this.commands) {
+                return [];
+            }
+
+            var result: QueryingEntry[] = [];
+
+            for (let commandString of Object.keys(this.commands)) {
+                var distance = Levenshtein.get(query, commandString);
+
+                if (distance < commandString.length / 2 || commandString.indexOf(query) === 0) {
+                    result.push({
+                        value: commandString,
+                        distance: distance
+                    });
+                }
+            }
+
+            return this.processQueryResult(result);
+        }
+
+        private processQueryResult(result: QueryingEntry[]): string[] {
+            if (!result) {
+                return [];
+            }
+
+            return result.sort((entry1, entry2) => {
+                return entry1.distance - entry2.distance;
+            }).map((entry) => {
+                return entry.value;
+            });
+        }
+
         private parseCommand(commandString: string): ParsedCommand {
             var parts = commandString.trim().split(/\s+/);
 
