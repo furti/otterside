@@ -71,7 +71,15 @@ namespace otterside.console {
                 textarea.value = '';
             }
             else if (e.keyCode === Key.TAB) {
-                this.autocomplete.show(this.state.context.autocomplete(textarea.value));
+                var choices = this.state.context.autocomplete(textarea.value);
+
+                if (choices && choices.length === 1) {
+                    textarea.value = choices[0];
+                    this.autocomplete.hide();
+                }
+                else {
+                    this.autocomplete.show(choices);
+                }
             }
             else if (e.keyCode === Key.ESC) {
                 if (this.autocomplete.isVisible()) {
