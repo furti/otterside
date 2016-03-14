@@ -1,6 +1,6 @@
 namespace otterside {
     export interface ParsedCommand {
         command: string;
-        arguments?: any[];
+        arguments?: { [name: string]: any };
     }
 }

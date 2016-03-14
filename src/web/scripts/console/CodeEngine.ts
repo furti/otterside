@@ -1,6 +1,6 @@
 namespace otterside.console {
     export class CodeEngine {
-        private static allowedGlobals = ['Math', 'NaN', 'Infinity', 'parseInt', 'parseFloat', 'isNaN', 'isFinite', 'Date'];
+        private static allowedGlobals = ['Math', 'NaN', 'Infinity', 'parseInt', 'parseFloat', 'isNaN', 'isFinite', 'Date', 'console', 'Object'];
 
         private static compilerOptions: ts.CompilerOptions = {
             module: ts.ModuleKind.CommonJS,
@@ -55,7 +55,7 @@ return (function(){
                     PlayState: PlayState.stateName
                 },
                 console: runConfig.console,
-                arguments: runConfig.context.arguments || []
+                arguments: runConfig.context.arguments || {}
             }
         }
 

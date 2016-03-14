@@ -51,9 +51,9 @@ namespace otterside.console.command {
             return file.executable ? 'e' : '-';
         }
 
-        private filterFiles(files: ConsoleFile[], commandArgs?: string[]): ConsoleFile[] {
+        private filterFiles(files: ConsoleFile[], commandArgs?: { [name: string]: any }): ConsoleFile[] {
             //Also show hidden files if the users wants it
-            if (commandArgs && commandArgs.indexOf('all') !== -1) {
+            if (commandArgs && commandArgs['all'] === 'all') {
                 return files;
             }
 

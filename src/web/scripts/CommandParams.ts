@@ -27,7 +27,7 @@ namespace otterside {
          * The list of arguments entered for this command
          * @type {string[]}
          */
-        arguments: string[];
+        arguments: { [name: string]: any };
     }
 
     export interface GameStates {

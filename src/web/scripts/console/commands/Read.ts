@@ -26,12 +26,12 @@ namespace otterside.console.command {
         }
 
         public executeCommand(context: console.CommandExecutionContext): void {
-            if (!context.arguments || context.arguments.length === 0) {
+            if (!context.arguments) {
                 this.console.printLine('a filename argument is required. use **read filename** to read a file.');
                 return;
             }
 
-            var fileName = context.arguments[0] as string;
+            var fileName = context.arguments['file'] as string;
 
             var file = this.console.getFile(fileName);
 

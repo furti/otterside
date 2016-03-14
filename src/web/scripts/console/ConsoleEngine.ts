@@ -76,7 +76,7 @@ namespace otterside.console {
 
             var parsedCommand = this.parseCommand(current);
 
-            if (!parsedCommand.arguments || parsedCommand.arguments.length === 0) {
+            if (!parsedCommand.arguments) {
                 return this.queryCommands(parsedCommand.command);
             }
             else {
@@ -126,12 +126,35 @@ namespace otterside.console {
 
             return {
                 command: parts[0],
-                arguments: parts.length > 1 ? parts.slice(1) : undefined
+                arguments: this.createArgumentMap(parts)
             }
         }
 
+        private createArgumentMap(commandParts: string[]): { [name: string]: any } {
+            if (commandParts.length <= 1) {
+                return undefined;
+            }
+
+            var args = commandParts.slice(1),
+                command = this.commands[commandParts[0]],
+                paramMap = {};
+
+            args.forEach((argument, index) => {
+                var argumentName = command ? command.getArgumentName(index) : undefined;
+
+                if (argumentName) {
+                    paramMap[argumentName] = argument;
+                }
+                else {
+                    paramMap[''] = argument;
+                }
+            });
+
+            return paramMap;
+        }
+
         private showHelp(parsedCommand: ParsedCommand): void {
-            if (!parsedCommand.arguments || parsedCommand.arguments.length === 0) {
+            if (!parsedCommand.arguments) {
 
                 this.console.printLine('Parameters are shown with _emphasis_. Optional parameters in [_square brackets_]')
 
@@ -142,7 +165,7 @@ namespace otterside.console {
                 }
             }
             else {
-                var commandName = parsedCommand.arguments[0];
+                var commandName = parsedCommand.arguments[''];
                 var command = this.commands[commandName];
 
                 if (!command) {
@@ -178,6 +201,14 @@ namespace otterside.console {
             } else {
                 this.handler.executeCommand(context);
             }
+        }
+
+        public getArgumentName(index: number): string {
+            if (!this.command.arguments || this.command.arguments.length <= index) {
+                return undefined;
+            }
+
+            return this.command.arguments[index].name;
         }
 
         /**

@@ -1,6 +1,6 @@
 namespace tutorial.tutorial {
     class TutorialState {
-        constructor(public file: string, private command: string, private args?: string[]) {
+        constructor(public file: string, private command: string, private args?: { [name: string]: string }) {
 
         }
 
@@ -10,14 +10,14 @@ namespace tutorial.tutorial {
             }
 
             if (!event.arguments) {
-                return !this.args || this.args.length === 0;
+                return !this.args;
             }
-            else if (!this.args || this.args.length === 0) {
+            else if (!this.args) {
                 return false;
             }
 
-            for (var index in event.arguments) {
-                if (event.arguments[index] !== this.args[index]) {
+            for (var name in Object.keys(event.arguments)) {
+                if (event.arguments[name] !== this.args[name]) {
                     return false;
                 }
             }
@@ -58,9 +58,9 @@ namespace tutorial.tutorial {
         private setupStates(): TutorialState[] {
             return [
                 new TutorialState('tutorial-2.md', 'help'),
-                new TutorialState('tutorial-3.md', 'help', ['read']),
+                new TutorialState('tutorial-3.md', 'help', { '': 'read' }),
                 new TutorialState('tutorial-4.md', 'list'),
-                new TutorialState('tutorial-5.md', 'list', ['all'])
+                new TutorialState('tutorial-5.md', 'list', { 'all': 'all' })
             ];
         }
     }
