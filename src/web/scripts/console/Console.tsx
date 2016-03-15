@@ -229,7 +229,8 @@ namespace otterside {
         private registerDefaultCommands(): void {
             var currentContext = this.getCurrentContext();
 
-            currentContext.registerCommand(console.command.Read.command, new console.command.Read(this));
+            var read = new console.command.Read(this);
+            currentContext.registerCommand(console.command.Read.command, read, read);
             currentContext.registerCommand(console.command.Exit.command, new console.command.Exit(this));
             currentContext.registerCommand(console.command.List.command, new console.command.List(this));
         }

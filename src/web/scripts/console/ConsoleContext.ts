@@ -18,8 +18,8 @@ namespace otterside.console {
             this.console = connectedConsole;
         }
 
-        public registerCommand(command: console.Command, handler: CommandHandler): void {
-            this.consoleEngine.registerCommand(command, handler);
+        public registerCommand(command: console.Command, handler: CommandHandler, autocompleteHandler?: AutocompleteHandler): void {
+            this.consoleEngine.registerCommand(command, handler, autocompleteHandler);
         }
 
         public executeCommand(commandString: string): void {

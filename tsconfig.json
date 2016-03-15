@@ -14,6 +14,7 @@
   "files": [
     "./src/web/scripts/BootState.ts",
     "./src/web/scripts/CommandParams.ts",
+    "./src/web/scripts/console/AutocompleteHandler.ts",
     "./src/web/scripts/console/CodeEngine.ts",
     "./src/web/scripts/console/Command.ts",
     "./src/web/scripts/console/CommandArgument.ts",

@@ -3,8 +3,6 @@ namespace otterside.console.command {
      * Command to read a file.
      */
     export class Exit {
-        private reader: Reader;
-
         public static command: console.Command = {
             command: 'exit',
             helpText: 'Close the console'

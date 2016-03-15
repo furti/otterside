@@ -55,6 +55,22 @@ namespace otterside.console.command {
             this.reader.performRead();
         }
 
+        public autocomplete(argumentName: string): string[] {
+            if (argumentName === 'file') {
+                var files = this.console.getFiles();
+
+                if (!files) {
+                    return [];
+                }
+
+                return files.map((file) => {
+                    return file.base;
+                });
+            }
+
+            return [];
+        }
+
         private registerCommands(consoleContext: console.ConsoleContext): void {
             consoleContext.registerCommand({
                 command: 'quit',

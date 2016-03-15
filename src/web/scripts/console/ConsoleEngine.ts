@@ -15,8 +15,8 @@ namespace otterside.console {
          * @param  {Command}                 command the command
          * @param  {CommandExecutionContext} handler the handler to execute
          */
-        public registerCommand(command: Command, handler: CommandHandler): void {
-            this.commands[command.command] = new CommandExecutor(command, handler);
+        public registerCommand(command: Command, handler: CommandHandler, autocompleteHandler?: AutocompleteHandler): void {
+            this.commands[command.command] = new CommandExecutor(command, handler, autocompleteHandler);
         }
 
         /**
@@ -77,21 +77,27 @@ namespace otterside.console {
             var parsedCommand = this.parseCommand(current);
 
             if (!parsedCommand.arguments) {
-                return this.queryCommands(parsedCommand.command);
+                return this.query(parsedCommand.command, Object.keys(this.commands));
             }
             else {
-                throw 'Argument autocomplete Not implemented yet';
+                var currentCommand = this.commands[parsedCommand.command];
+                var possibleValues = currentCommand.autocomplete(parsedCommand.lastArgumentName);
+
+                return this.query(parsedCommand.arguments[parsedCommand.lastArgumentName], possibleValues)
+                    .map((value) => {
+                        return parsedCommand.command + ' ' + value;
+                    });
             }
         }
 
-        private queryCommands(query: string): string[] {
+        private query(query: string, possibleValues: string[]): string[] {
             if (!this.commands) {
                 return [];
             }
 
             var result: QueryingEntry[] = [];
 
-            for (let commandString of Object.keys(this.commands)) {
+            for (let commandString of possibleValues) {
                 var distance = Levenshtein.get(query, commandString);
 
                 if (distance < commandString.length / 2 || commandString.indexOf(query) === 0) {
@@ -126,8 +132,20 @@ namespace otterside.console {
 
             return {
                 command: parts[0],
-                arguments: this.createArgumentMap(parts)
+                arguments: this.createArgumentMap(parts),
+                lastArgumentName: this.getLastArgumentName(parts)
             }
+        }
+
+        private getLastArgumentName(commandParts: string[]): string {
+            if (commandParts.length <= 1) {
+                return undefined;
+            }
+
+            var args = commandParts.slice(1),
+                command = this.commands[commandParts[0]];
+
+            return command.getArgumentName(args.length - 1);
         }
 
         private createArgumentMap(commandParts: string[]): { [name: string]: any } {
@@ -184,11 +202,13 @@ namespace otterside.console {
 
     class CommandExecutor {
         private handler: any;
+        private autocompleteHandler: any;
         private command: Command;
 
-        constructor(command: Command, handler: CommandHandler) {
+        constructor(command: Command, handler: CommandHandler, autocompleteHandler?: AutocompleteHandler) {
             this.command = command;
             this.handler = handler;
+            this.autocompleteHandler = autocompleteHandler;
         }
 
         public execute(parsedCommand: ParsedCommand): void {
@@ -209,6 +229,19 @@ namespace otterside.console {
             }
 
             return this.command.arguments[index].name;
+        }
+
+        public autocomplete(argumentName: string): string[] {
+            if (this.autocompleteHandler) {
+                if (typeof this.autocompleteHandler === 'function') {
+                    return this.autocompleteHandler(argumentName);
+                }
+                else {
+                    return this.autocompleteHandler.autocomplete(argumentName);
+                }
+            }
+
+            return [];
         }
 
         /**
